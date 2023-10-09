@@ -7,4 +7,9 @@
 	import '../app.postcss';
 </script>
 
+<nav>
+	<a href="/">home</a>
+	<a href="/signup">signup</a>
+</nav>
+
 <slot />
