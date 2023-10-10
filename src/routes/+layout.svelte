@@ -5,12 +5,12 @@
 	import '@skeletonlabs/skeleton/styles/skeleton.css';
 	// Most of your app wide CSS should be put in this file
 	import '../app.postcss';
+
 </script>
+<slot />
 
 <nav>
-	<a href="/">home</a>
+	<a href="/home">home</a>
 	<a href="/signup">signup</a>
 	<a href="/login">login</a>
 </nav>
-
-<slot />
