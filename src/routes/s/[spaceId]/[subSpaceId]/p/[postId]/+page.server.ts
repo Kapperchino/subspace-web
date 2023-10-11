@@ -9,8 +9,10 @@ export const load: PageServerLoad = async ({ params, cookies }) => {
     }
     const post = await getPost(user, Number(params.postId));
     if (Number(params.spaceId) !== post.space_parent_id || Number(params.subSpaceId) !== post.space_id) {
+        console.log(params)
         return;
     }
-    console.log(post);
-    return post;
+    return {
+        post: post
+    };
 };
