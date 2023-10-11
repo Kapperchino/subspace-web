@@ -1,6 +1,6 @@
+import type { SignUp } from '../../models/signup.type';
+import { signup } from '../../service/loginService';
 import type { Actions } from './$types';
-import { signup } from '../../service/loginService.d.ts';
-import { type SignUp, LogIn, type UserMeta } from "../../models/signup.type.ts";
 
 
 export const actions = {

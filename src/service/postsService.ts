@@ -1,0 +1,18 @@
+import axios, { type AxiosResponse } from 'axios';
+import type { UserMeta } from '../models/signup.type';
+import type { Post } from '../models/post.type';
+
+const url = 'https://subspace-backend.fly.dev';
+
+export const getPost = async (user: UserMeta, postId: number): Promise<Post> => {
+    const data: AxiosResponse<Post> = await axios.get(`${url}/posts/${postId}?userId=${user.user_id}`,
+        {
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': `Bearer ${user.token}`,
+            }
+        });
+    return data.data
+}
+
+
