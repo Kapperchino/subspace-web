@@ -46,3 +46,21 @@ export type Vote = {
     vote_type: VoteType;
     is_deleted: boolean;
 }
+
+export type VoteRequest = {
+    user_id: number;
+    post_or_comment_id: number;
+    is_up_vote: boolean;
+    vote_type: VoteType;
+}
+
+export type VotesMeta = {
+    vote_id: number;
+    up_votes: number;
+    down_votes: number;
+    is_deleted: boolean;
+    user_id: number;
+    post_or_comment_id: number;
+    is_up_vote: boolean;
+    vote_type: VoteType;
+}

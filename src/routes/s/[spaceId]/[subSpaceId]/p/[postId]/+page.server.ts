@@ -1,3 +1,4 @@
+import { setContext } from 'svelte';
 import type { UserMeta } from '../../../../../../models/signup.type';
 import { getPost } from '../../../../../../service/postsService';
 import type { PageServerLoad } from './$types';
@@ -13,6 +14,7 @@ export const load: PageServerLoad = async ({ params, cookies }) => {
         return;
     }
     return {
-        post: post
+        post: post,
+        user: user
     };
 };

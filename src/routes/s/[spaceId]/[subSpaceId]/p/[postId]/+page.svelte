@@ -7,9 +7,13 @@
 
 	import Upvote from '~icons/bx/upvote';
 	import Downvote from '~icons/bx/downvote';
-
+	import VoteComponent from '$lib/voteComponent.svelte';
+	import { setContext } from 'svelte';
+	import { VoteType } from '../../../../../../models/post.type';
 
 	export let data: PageData;
+
+	setContext('user', data.user);
 </script>
 
 <AppShell>
@@ -18,10 +22,9 @@
 	</svelte:fragment>
 	<svelte:fragment slot="sidebarLeft">Sidebar Left</svelte:fragment>
 	<svelte:fragment slot="sidebarRight">Sidebar Right</svelte:fragment>
-
 	<div class="flex flex-row">
-		<div class="basis-1/12 md:basis-1/4" />
-		<div class="card col-span-3 basis-10/12 md:basis-2/4">
+		<div class="basis-1/12 md:basis-1/6" />
+		<div class="card col-span-3 basis-10/12 md:basis-4/6">
 			{#if data.post?.topic != ''}
 				<div class="p-3 pl-6 pt-4">
 					<h3
@@ -44,12 +47,17 @@
 				<Avatar width="w-10" src={data.post?.poster_picture?.url} />
 				<p class="font-semibold align-sub pl-1 pt-2">{data.post?.poster_name}</p>
 				<div class="grow" />
-				<div class="  btn-group   variant-ghost">
-					<button> <Upvote /> </button>
-					<button><Downvote/></button>
+				<div class="pr-3">
+					<VoteComponent
+						upVotes={data.post?.up_votes}
+						downVotes={data.post?.down_votes}
+						voteData={data.post?.vote}
+						id={data.post?.id}
+						voteType={VoteType.Post}
+					/>
 				</div>
 			</div>
 		</div>
-		<div class="basis-1/12 md:basis-1/4" />
+		<div class="basis-1/12 md:basis-1/6" />
 	</div>
 </AppShell>
