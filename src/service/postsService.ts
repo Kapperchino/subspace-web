@@ -15,4 +15,15 @@ export const getPost = async (user: UserMeta, postId: number): Promise<Post> => 
     return data.data
 }
 
+export const getPosts = async (user: UserMeta, spaceId: number): Promise<AxiosResponse<Array<Post>>> => {
+    const data: AxiosResponse<Array<Post>> = await axios.get(`${url}/posts/spaces/${spaceId}?sort=latest&days=7&userId=${user!.user_id}`,
+        {
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': `Bearer ${user.token}`,
+            }
+        });
+    return data
+}
+
 
