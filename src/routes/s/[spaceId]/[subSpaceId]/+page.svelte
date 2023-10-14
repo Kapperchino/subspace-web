@@ -50,7 +50,7 @@
 					</a>
 				{/if}
 				<a class="pl-4 pr-4 pt-2 flex justify-center" href="/s/{data.params?.spaceId}/{data.params?.subSpaceId}/p/{post.id}">
-					<div class=" basis-1/4 bg-gradient-to-r from-gray-900 to-gray-700"/>
+					<div class="basis-1/4 rounded-md bg-gradient-to-r from-gray-900 to-gray-800"/>
 					<img
 						class="rounded-md"
 						alt="The project logo"
@@ -58,7 +58,7 @@
 						width={getDimention(post?.post_pictures?.at(0)).width}
 						src={post?.post_pictures?.at(0)?.url}
 					/>
-					<div class="basis-1/4 bg-gradient-to-l from-gray-900 to-gray-700"/>
+					<div class="basis-1/4 rounded-md bg-gradient-to-l from-gray-900 to-gray-800"/>
 				</a>
 				<section class="p-2 pl-4">{post?.body}</section>
 				<div class="flex flex-row pl-4 pb-2">
