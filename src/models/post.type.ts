@@ -21,7 +21,7 @@ export type Post = {
 
 export type PictureMeta = {
     url: string;
-    width: string;
+    width: number;
     height: number;
     id: number;
 }

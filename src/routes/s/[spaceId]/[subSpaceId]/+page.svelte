@@ -5,14 +5,23 @@
 	import type { PageData } from './$types';
 	import { textfit } from 'svelte-textfit';
 
-	import Upvote from '~icons/bx/upvote';
-	import Downvote from '~icons/bx/downvote';
 	import VoteComponent from '$lib/voteComponent.svelte';
 	import { setContext } from 'svelte';
-	import { VoteType, type Post } from '../../../../models/post.type';
+	import { VoteType, type Post, type PictureMeta } from '../../../../models/post.type';
 
 	export let data: PageData;
 	let posts: Post[] = data.posts!;
+	const imgHeight = 500;
+
+	export function getDimention(meta: PictureMeta | undefined) {
+		const ratio = meta!.width / meta!.height;
+		const width = imgHeight * ratio;
+		const height = Math.min(imgHeight, meta!.height);
+		return {
+			width: width,
+			height: height
+		};
+	}
 
 	setContext('user', data.user);
 </script>
@@ -25,12 +34,9 @@
 	{#each posts as post, index}
 		<div class="flex flex-row pt-4">
 			<div class="basis-1/12 md:basis-3/12" />
-			<a
-				href="/s/{data.params?.spaceId}/{data.params?.subSpaceId}/p/{post.id}"
-				class="card card-hover col-span-3 basis-10/12 md:basis-6/12"
-			>
+			<div class="card card-hover basis-10/12 md:basis-6/12">
 				{#if post?.topic != ''}
-					<div class="p-3 pl-6 pt-4">
+					<a class="p-3 pl-6 pt-4" href="/s/{data.params?.spaceId}/{data.params?.subSpaceId}/p/{post.id}">
 						<h3
 							use:textfit={{
 								mode: 'single',
@@ -41,11 +47,19 @@
 						>
 							{post?.topic}
 						</h3>
-					</div>
+					</a>
 				{/if}
-				<div class="pl-4 pr-4 pt-2">
-					<img class="rounded-md" alt="The project logo" src={post?.post_pictures?.at(0)?.url} />
-				</div>
+				<a class="pl-4 pr-4 pt-2 flex justify-center" href="/s/{data.params?.spaceId}/{data.params?.subSpaceId}/p/{post.id}">
+					<div class=" basis-1/4 bg-gradient-to-r from-gray-900 to-gray-700"/>
+					<img
+						class="rounded-md"
+						alt="The project logo"
+						height={getDimention(post?.post_pictures?.at(0)).height}
+						width={getDimention(post?.post_pictures?.at(0)).width}
+						src={post?.post_pictures?.at(0)?.url}
+					/>
+					<div class="basis-1/4 bg-gradient-to-l from-gray-900 to-gray-700"/>
+				</a>
 				<section class="p-2 pl-4">{post?.body}</section>
 				<div class="flex flex-row pl-4 pb-2">
 					<Avatar width="w-10" src={post?.poster_picture?.url} />
@@ -61,9 +75,9 @@
 						/>
 					</div>
 				</div>
-			</a>
+			</div>
 			<div class="basis-1/12 md:basis-3/12" />
 		</div>
 	{/each}
-    <svelte:fragment slot="sidebarRight">Sidebar Right</svelte:fragment>
+	<svelte:fragment slot="sidebarRight">Sidebar Right</svelte:fragment>
 </AppShell>
