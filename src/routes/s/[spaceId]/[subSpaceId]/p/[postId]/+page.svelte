@@ -9,9 +9,20 @@
 	import Downvote from '~icons/bx/downvote';
 	import VoteComponent from '$lib/voteComponent.svelte';
 	import { setContext } from 'svelte';
-	import { VoteType } from '../../../../../../models/post.type';
+	import { VoteType, type PictureMeta } from '../../../../../../models/post.type';
 
 	export let data: PageData;
+	const imgHeight = 800;
+
+	export function getDimention(meta: PictureMeta | undefined) {
+		const ratio = meta!.width / meta!.height;
+		const width = imgHeight * ratio;
+		const height = Math.min(imgHeight, meta!.height);
+		return {
+			width: width,
+			height: height
+		};
+	}
 
 	setContext('user', data.user);
 </script>
@@ -22,7 +33,7 @@
 	</svelte:fragment>
 	<svelte:fragment slot="sidebarLeft">Sidebar Left</svelte:fragment>
 	<svelte:fragment slot="sidebarRight">Sidebar Right</svelte:fragment>
-	<div class="flex flex-row">
+	<div class="pt-6 flex flex-row">
 		<div class="basis-1/12 md:basis-1/6" />
 		<div class="card col-span-3 basis-10/12 md:basis-4/6">
 			{#if data.post?.topic != ''}
@@ -39,8 +50,16 @@
 					</h3>
 				</div>
 			{/if}
-			<div class="pl-4 pr-4 pt-2">
-				<img class="rounded-md" alt="The project logo" src={data.post?.post_pictures?.at(0)?.url} />
+			<div class="pl-4 pr-4 pt-2 flex justify-center">
+				<div class="basis-1/4 rounded-md bg-gradient-to-r from-gray-900 to-gray-800" />
+				<img
+					class="rounded-md"
+					alt="The project logo"
+					height={getDimention(data.post?.post_pictures?.at(0)).height}
+					width={getDimention(data.post?.post_pictures?.at(0)).width}
+					src={data.post?.post_pictures?.at(0)?.url}
+				/>
+				<div class="basis-1/4 rounded-md bg-gradient-to-l from-gray-900 to-gray-800" />
 			</div>
 			<section class="p-2 pl-4">{data.post?.body}</section>
 			<div class="flex flex-row pl-4 pb-2">

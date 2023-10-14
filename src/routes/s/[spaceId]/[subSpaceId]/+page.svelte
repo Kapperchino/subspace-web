@@ -36,7 +36,10 @@
 			<div class="basis-1/12 md:basis-3/12" />
 			<div class="card card-hover basis-10/12 md:basis-6/12">
 				{#if post?.topic != ''}
-					<a class="p-3 pl-6 pt-4" href="/s/{data.params?.spaceId}/{data.params?.subSpaceId}/p/{post.id}">
+					<a
+						class="flex p-3 pl-6 pt-4"
+						href="/s/{data.params?.spaceId}/{data.params?.subSpaceId}/p/{post.id}"
+					>
 						<h3
 							use:textfit={{
 								mode: 'single',
@@ -49,8 +52,11 @@
 						</h3>
 					</a>
 				{/if}
-				<a class="pl-4 pr-4 pt-2 flex justify-center" href="/s/{data.params?.spaceId}/{data.params?.subSpaceId}/p/{post.id}">
-					<div class="basis-1/4 rounded-md bg-gradient-to-r from-gray-900 to-gray-800"/>
+				<a
+					class="pl-4 pr-4 pt-2 flex justify-center"
+					href="/s/{data.params?.spaceId}/{data.params?.subSpaceId}/p/{post.id}"
+				>
+					<div class="basis-1/4 rounded-md bg-gradient-to-r from-gray-900 to-gray-800" />
 					<img
 						class="rounded-md"
 						alt="The project logo"
@@ -58,13 +64,16 @@
 						width={getDimention(post?.post_pictures?.at(0)).width}
 						src={post?.post_pictures?.at(0)?.url}
 					/>
-					<div class="basis-1/4 rounded-md bg-gradient-to-l from-gray-900 to-gray-800"/>
+					<div class="basis-1/4 rounded-md bg-gradient-to-l from-gray-900 to-gray-800" />
 				</a>
-				<section class="p-2 pl-4">{post?.body}</section>
+				<a href="/s/{data.params?.spaceId}/{data.params?.subSpaceId}/p/{post.id}">
+					<section class="p-2 pl-4">{post?.body}</section>
+				</a>
 				<div class="flex flex-row pl-4 pb-2">
 					<Avatar width="w-10" src={post?.poster_picture?.url} />
 					<p class="font-semibold align-sub pl-1 pt-2">{post?.poster_name}</p>
-					<div class="grow" />
+					<a class="grow" href="/s/{data.params?.spaceId}/{data.params?.subSpaceId}/p/{post.id}">
+					</a>
 					<div class="pr-3">
 						<VoteComponent
 							upVotes={post?.up_votes}
