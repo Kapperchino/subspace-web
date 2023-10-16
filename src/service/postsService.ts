@@ -12,6 +12,7 @@ export const getPost = async (user: UserMeta, postId: number): Promise<Post> => 
                 'Authorization': `Bearer ${user.token}`,
             }
         });
+        console.log('Post id:', data);
     return data.data
 }
 
@@ -23,6 +24,18 @@ export const getPosts = async (user: UserMeta, spaceId: number): Promise<AxiosRe
                 'Authorization': `Bearer ${user.token}`,
             }
         });
+    return data
+}
+
+export const getSubscriptions = async (user: UserMeta): Promise<AxiosResponse<Array<Post>>> => {
+    const data: AxiosResponse<Array<Post>> = await axios.get(`${url}/posts/users/${user!.user_id}/subscriptions`,
+        {
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': `Bearer ${user.token}`,
+            }
+        });
+        console.log(data);
     return data
 }
 

@@ -28,16 +28,11 @@
 </script>
 
 <AppShell>
-	<svelte:fragment slot="header">
-		<AppBar>Skeleton</AppBar>
-	</svelte:fragment>
-	<svelte:fragment slot="sidebarLeft">Sidebar Left</svelte:fragment>
-	<svelte:fragment slot="sidebarRight">Sidebar Right</svelte:fragment>
 	<div class="pt-6 flex flex-row">
 		<div class="basis-1/12 md:basis-1/6" />
 		<div class="card col-span-3 basis-10/12 md:basis-4/6">
 			{#if data.post?.topic != ''}
-				<div class="p-3 pl-6 pt-4">
+				<div class="flex p-3 pl-6 pt-4">
 					<h3
 						use:textfit={{
 							mode: 'single',
@@ -50,17 +45,19 @@
 					</h3>
 				</div>
 			{/if}
-			<div class="pl-4 pr-4 pt-2 flex justify-center">
-				<div class="basis-1/4 rounded-md bg-gradient-to-r from-gray-900 to-gray-800" />
-				<img
-					class="rounded-md"
-					alt="The project logo"
-					height={getDimention(data.post?.post_pictures?.at(0)).height}
-					width={getDimention(data.post?.post_pictures?.at(0)).width}
-					src={data.post?.post_pictures?.at(0)?.url}
-				/>
-				<div class="basis-1/4 rounded-md bg-gradient-to-l from-gray-900 to-gray-800" />
-			</div>
+			{#if data.post?.post_pictures != null}
+				<div class="pl-4 pr-4 pt-2 flex justify-center">
+					<div class="basis-1/4 rounded-md bg-gradient-to-r from-gray-900 to-gray-800" />
+					<img
+						class="rounded-md"
+						alt="The project logo"
+						height={getDimention(data.post?.post_pictures?.at(0)).height}
+						width={getDimention(data.post?.post_pictures?.at(0)).width}
+						src={data.post?.post_pictures?.at(0)?.url}
+					/>
+					<div class="basis-1/4 rounded-md bg-gradient-to-l from-gray-900 to-gray-800" />
+				</div>
+			{/if}
 			<section class="p-2 pl-4">{data.post?.body}</section>
 			<div class="flex flex-row pl-4 pb-2">
 				<Avatar width="w-10" src={data.post?.poster_picture?.url} />

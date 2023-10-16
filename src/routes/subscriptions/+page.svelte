@@ -7,7 +7,7 @@
 
 	import VoteComponent from '$lib/voteComponent.svelte';
 	import { setContext } from 'svelte';
-	import { VoteType, type Post, type PictureMeta } from '../../../../models/post.type';
+	import { VoteType, type Post, type PictureMeta } from '../../models/post.type';
 
 	export let data: PageData;
 	let posts: Post[] = data.posts!;
