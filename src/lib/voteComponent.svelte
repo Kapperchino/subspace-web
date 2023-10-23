@@ -15,7 +15,6 @@
 	export let voteType: VoteType;
 	let user: UserMeta = getContext('user');
 	let voteStateInit = voteData?.is_up_vote ? 'up' : 'down';
-	console.log(voteData);
 	$: totalVotes = upVotes - downVotes;
 	$: voteState = voteData == null || voteData.is_deleted ? 'none' : voteStateInit;
 	async function onLike() {

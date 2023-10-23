@@ -8,6 +8,9 @@
 	import VoteComponent from '$lib/voteComponent.svelte';
 	import { setContext } from 'svelte';
 	import { VoteType, type Post, type PictureMeta } from '../../../../models/post.type';
+	import ImageAddFilled from '~icons/bxs/image-add';
+	import VideoAdd from '~icons/bxs/video-plus';
+	import LinkIcon from '~icons/bx/link';
 
 	export let data: PageData;
 	let posts: Post[] = data.posts!;
@@ -27,6 +30,39 @@
 </script>
 
 <AppShell>
+	<div class="pt-4 flex flex-row">
+		<div class="basis-1/12 md:basis-1/4" />
+		<div class="card basis-10/12 md:basis-2/4">
+			<section class="p-3 col-span-3">
+				<form class="grid grid-cols-1 gap-2" method="POST" action="?/post">
+					<label class="label">
+						<span>Post In</span>
+						<input class="input w-52" type="search" name="search" placeholder="Search..." /></label
+					>
+					<label class="label">
+						<textarea
+							class="textarea grid-cols-[auto_1fr_auto]"
+							name="Post"
+							placeholder="Post your thoughts!"
+							rows="3"
+						/>
+					</label>
+					<div class="flex-row">
+						<button type="button" class="btn-icon variant-filled-surface"><ImageAddFilled /></button
+						>
+						<button type="button" class="btn-icon variant-filled-surface"><VideoAdd /></button>
+						<button type="button" class="btn-icon variant-filled-surface"><LinkIcon /></button>
+						<button type="button" class="btn btn-md variant-filled-surface">Title</button>
+					</div>
+					<button type="submit" class="btn variant-filled-surface w-16 justify-self-end"
+						>Post
+					</button>
+				</form>
+			</section>
+		</div>
+
+		<div class="basis-1/12 md:basis-1/4" />
+	</div>
 	{#each posts as post, index}
 		<div class="flex flex-row pt-4">
 			<div class="basis-1/12 md:basis-3/12" />

@@ -8,7 +8,6 @@ export const actions = {
         const formData = Object.fromEntries(await request.formData());
         const req: SignUp = formData as SignUp;
         const meta = await signup(req);
-        console.log(meta);
         return {
             success: true
         };

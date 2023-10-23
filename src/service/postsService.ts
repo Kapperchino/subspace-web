@@ -12,7 +12,6 @@ export const getPost = async (user: UserMeta, postId: number): Promise<Post> => 
                 'Authorization': `Bearer ${user.token}`,
             }
         });
-        console.log('Post id:', data);
     return data.data
 }
 
@@ -35,7 +34,6 @@ export const getSubscriptions = async (user: UserMeta): Promise<AxiosResponse<Ar
                 'Authorization': `Bearer ${user.token}`,
             }
         });
-        console.log(data);
     return data
 }
 
