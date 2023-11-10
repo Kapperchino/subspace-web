@@ -1,16 +1,16 @@
 <script lang="ts">
-	import { AppShell, Avatar } from '@skeletonlabs/skeleton';
-	import { AppBar } from '@skeletonlabs/skeleton';
+	import { AppShell, Avatar, FileButton, TabAnchor, TabGroup } from '@skeletonlabs/skeleton';
 
-	import type { PageData } from './$types';
 	import { textfit } from 'svelte-textfit';
 
 	import VoteComponent from '$lib/voteComponent.svelte';
-	import { setContext } from 'svelte';
-	import { VoteType, type Post, type PictureMeta } from '../../models/post.type';
+	import ImageAddFilled from '~icons/bxs/image-add';
+	import VideoAdd from '~icons/bxs/video-plus';
+	import LinkIcon from '~icons/bx/link';
+	import { page } from '$app/stores';
+	import { VoteType, type PictureMeta, type Post } from '../models/post.type';
 
-	export let data: PageData;
-	let posts: Post[] = data.posts!;
+	export let posts: Post[];
 	const imgHeight = 500;
 
 	export function getDimention(meta: PictureMeta | undefined) {
@@ -22,15 +22,58 @@
 			height: height
 		};
 	}
-
-	setContext('user', data.user);
 </script>
 
 <AppShell>
+	<div class="pt-4 flex flex-row">
+		<div class="basis-1/12 md:basis-2/12" />
+		<div class="card basis-10/12 md:basis-8/12">
+			<section class="p-3 col-span-3">
+				<form class="grid grid-cols-1 gap-2" method="POST" action="?/post">
+					<label class="label pb-1">
+						<span>Post In:</span>
+						<input class="input w-52" type="search" name="search" placeholder="Search..." /></label
+					>
+					<label class="label">
+						<textarea
+							class="textarea grid-cols-[auto_1fr_auto]"
+							name="Title"
+							placeholder="Title (Optional)"
+							rows="1"
+						/>
+					</label>
+					<label class="label">
+						<textarea
+							class="textarea grid-cols-[auto_1fr_auto]"
+							name="Post"
+							placeholder="Post your thoughts!"
+							rows="3"
+						/>
+					</label>
+					<div class="flex-row flex">
+						<FileButton name="pictures" button="btn-icon variant-filled-surface"
+							><ImageAddFilled /></FileButton
+						>
+						<div class="pl-1" />
+						<FileButton name="videos" button="btn-icon variant-filled-surface"
+							><VideoAdd /></FileButton
+						>
+						<div class="pl-1" />
+						<button type="button" class="btn-icon variant-filled-surface"><LinkIcon /></button>
+					</div>
+					<button type="submit" class="btn variant-filled-surface w-16 justify-self-end"
+						>Post
+					</button>
+				</form>
+			</section>
+		</div>
+
+		<div class="basis-1/12 md:basis-2/12" />
+	</div>
 	{#each posts as post, index}
 		<div class="flex flex-row pt-4">
-			<div class="basis-1/12 md:basis-3/12" />
-			<div class="card card-hover basis-10/12 md:basis-6/12">
+			<div class="basis-1/12 md:basis-2/12" />
+			<div class="card basis-10/12 md:basis-8/12">
 				{#if post?.topic != ''}
 					<a
 						class="flex p-3 pl-6 pt-4"
@@ -82,7 +125,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="basis-1/12 md:basis-3/12" />
+			<div class="basis-1/12 md:basis-2/12" />
 		</div>
 	{/each}
 </AppShell>

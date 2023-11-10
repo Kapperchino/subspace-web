@@ -10,15 +10,6 @@
 	import { page } from '$app/stores';
 </script>
 
-<TabGroup justify="justify-center">
-	<TabAnchor  href="/s/1/1" selected={$page.url.pathname === '/s/1/1'} 
-		>For You</TabAnchor
-	>
-	<TabAnchor href="/subscriptions" selected={$page.url.pathname === '/subscriptions'} 
-		>Following</TabAnchor
-	>
-</TabGroup>
-
 <slot />
 
 
