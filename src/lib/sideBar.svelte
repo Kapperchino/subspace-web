@@ -18,7 +18,7 @@
 		aspectRatio="h-12"
 		href="/home"
 		regionLead="flex justify-items-start items-start"
-		selected={$page.url.pathname === '/home'}
+		selected={$page.url.pathname === '/home' || $page.url.pathname === '/following'}
 	>
 		<div class="pl-3 flex flex-row">
 			<Home />
@@ -26,7 +26,7 @@
 			<p class="hidden lg:flex lg:text-lg">Home</p>
 		</div>
 	</AppRailAnchor>
-	<AppRailAnchor aspectRatio="h-12" href="/about" selected={$page.url.pathname === '/about'}>
+	<AppRailAnchor aspectRatio="h-12" href="/explore" selected={$page.url.pathname === '/explore'}>
 		<div class="pl-3 flex flex-row">
 			<Search />
 			<div class="pl-1" />
