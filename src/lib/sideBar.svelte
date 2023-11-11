@@ -13,7 +13,7 @@
 	import { page } from '$app/stores';
 </script>
 
-<AppRail width="w-0 md:w-14 lg:w-64 sm:w-0" >
+<AppRail width="w-0 md:w-14 lg:w-64 sm:w-0">
 	<AppRailAnchor
 		aspectRatio="h-12"
 		href="/home"
@@ -33,14 +33,18 @@
 			<p class="hidden lg:flex lg:text-lg">Explore</p>
 		</div>
 	</AppRailAnchor>
-	<AppRailAnchor aspectRatio="h-12" href="/about" selected={$page.url.pathname === '/about'}>
+	<AppRailAnchor
+		aspectRatio="h-12"
+		href="/spaces"
+		selected={$page.url.pathname.startsWith('/spaces')}
+	>
 		<div class="pl-3 flex flex-row">
 			<Satellite />
 			<div class="pl-1" />
 			<p class="hidden lg:flex lg:text-lg">Space</p>
 		</div></AppRailAnchor
 	>
-	<AppRailAnchor aspectRatio="h-12" href="/about" selected={$page.url.pathname === '/about'}>
+	<AppRailAnchor aspectRatio="h-12" href="/notifications" selected={$page.url.pathname === '/notifications'}>
 		<div class="pl-3 flex flex-row">
 			<Bell />
 			<div class="pl-1" />
