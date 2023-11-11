@@ -37,8 +37,8 @@
 	<svelte:fragment slot="sidebarLeft"><SideBar /></svelte:fragment>
 	{#each posts as post, index}
 		<div class="flex flex-row pt-4">
-			<div class="basis-1/12 md:basis-3/12" />
-			<div class="card card-hover basis-10/12 md:basis-6/12">
+			<div class="basis-1/12 md:basis-2/12" />
+			<div class="card card-hover basis-10/12 md:basis-8/12">
 				{#if post?.topic != ''}
 					<a
 						class="flex p-3 pl-6 pt-4"
@@ -90,7 +90,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="basis-1/12 md:basis-3/12" />
+			<div class="basis-1/12 md:basis-2/12" />
 		</div>
 	{/each}
 </AppShell>
