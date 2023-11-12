@@ -28,8 +28,8 @@
 </script>
 
 <div class="pt-6 flex flex-row">
-	<div class="basis-1/12 md:basis-1/6" />
-	<div class="card col-span-3 basis-10/12 md:basis-4/6">
+	<div class="basis-2 md:basis-1/6" />
+	<div class="card col-span-3 basis-full md:basis-4/6">
 		{#if data.post?.topic != ''}
 			<div class="flex p-3 pl-6 pt-4">
 				<h3
@@ -73,5 +73,5 @@
 			</div>
 		</div>
 	</div>
-	<div class="basis-1/12 md:basis-1/6" />
+	<div class="basis-2 md:basis-1/6" />
 </div>
