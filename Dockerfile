@@ -6,12 +6,13 @@ RUN npm install
 RUN npm run build
 RUN npm prune --production
 
-FROM node:21-alpine
+FROM node:21
 WORKDIR /app
 COPY --from=builder /app/build build/
 COPY --from=builder /app/node_modules node_modules/
 COPY package.json .
 EXPOSE 3000
 ENV NODE_ENV=production
-ENV ORIGIN=https://subspace-frontend.fly.dev
+ENV ORIGIN=https://subspace-web.fly.dev
+ENV BACK_END=http://subspace-backend.internal
 CMD [ "node", "build" ]

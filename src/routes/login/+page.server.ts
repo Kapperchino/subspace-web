@@ -1,3 +1,4 @@
+import { redirect } from '@sveltejs/kit';
 import type { LogIn } from '../../models/signup.type';
 import { login } from '../../service/loginService';
 import type { Actions } from './$types';
@@ -8,8 +9,6 @@ export const actions = {
         const info: LogIn = { email: formData.get('email')!.toString(), password: formData.get('password')!.toString() }
         const meta = await login(info);
         cookies.set("user", JSON.stringify(meta));
-        return {
-            success: true
-        };
+        throw redirect(302, '/home');
     }
 } satisfies Actions;
