@@ -11,6 +11,7 @@ export type Post = {
     link: string;
     body: string;
     post_pictures: PictureMeta[];
+    post_videos: VideoMeta[];
     context_type: ContentType;
     up_votes: number;
     down_votes: number;
@@ -21,6 +22,16 @@ export type Post = {
 
 export type PictureMeta = {
     url: string;
+    width: number;
+    height: number;
+    id: number;
+}
+
+export type VideoMeta = {
+    thumbnail: string;
+    url: string;
+    duration: number;
+    status: string;
     width: number;
     height: number;
     id: number;

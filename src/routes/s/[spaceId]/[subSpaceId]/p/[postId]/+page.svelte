@@ -9,7 +9,7 @@
 	import Downvote from '~icons/bx/downvote';
 	import VoteComponent from '$lib/voteComponent.svelte';
 	import { setContext } from 'svelte';
-	import { VoteType, type PictureMeta } from '../../../../../../models/post.type';
+	import { VoteType, type PictureMeta, type VideoMeta } from '../../../../../../models/post.type';
 
 	export let data: PageData;
 	const imgHeight = 800;
@@ -22,6 +22,19 @@
 			width: width,
 			height: height
 		};
+	}
+	
+	function getVideoUrl(meta: VideoMeta): string {
+		let url = '';
+		let list = meta.url.split('/');
+		list.pop();
+		list.pop();
+		list.push('/iframe');
+		list.forEach((element) => {
+			url += element;
+			url += '/';
+		});
+		return url;
 	}
 
 	setContext('user', data.user);
@@ -55,6 +68,17 @@
 					src={data.post?.post_pictures?.at(0)?.url}
 				/>
 				<div class="basis-1/4 rounded-md bg-gradient-to-l from-gray-900 to-gray-800" />
+			</div>
+		{/if}
+		{#if data.post?.post_videos != null}
+			<div style="position: relative; padding-top: 80%;">
+				<!-- svelte-ignore a11y-missing-attribute -->
+				<iframe
+					src={getVideoUrl(data.post?.post_videos[0])}
+					style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+					allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+					allowfullscreen={true}
+				/>
 			</div>
 		{/if}
 		<section class="p-2 pl-4">{data.post?.body}</section>
