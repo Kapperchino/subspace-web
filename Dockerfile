@@ -14,5 +14,5 @@ COPY package.json .
 EXPOSE 3000
 ENV NODE_ENV=production
 ENV ORIGIN=https://subspace-web.fly.dev
-ENV BACK_END=http://subspace-backend.internal
+ENV BACK_END=https://subspace-backend.fly.dev
 CMD [ "node", "build" ]
