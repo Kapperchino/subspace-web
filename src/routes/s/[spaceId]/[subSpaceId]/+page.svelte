@@ -13,12 +13,8 @@
 	setContext('user', data.user);
 </script>
 
-<AppShell>
-	<TabGroup justify="justify-center">
-		<TabAnchor href="/s/1/1" selected={$page.url.pathname === '/s/1/1'}>Posts</TabAnchor>
-		<TabAnchor href="/following" selected={$page.url.pathname === '/following'}>About</TabAnchor
-		>
-	</TabGroup>
-	<svelte:fragment slot="sidebarLeft">Sidebar Left</svelte:fragment>
-	<SpaceComponent {posts} />
-</AppShell>
+<TabGroup justify="justify-center">
+	<TabAnchor href="/s/1/1" selected={$page.url.pathname === '/s/1/1'}>Posts</TabAnchor>
+	<TabAnchor href="/following" selected={$page.url.pathname === '/following'}>About</TabAnchor>
+</TabGroup>
+<SpaceComponent {posts} />

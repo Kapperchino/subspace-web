@@ -24,13 +24,10 @@
 	setContext('user', data.user);
 </script>
 
-<AppShell>
-	<TabGroup justify="justify-center">
-		<TabAnchor href="/spaces/popular" selected={$page.url.pathname === '/spaces/popular'}
-			>Popular</TabAnchor
-		>
-		<TabAnchor href="/spaces/new" selected={$page.url.pathname === '/spaces/new'}>New</TabAnchor>
-	</TabGroup>
-	<svelte:fragment slot="sidebarLeft"><SideBar /></svelte:fragment>
-	<SpacePageComponent {spaces} />
-</AppShell>
+<TabGroup justify="justify-center">
+	<TabAnchor href="/spaces/popular" selected={$page.url.pathname === '/spaces/popular'}
+		>Popular</TabAnchor
+	>
+	<TabAnchor href="/spaces/new" selected={$page.url.pathname === '/spaces/new'}>New</TabAnchor>
+</TabGroup>
+<SpacePageComponent {spaces} />

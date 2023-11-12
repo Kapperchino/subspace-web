@@ -15,8 +15,6 @@
 	export let spaces: Space[];
 </script>
 
-<AppShell>
-	{#each spaces as space, index}
-		<SpaceCardComponent {space} />
-	{/each}
-</AppShell>
+{#each spaces as space, index}
+	<SpaceCardComponent {space} />
+{/each}
