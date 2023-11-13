@@ -10,6 +10,7 @@
 
 	export let data: PageData;
 	let posts: Post[] = data.posts!;
+	let spaceId :number = data.spaceId;
 	setContext('user', data.user);
 </script>
 
@@ -17,4 +18,4 @@
 	<TabAnchor href="/s/1/1" selected={$page.url.pathname === '/s/1/1'}>Posts</TabAnchor>
 	<TabAnchor href="/following" selected={$page.url.pathname === '/following'}>About</TabAnchor>
 </TabGroup>
-<SpaceComponent {posts} />
+<SpaceComponent {posts} {spaceId}/>

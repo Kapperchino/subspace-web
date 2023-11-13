@@ -5,10 +5,13 @@
 
 	import VoteComponent from '$lib/voteComponent.svelte';
 	import { VoteType, type PictureMeta, type Post, type VideoMeta } from '../models/post.type';
+	import PostCardMetaComponent from './postCardMetaComponent.svelte';
+	import TimeComponent from './timeComponent.svelte';
 
 	const imgHeight = 500;
 
 	export let post: Post;
+	export let spaceId: number;
 
 	export function getDimention(meta: PictureMeta | undefined) {
 		const ratio = meta!.width / meta!.height;
@@ -34,6 +37,8 @@
 	}
 </script>
 
+<div class="pt-2 pl-2"><PostCardMetaComponent {post} {spaceId} /></div>
+
 {#if post?.topic != ''}
 	<a class="flex p-3 pl-6 pt-4" href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post.id}">
 		<h3
@@ -46,6 +51,11 @@
 		>
 			{post?.topic}
 		</h3>
+	</a>
+{/if}
+{#if post?.body != ''}
+	<a href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post.id}">
+		<section class="p-2 pl-4">{post?.body}</section>
 	</a>
 {/if}
 {#if post?.post_pictures != null}
@@ -65,6 +75,7 @@
 	</a>
 {/if}
 {#if post?.post_videos != null}
+	<div class="pt-2" />
 	<div style="position: relative; padding-top: 80%;">
 		<!-- svelte-ignore a11y-missing-attribute -->
 		<iframe
@@ -75,14 +86,10 @@
 		/>
 	</div>
 {/if}
-<a href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post.id}">
-	<section class="p-2 pl-4">{post?.body}</section>
-</a>
-<div class="flex flex-row pl-4 pb-2">
-	<Avatar width="w-10" src={post?.poster_picture?.url} />
-	<p class="font-semibold align-sub pl-1 pt-2">{post?.poster_name}</p>
+<div class="flex flex-row pl-4 pb-2 pt-2">
+	<div class="pt-2"><TimeComponent time={post.created} /></div>
 	<a class="grow" href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post.id}" />
-	<div class="pr-3">
+	<div class="pr-3 pt-1">
 		<VoteComponent
 			upVotes={post?.up_votes}
 			downVotes={post?.down_votes}

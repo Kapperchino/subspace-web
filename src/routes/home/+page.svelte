@@ -17,7 +17,6 @@
 	import { page } from '$app/stores';
 	import SpaceComponent from '$lib/spaceComponent.svelte';
 	import type { Post } from '../../models/post.type';
-	import SideBar from '$lib/sideBar.svelte';
 	export let data: PageData;
 	let posts: Post[] = data.posts!;
 
@@ -28,4 +27,4 @@
 	<TabAnchor href="/home" selected={$page.url.pathname === '/home'}>For You</TabAnchor>
 	<TabAnchor href="/following" selected={$page.url.pathname === '/following'}>Following</TabAnchor>
 </TabGroup>
-<SpaceComponent {posts} />
+<SpaceComponent {posts} spaceId={1} />

@@ -16,7 +16,7 @@ export type Post = {
     up_votes: number;
     down_votes: number;
     comments_count: number;
-    created: Date;
+    created: string;
     vote: Vote;
 }
 

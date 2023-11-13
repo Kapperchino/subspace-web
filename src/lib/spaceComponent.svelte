@@ -8,11 +8,12 @@
 	import type { Post } from '../models/post.type';
 
 	export let posts: Post[];
+	export let spaceId: number;
 </script>
 
 <div class="pt-4 flex flex-row">
-	<div class="basis-2 md:basis-2/12" />
-	<div class="card basis-full md:basis-8/12">
+	<div class="basis-2 md:basis-2/12 lg:basis-1/5 xl:basis-3/12" />
+	<div class="card basis-full md:basis-8/12 lg:basis-3/5 xl:basis-6/12">
 		<section class="p-3 col-span-3">
 			<form class="grid grid-cols-1 gap-2" method="POST" action="?/post">
 				<label class="label pb-1">
@@ -53,14 +54,18 @@
 		</section>
 	</div>
 
-	<div class="basis-2 md:basis-2/12" />
+	<div class="basis-2 md:basis-2/12 lg:basis-1/5 xl:basis-3/12" />
 </div>
-{#each posts as post, index}
-	<div class="flex flex-row pt-4">
-		<div class="basis-2 md:basis-2/12" />
-		<div class="card basis-full md:basis-8/12">
-			<PostCardComponent {post} />
+{#if posts != null && posts.length > 0}
+	{#each posts as post, index}
+		<div class="flex flex-row pt-4">
+			<div class="basis-2 md:basis-2/12 lg:basis-1/5 xl:basis-3/12" />
+			<div class="card basis-full md:basis-8/12 lg:basis-3/5 xl:basis-6/12">
+				<PostCardComponent {post} {spaceId} />
+			</div>
+			<div class="basis-2 md:basis-2/12 lg:basis-1/5 xl:basis-3/12" />
 		</div>
-		<div class="basis-2 md:basis-2/12" />
-	</div>
-{/each}
+	{/each}
+{:else}
+	shits empty bro
+{/if}

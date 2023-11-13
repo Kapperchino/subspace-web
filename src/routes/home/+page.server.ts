@@ -10,7 +10,6 @@ export const load: PageServerLoad = async ({ params, cookies }) => {
     }
     const user: UserMeta = JSON.parse(cookies.get("user")!);
     const posts = await getPosts(user, 1);
-    console.log(JSON.stringify(posts.data));
     if (posts.status == 401) {
         throw redirect(302, '/login');
     }
