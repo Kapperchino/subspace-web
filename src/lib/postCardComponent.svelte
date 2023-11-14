@@ -37,7 +37,10 @@
 	}
 </script>
 
-<div class="pt-2 pl-2"><PostCardMetaComponent {post} {spaceId} /></div>
+<div class="flex-row flex">
+	<div class="pt-2 pl-2"><PostCardMetaComponent {post} {spaceId} /></div>
+	<a class="grow" href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post.id}" />
+</div>
 
 {#if post?.topic != ''}
 	<a class="flex p-3 pl-6 pt-4" href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post.id}">

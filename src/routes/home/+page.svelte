@@ -1,15 +1,7 @@
 <script lang="ts">
 	import {
-		AppRail,
-		AppRailAnchor,
-		AppShell,
-		Avatar,
-		Drawer,
-		FileButton,
 		TabAnchor,
 		TabGroup,
-		drawerStore,
-		type DrawerSettings
 	} from '@skeletonlabs/skeleton';
 	import type { PageData } from './$types';
 
@@ -17,6 +9,7 @@
 	import { page } from '$app/stores';
 	import SpaceComponent from '$lib/spaceComponent.svelte';
 	import type { Post } from '../../models/post.type';
+	import PostingComponent from '$lib/postingComponent.svelte';
 	export let data: PageData;
 	let posts: Post[] = data.posts!;
 
@@ -27,4 +20,6 @@
 	<TabAnchor href="/home" selected={$page.url.pathname === '/home'}>For You</TabAnchor>
 	<TabAnchor href="/following" selected={$page.url.pathname === '/following'}>Following</TabAnchor>
 </TabGroup>
+
+<PostingComponent></PostingComponent>
 <SpaceComponent {posts} spaceId={1} />
