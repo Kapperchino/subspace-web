@@ -4,11 +4,13 @@
 	import LinkIcon from '~icons/bx/link';
 	import XIcon from '~icons/bx/x';
 	import { FileButton } from '@skeletonlabs/skeleton';
+	import type { Input } from 'postcss';
 
 	$: hasTitle = false;
 	$: hasLink = false;
 	let picList: Array<string> = [];
 	let picFiles: FileList | undefined;
+	let picInput: HTMLInputElement;
 
 	async function onPicChange(e: Event) {
 		console.log(picFiles);
@@ -38,8 +40,7 @@
 	function closeImage() {
 		picList.pop();
 		picList = picList;
-		picFiles = new FileList();
-		picFiles = picFiles;
+		picInput.value = '';
 	}
 </script>
 
@@ -119,16 +120,23 @@
 					</div>
 				{/if}
 				<div class="flex-row flex">
-					<FileButton
-						name="pictures"
-						button="btn-icon variant-filled-surface h-8 w-8"
-						bind:files={picFiles}
-						on:change={onPicChange}><ImageAddFilled /></FileButton
-					>
+					<label class="btn-icon variant-filled-surface h-8 w-8">
+						<ImageAddFilled />
+						<input
+							id="image-files"
+							type="file"
+							class="hidden"
+							accept="image/*"
+							bind:this={picInput}
+							bind:files={picFiles}
+							on:change={onPicChange}
+						/>
+					</label>
 					<div class="pl-1" />
-					<FileButton name="videos" button="btn-icon variant-filled-surface h-8 w-8"
-						><VideoAdd /></FileButton
-					>
+					<label class="btn-icon variant-filled-surface h-8 w-8">
+						<VideoAdd />
+						<input type="file" class="hidden" accept="video/mp4,video/x-m4v,video/*" />
+					</label>
 					<div class="pl-1" />
 					<button
 						type="button"
