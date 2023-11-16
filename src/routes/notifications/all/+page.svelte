@@ -1,13 +1,5 @@
 <script lang="ts">
-	import {
-		AppRail,
-		AppRailAnchor,
-		AppShell,
-		Avatar,
-		FileButton,
-		TabAnchor,
-		TabGroup
-	} from '@skeletonlabs/skeleton';
+
 	import type { PageData } from './$types';
 
 	import { setContext } from 'svelte';
@@ -17,7 +9,7 @@
 	import ExploreComponent from '$lib/exploreComponent.svelte';
 </script>
 
-<TabGroup justify="justify-center">
+<!-- <TabGroup justify="justify-center">
 	<TabAnchor href="/notifications/all" selected={$page.url.pathname === '/notifications/all'}
 		>All</TabAnchor
 	>
@@ -25,4 +17,4 @@
 		href="/notifications/mentions"
 		selected={$page.url.pathname === '/notifications/mentions'}>Mentions</TabAnchor
 	>
-</TabGroup>
+</TabGroup> -->

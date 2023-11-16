@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import type { Vote, VoteType } from '../models/post.type';
 
 	import Home from '~icons/bx/home';
@@ -9,7 +9,6 @@
 	import { getContext, onMount } from 'svelte';
 	import type { UserMeta } from '../models/signup.type';
 	import { getVotes, vote } from '../service/voteService';
-	import { AppRail, AppRailAnchor } from '@skeletonlabs/skeleton';
 	import { page } from '$app/stores';
 </script>
 
@@ -70,4 +69,4 @@
 	div :global(.big-icon) {
 		font-size: 72px;
 	}
-</style>
+</style> -->

@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { AppShell, Avatar, TabAnchor, TabGroup } from '@skeletonlabs/skeleton';
-	import { AppBar } from '@skeletonlabs/skeleton';
 
 	import type { PageData } from './$types';
 	import { textfit } from 'svelte-textfit';
@@ -9,7 +7,6 @@
 	import { setContext } from 'svelte';
 	import { VoteType, type Post, type PictureMeta } from '../../models/post.type';
 	import { page } from '$app/stores';
-	import SideBar from '$lib/sideBar.svelte';
 
 	export let data: PageData;
 	let posts: Post[] = data.posts!;
@@ -28,10 +25,10 @@
 	setContext('user', data.user);
 </script>
 
-<TabGroup justify="justify-center">
+<!-- <TabGroup justify="justify-center">
 	<TabAnchor href="/home" selected={$page.url.pathname === '/home'}>For You</TabAnchor>
 	<TabAnchor href="/following" selected={$page.url.pathname === '/following'}>Following</TabAnchor>
-</TabGroup>
+</TabGroup> -->
 {#each posts as post, index}
 	<div class="flex flex-row pt-4">
 		<div class="basis-1/12 md:basis-2/12" />
@@ -73,7 +70,7 @@
 				<section class="p-2 pl-4">{post?.body}</section>
 			</a>
 			<div class="flex flex-row pl-4 pb-2">
-				<Avatar width="w-10" src={post?.poster_picture?.url} />
+				<!-- <Avatar width="w-10" src={post?.poster_picture?.url} /> -->
 				<p class="font-semibold align-sub pl-1 pt-2">{post?.poster_name}</p>
 				<a class="grow" href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post.id}" />
 				<div class="pr-3">

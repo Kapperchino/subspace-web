@@ -1,13 +1,4 @@
 <script lang="ts">
-	import {
-		AppRail,
-		AppRailAnchor,
-		AppShell,
-		Avatar,
-		FileButton,
-		TabAnchor,
-		TabGroup
-	} from '@skeletonlabs/skeleton';
 	import type { PageData } from './$types';
 
 	import { setContext } from 'svelte';
@@ -24,10 +15,10 @@
 	setContext('user', data.user);
 </script>
 
-<TabGroup justify="justify-center">
+<!-- <TabGroup justify="justify-center">
 	<TabAnchor href="/spaces/popular" selected={$page.url.pathname === '/spaces/popular'}
 		>Popular</TabAnchor
 	>
 	<TabAnchor href="/spaces/new" selected={$page.url.pathname === '/spaces/new'}>New</TabAnchor>
-</TabGroup>
+</TabGroup> -->
 <SpacePageComponent {spaces} />

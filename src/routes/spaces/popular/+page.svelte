@@ -1,13 +1,5 @@
 <script lang="ts">
-	import {
-		AppRail,
-		AppRailAnchor,
-		AppShell,
-		Avatar,
-		FileButton,
-		TabAnchor,
-		TabGroup
-	} from '@skeletonlabs/skeleton';
+
 	import type { PageData } from './$types';
 
 	import { setContext } from 'svelte';

@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import {
 		AppRail,
 		AppRailAnchor,
@@ -33,4 +33,4 @@
 	<TabAnchor href="/news" selected={$page.url.pathname === '/news'}>News</TabAnchor>
 	<TabAnchor href="/sports" selected={$page.url.pathname === '/sports'}>Sports</TabAnchor>
 </TabGroup>
-<ExploreComponent {tags} />
+<ExploreComponent {tags} /> -->

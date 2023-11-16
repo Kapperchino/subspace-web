@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { AppShell, Avatar, FileButton, TabAnchor, TabGroup } from '@skeletonlabs/skeleton';
 
 	import { textfit } from 'svelte-textfit';
 

@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { AppShell, Avatar } from '@skeletonlabs/skeleton';
-	import { AppBar } from '@skeletonlabs/skeleton';
 
 	import type { PageData } from './$types';
 	import { textfit } from 'svelte-textfit';

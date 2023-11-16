@@ -68,31 +68,37 @@
 	}
 </script>
 
-<div class="btn-group variant-ghost p">
+<div class="join join-horizontal">
 	{#if voteState == 'none'}
-		<button class="btn-md" on:click={onLike}> <Upvote /> </button>
-		<div class=" px-2.5 pt-1.5">
+		<button class="btn btn-sm btn-square join-item" on:click={onLike}> <Upvote /> </button>
+		<div class="divider-neutral  join-item" />
+		<div class="font-semibold pt-1.5 pl-3 pr-3">
 			{totalVotes}
 		</div>
-		<button class="btn-md" on:click={onDislike}><Downvote /></button>
+		<div class="divider-neutral  join-item" />
+		<button class="btn btn-sm btn-square join-item" on:click={onDislike}><Downvote /></button>
 	{:else if voteState == 'up'}
-		<button class="btn-md" on:click={onLike}> <UpvoteFilled /> </button>
-		<div class=" px-2.5 pt-1.5">
+		<button class="btn btn-sm btn-square btn-primary join-item" on:click={onLike}>
+			<UpvoteFilled />
+		</button>
+		<div class="divider-neutral  join-item" />
+		<div class="font-semibold pt-1.5 pl-3 pr-3">
 			{totalVotes}
 		</div>
-		<button class="btn-md" on:click={onDislike}><Downvote /></button>
+		<div class="divider-neutral  join-item" />
+
+		<button class="btn btn-sm btn-square join-item" on:click={onDislike}
+			><Downvote /></button
+		>
 	{:else}
-		<button class="btn-md" on:click={onLike}> <Upvote /> </button>
-		<div class=" px-2.5 pt-1.5">
+		<button class="btn btn-sm btn-square join-item" on:click={onLike}> <Upvote /> </button>
+		<div class="divider-neutral join-item" />
+		<div class="font-semibold pt-1.5 pl-3 pr-3">
 			{totalVotes}
 		</div>
-		<button class="btn-md" on:click={onDislike}><DownvoteFilled /></button>
+		<div class="divider-neutral join-item" />
+		<button class="btn btn-sm btn-square btn-error join-item" on:click={onDislike}
+			><DownvoteFilled /></button
+		>
 	{/if}
 </div>
-
-<style>
-	.btn-group button {
-		padding-left: 0.5rem;
-		padding-right: 0.5rem;
-	}
-</style>

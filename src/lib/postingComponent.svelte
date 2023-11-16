@@ -3,8 +3,6 @@
 	import VideoAdd from '~icons/bxs/video-plus';
 	import LinkIcon from '~icons/bx/link';
 	import XIcon from '~icons/bx/x';
-	import { FileButton } from '@skeletonlabs/skeleton';
-	import type { Input } from 'postcss';
 
 	$: hasTitle = false;
 	$: hasLink = false;
@@ -46,7 +44,7 @@
 
 <div class="pt-4 flex flex-row">
 	<div class="basis-2 md:basis-2/12 lg:basis-1/5 xl:basis-3/12" />
-	<div class="card basis-full md:basis-8/12 lg:basis-3/5 xl:basis-6/12">
+	<div class="card card-compact basis-full md:basis-8/12 lg:basis-3/5 xl:basis-6/12">
 		<section class="p-3 col-span-3">
 			<form class="grid grid-cols-1" method="POST" action="?/post">
 				{#if hasTitle}

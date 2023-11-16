@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { AppShell, TabAnchor, TabGroup } from '@skeletonlabs/skeleton';
 
 	import type { PageData } from './$types';
 
@@ -14,8 +13,8 @@
 	setContext('user', data.user);
 </script>
 
-<TabGroup justify="justify-center">
+<!-- <TabGroup justify="justify-center">
 	<TabAnchor href="/s/1/1" selected={$page.url.pathname === '/s/1/1'}>Posts</TabAnchor>
 	<TabAnchor href="/following" selected={$page.url.pathname === '/following'}>About</TabAnchor>
-</TabGroup>
+</TabGroup> -->
 <SpaceComponent {posts} {spaceId}/>

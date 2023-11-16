@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import Home from '~icons/bx/home';
 	import Search from '~icons/bx/search';
 	import Satellite from '~icons/material-symbols/satellite-alt-outline-sharp';
@@ -79,4 +79,4 @@
 	div :global(.big-icon) {
 		font-size: 72px;
 	}
-</style>
+</style> -->
