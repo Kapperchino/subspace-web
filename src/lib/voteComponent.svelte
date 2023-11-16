@@ -17,7 +17,7 @@
 	let voteStateInit = voteData?.is_up_vote ? 'up' : 'down';
 	$: totalVotes = upVotes - downVotes;
 	$: voteState = voteData == null || voteData.is_deleted ? 'none' : voteStateInit;
-	async function onLike() {
+	async function onLike(event : Event) {
 		if (voteData == null) {
 			voteData = {
 				vote_id: 0,
@@ -42,7 +42,7 @@
 		}
 	}
 
-	async function onDislike() {
+	async function onDislike(event : Event) {
 		if (voteData == null) {
 			voteData = {
 				vote_id: 0,
@@ -70,15 +70,15 @@
 
 <div class="join join-horizontal">
 	{#if voteState == 'none'}
-		<button class="btn btn-sm btn-square join-item" on:click={onLike}> <Upvote /> </button>
+		<button class="btn btn-sm btn-square join-item" on:click|stopPropagation={onLike}> <Upvote /> </button>
 		<div class="divider-neutral  join-item" />
 		<div class="font-semibold pt-1.5 pl-3 pr-3">
 			{totalVotes}
 		</div>
 		<div class="divider-neutral  join-item" />
-		<button class="btn btn-sm btn-square join-item" on:click={onDislike}><Downvote /></button>
+		<button class="btn btn-sm btn-square join-item" on:click|stopPropagation={onDislike}><Downvote /></button>
 	{:else if voteState == 'up'}
-		<button class="btn btn-sm btn-square btn-primary join-item" on:click={onLike}>
+		<button class="btn btn-sm btn-square btn-primary join-item" on:click|stopPropagation={onLike}>
 			<UpvoteFilled />
 		</button>
 		<div class="divider-neutral  join-item" />
@@ -87,17 +87,17 @@
 		</div>
 		<div class="divider-neutral  join-item" />
 
-		<button class="btn btn-sm btn-square join-item" on:click={onDislike}
+		<button class="btn btn-sm btn-square join-item" on:click|stopPropagation={onDislike}
 			><Downvote /></button
 		>
 	{:else}
-		<button class="btn btn-sm btn-square join-item" on:click={onLike}> <Upvote /> </button>
+		<button class="btn btn-sm btn-square join-item" on:click|stopPropagation={onLike}> <Upvote /> </button>
 		<div class="divider-neutral join-item" />
 		<div class="font-semibold pt-1.5 pl-3 pr-3">
 			{totalVotes}
 		</div>
 		<div class="divider-neutral join-item" />
-		<button class="btn btn-sm btn-square btn-error join-item" on:click={onDislike}
+		<button class="btn btn-sm btn-square btn-error join-item" on:click|stopPropagation={onDislike}
 			><DownvoteFilled /></button
 		>
 	{/if}

@@ -8,12 +8,12 @@
 
 {#if posts != null && posts.length > 0}
 	{#each posts as post, index}
-		<div class="flex flex-row pt-2">
-			<div class="basis-2 md:basis-2/12 lg:basis-1/5 xl:basis-3/12" />
-			<div class="basis-full md:basis-8/12 lg:basis-3/5 xl:basis-6/12 shadow-xl">
+		<div class="flex flex-row pt-2 justify-center">
+			<div class="flex" />
+			<div class="grow max-w-xl">
 				<PostCardComponent {post} {spaceId} />
 			</div>
-			<div class="basis-2 md:basis-2/12 lg:basis-1/5 xl:basis-3/12" />
+			<div class="flex" />
 		</div>
 	{/each}
 {:else}

@@ -1,7 +1,6 @@
 <script lang="ts">
 
 	import type { PageData } from './$types';
-	import { textfit } from 'svelte-textfit';
 
 	import Upvote from '~icons/bx/upvote';
 	import Downvote from '~icons/bx/downvote';

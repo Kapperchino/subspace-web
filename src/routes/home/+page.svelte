@@ -12,10 +12,5 @@
 	setContext('user', data.user);
 </script>
 
-<!-- <TabGroup justify="justify-center">
-	<TabAnchor href="/home" selected={$page.url.pathname === '/home'}>For You</TabAnchor>
-	<TabAnchor href="/following" selected={$page.url.pathname === '/following'}>Following</TabAnchor>
-</TabGroup> -->
-
 <PostingComponent></PostingComponent>
 <SpaceComponent {posts} spaceId={1} />

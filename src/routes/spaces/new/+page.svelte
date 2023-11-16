@@ -14,11 +14,4 @@
 	let spaces: Space[] = data.spaces!;
 	setContext('user', data.user);
 </script>
-
-<!-- <TabGroup justify="justify-center">
-	<TabAnchor href="/spaces/popular" selected={$page.url.pathname === '/spaces/popular'}
-		>Popular</TabAnchor
-	>
-	<TabAnchor href="/spaces/new" selected={$page.url.pathname === '/spaces/new'}>New</TabAnchor>
-</TabGroup> -->
 <SpacePageComponent {spaces} />

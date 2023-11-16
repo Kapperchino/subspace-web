@@ -1,32 +1,30 @@
-<div class="flex flex-row">
-	<div class="basis-1/12 md:basis-1/4" />
-	<div class="card basis-10/12 md:basis-2/4">
-		<section class="p-8 col-span-3">
-			<form class="grid grid-cols-1 gap-4" method="POST" action="?/login">
-				<label class="label">
-					<span>Email</span>
-					<input
-						class="input-group input-group-divider grid-cols-[auto_1fr_auto]"
-						name="email"
-						type="email"
-						placeholder="Email"
-					/>
-				</label>
-				<label class="label">
-					<span>Password</span>
-					<input
-						class="input-group input-group-divider grid-cols-[auto_1fr_auto]"
-						name="password"
-						type="password"
-						placeholder="Password"
-					/>
-				</label>
-				<button type="submit" class="btn variant-filled-surface mt-5 w-32 justify-self-end"
-					>Login
-				</button>
-			</form>
-		</section>
+<div class="hero min-h-screen bg-base-200">
+	<div class="hero-content flex-col lg:flex-row-reverse">
+	  <div class="text-center lg:text-left">
+		<h1 class="text-5xl font-bold">Login to Subspace</h1>
+		<p class="py-6">Welcome to Subspace Beta!</p>
+	  </div>
+	  <div class="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+		<form class="card-body" method="POST" action="?/login">
+		  <div class="form-control">
+			<label class="label">
+			  <span class="label-text">Email</span>
+			</label>
+			<input name="email" type="email" placeholder="email" class="input input-bordered" required />
+		  </div>
+		  <div class="form-control">
+			<label class="label">
+			  <span class="label-text">Password</span>
+			</label>
+			<input name="password" type="password" placeholder="password" class="input input-bordered" required />
+			<label class="label">
+			  <a href="#" class="label-text-alt link link-hover">Forgot password?</a>
+			</label>
+		  </div>
+		  <div class="form-control mt-6">
+			<button class="btn btn-primary" type="submit">Login</button>
+		  </div>
+		</form>
+	  </div>
 	</div>
-
-	<div class="basis-1/12 md:basis-1/4" />
-</div>
+  </div>

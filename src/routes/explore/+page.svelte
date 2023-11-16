@@ -1,13 +1,4 @@
-<!-- <script lang="ts">
-	import {
-		AppRail,
-		AppRailAnchor,
-		AppShell,
-		Avatar,
-		FileButton,
-		TabAnchor,
-		TabGroup
-	} from '@skeletonlabs/skeleton';
+<script lang="ts">
 	import type { PageData } from './$types';
 
 	import { setContext } from 'svelte';
@@ -23,14 +14,15 @@
 	setContext('user', data.user);
 </script>
 
-<div class="flex flex-row pt-3">
-	<div class="basis-1/6" />
-	<input class="input basis-4/6" type="search" name="search" placeholder="Search..." />
-	<div class="basis-1/6" />
+<div class="pt-1 flex backdrop-blur bg-base-300" >
+	<div class="flex grow"></div>
+	<div class="flex tabs tabs-boxed tabs-lg ">
+		<a class="tab tab-active" href="/home">Trending</a>
+		<a class="tab" href="/news">News</a>
+		<a class="tab" href="/sports">Sports</a>
+	</div>
+	<div class="flex grow"></div>
+
 </div>
-<TabGroup justify="justify-center">
-	<TabAnchor href="/trending" selected={$page.url.pathname === '/explore'}>Trending</TabAnchor>
-	<TabAnchor href="/news" selected={$page.url.pathname === '/news'}>News</TabAnchor>
-	<TabAnchor href="/sports" selected={$page.url.pathname === '/sports'}>Sports</TabAnchor>
-</TabGroup>
-<ExploreComponent {tags} /> -->
+
+<ExploreComponent {tags} />

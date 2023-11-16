@@ -1,4 +1,4 @@
-<!-- <script lang="ts">
+<script lang="ts">
 	import type { Vote, VoteType } from '../models/post.type';
 
 	import Home from '~icons/bx/home';
@@ -12,61 +12,32 @@
 	import { page } from '$app/stores';
 </script>
 
-<AppRail width="w-0 md:w-14 lg:w-64 sm:w-0">
-	<AppRailAnchor
-		aspectRatio="h-12"
-		href="/home"
-		regionLead="flex justify-items-start items-start"
-		selected={$page.url.pathname === '/home' || $page.url.pathname === '/following'}
-	>
-		<div class="pl-3 flex flex-row">
-			<Home />
-			<div class="pl-1" />
-			<p class="hidden lg:flex lg:text-lg">Home</p>
+<div class="drawer-side">
+	<label for="my-drawer-3" aria-label="close sidebar" class="drawer-overlay lg:hidden"></label> 
+	<ul class="menu p-4 w-60 min-h-full bg-base-200">
+	  <!-- Sidebar content here -->
+	  <li><div class=" join">
+		<div class="text-lg">
+			<Home></Home>
 		</div>
-	</AppRailAnchor>
-	<AppRailAnchor aspectRatio="h-12" href="/explore" selected={$page.url.pathname === '/explore'}>
-		<div class="pl-3 flex flex-row">
+		<a href="/home" class="flex text-lg">Home</a>
+	  </div></li>
+	  <li><div class=" join">
+		<div class="text-lg">
 			<Search />
-			<div class="pl-1" />
-			<p class="hidden lg:flex lg:text-lg">Explore</p>
 		</div>
-	</AppRailAnchor>
-	<AppRailAnchor
-		aspectRatio="h-12"
-		href="/spaces"
-		selected={$page.url.pathname.startsWith('/spaces')}
-	>
-		<div class="pl-3 flex flex-row">
+		<a href="/explore" class="flex text-lg">Explore</a>
+	  </div></li>
+	  <li><div class=" join">
+		<div class="text-lg">
 			<Satellite />
-			<div class="pl-1" />
-			<p class="hidden lg:flex lg:text-lg">Space</p>
-		</div></AppRailAnchor
-	>
-	<AppRailAnchor aspectRatio="h-12" href="/notifications" selected={$page.url.pathname === '/notifications'}>
-		<div class="pl-3 flex flex-row">
+		</div>
+		<a href="/spaces" class="flex text-lg">Space</a>
+	  </div></li>
+	  <li><div class=" join">
+		<div class="text-lg">
 			<Bell />
-			<div class="pl-1" />
-			<p class="hidden lg:flex lg:text-lg">Notifications</p>
-		</div></AppRailAnchor
-	>
-</AppRail>
-
-<style>
-	/*
-        Cannot target component in CSS, target SVG
-        instead using Svelte's :global() function
-    */
-	div :global(svg) {
-		font-size: 24px;
-		line-height: 1em;
-	}
-
-	/*
-        Must use :global() because Svelte cannot assign style to a
-        component by class name, it can only work with standard HTML tags.
-    */
-	div :global(.big-icon) {
-		font-size: 72px;
-	}
-</style> -->
+		</div>
+		<a href="/notifications" class="flex text-lg">Notifications</a>
+	  </div></li>
+  </div>

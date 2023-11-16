@@ -3,6 +3,8 @@
 	import VideoAdd from '~icons/bxs/video-plus';
 	import LinkIcon from '~icons/bx/link';
 	import XIcon from '~icons/bx/x';
+	import { textareaAutosizeAction } from "svelte-legos";
+
 
 	$: hasTitle = false;
 	$: hasLink = false;
@@ -42,14 +44,15 @@
 	}
 </script>
 
-<div class="pt-4 flex flex-row">
-	<div class="basis-2 md:basis-2/12 lg:basis-1/5 xl:basis-3/12" />
-	<div class="card card-compact basis-full md:basis-8/12 lg:basis-3/5 xl:basis-6/12">
+<div class="flex flex-row pt-2 justify-center">
+	<div class="flex" />
+	<div class="card card-compact shadow-lg bg-primary-content grow max-w-xl">
 		<section class="p-3 col-span-3">
 			<form class="grid grid-cols-1" method="POST" action="?/post">
 				{#if hasTitle}
 					<label class="label">
 						<textarea
+						use:textareaAutosizeAction
 							class="textarea grid-cols-[auto_1fr_auto]"
 							name="Title"
 							placeholder="Title(Optional)"
@@ -69,10 +72,10 @@
 				{/if}
 				<label class="label">
 					<textarea
-						class="textarea grid-cols-[auto_1fr_auto]"
+						use:textareaAutosizeAction
+						class="textarea textarea-md textarea-primary textarea-bordered w-full grid-cols-[auto_1fr_auto]"
 						name="Post"
-						placeholder="Post your thoughts!"
-						rows="2"
+						placeholder="Post here!"
 					/>
 				</label>
 				<div class="flex-row flex pb-2">
@@ -150,5 +153,5 @@
 		</section>
 	</div>
 
-	<div class="basis-2 md:basis-2/12 lg:basis-1/5 xl:basis-3/12" />
+	<div class="flex" />
 </div>

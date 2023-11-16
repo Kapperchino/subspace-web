@@ -1,6 +1,5 @@
 <script lang="ts">
 
-	import { textfit } from 'svelte-textfit';
 
 	import VoteComponent from '$lib/voteComponent.svelte';
 	import ImageAddFilled from '~icons/bxs/image-add';
