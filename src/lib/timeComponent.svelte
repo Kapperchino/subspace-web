@@ -1,10 +1,10 @@
 <script lang="ts">
 
-	export let time: string;
+	export let time: string | undefined;
 
-	function getTimeDiff(later: string): string {
+	function getTimeDiff(later: string | undefined): string {
 		var now = new Date().getTime();
-		var diffEpoch = now - new Date(later).getTime();
+		var diffEpoch = now - new Date(later!).getTime();
 		const diff = new Date(diffEpoch).getTime();
 		const minutes = Math.floor(diff / 1000 / 60);
 		const hours = Math.floor(minutes / 60);

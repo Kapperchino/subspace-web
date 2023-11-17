@@ -1,9 +1,9 @@
 import { setContext } from 'svelte';
 import type { PageServerLoad } from './$types';
-import type { UserMeta } from '../../../../models/signup.type';
-import { getPosts } from '../../../../service/postsService';
+
 import { redirect } from '@sveltejs/kit';
-import { getSpace } from '../../../../service/spaceService';
+import type { UserMeta } from '../../../../../models/signup.type';
+import { getSpace } from '../../../../../service/spaceService';
 
 export const load: PageServerLoad = async ({ params, cookies }) => {
     if (cookies.get("user") == undefined) {
@@ -11,17 +11,12 @@ export const load: PageServerLoad = async ({ params, cookies }) => {
     }
     const user: UserMeta = JSON.parse(cookies.get("user")!);
     const spaceId = Number(params.subSpaceId);
-    const posts = await getPosts(user, spaceId);
-    if (posts.status == 401) {
-        throw redirect(302, '/login');
-    }
     const subspace = await getSpace(user, spaceId);
     if (subspace.status == 401) {
         throw redirect(302, '/login');
     }
     return {
         user: user,
-        posts: posts.data,
         spaceId: spaceId,
         subspace: subspace.data,
         params: params

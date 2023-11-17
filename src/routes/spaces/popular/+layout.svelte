@@ -19,7 +19,7 @@
 		</div> 
 		<div class="flex grow"></div>
 		<div class="backdrop-blur bg-base-300" >
-			<div class=" bottom-10 tabs tabs-boxed tabs-lg flex">
+			<div class=" bottom-10 tabs tabs-boxed tabs-md flex">
 				<a class="tab tab-active" href="/spaces/popular">Popular</a>
 				<a class="tab" href="/spaces/new">New</a>
 			</div>

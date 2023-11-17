@@ -37,5 +37,3 @@ export const getSubscriptions = async (user: UserMeta): Promise<AxiosResponse<Ar
         });
     return data
 }
-
-

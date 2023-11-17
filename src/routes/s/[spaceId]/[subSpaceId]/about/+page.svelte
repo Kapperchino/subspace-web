@@ -5,10 +5,8 @@
 	import { setContext } from 'svelte';
 	import { page } from '$app/stores';
 	import SpaceComponent from '$lib/spaceComponent.svelte';
-	import type { Post } from '../../../../models/post.type';
 
 	export let data: PageData;
-	let posts: Post[] = data.posts!;
 	let spaceId :number = data.spaceId;
 	let parentId :number = data.subspace.parent_id;
 	setContext('user', data.user);
@@ -26,15 +24,19 @@
 	<div class="flex grow"></div>
 	<div class="backdrop-blur bg-base-300" >
 		<div class=" bottom-10 tabs tabs-boxed tabs-md flex">
-			<a class="tab tab-active" href="/s/{parentId}/{spaceId}">Posts</a>
-			<a class="tab" href="/s/{parentId}/{spaceId}/about">About</a>
+			<a class="tab" href="/s/{parentId}/{spaceId}">Posts</a>
+			<a class="tab  tab-active" href="/s/{parentId}/{spaceId}/about">About</a>
 		</div>
 	</div>
 	<div class="flex grow"></div>
-
   </div>
-<!-- <TabGroup justify="justify-center">
-	<TabAnchor href="/s/1/1" selected={$page.url.pathname === '/s/1/1'}>Posts</TabAnchor>
-	<TabAnchor href="/following" selected={$page.url.pathname === '/following'}>About</TabAnchor>
-</TabGroup> -->
-<SpaceComponent {posts} {spaceId}/>
+
+  <div class="card card-compact shadow-lg bg-base-100">
+	<div class="card-body">
+	
+
+			{data.subspace.description}
+		
+	</div>
+</div>
+

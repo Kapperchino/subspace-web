@@ -35,12 +35,9 @@
 		return url;
 	}
 
-	function clickTo(){
-		goto(`/s/${post?.space_parent_id}/${post?.space_id}/p/${post?.id}`);
-	}
 </script>
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<div class="card card-compact shadow-lg bg-base-100 hover:cursor-pointer" on:click={clickTo}>
+	<div class="card card-compact shadow-lg bg-base-100">
 		<div class="card-body">
 			<div class="flex-row flex">
 				<div ><PostCardMetaComponent {post} {spaceId} /></div>

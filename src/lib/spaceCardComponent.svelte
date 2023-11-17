@@ -1,19 +1,28 @@
 <script lang="ts">
 	import type { Space } from '../models/space.type';
+	import SpaceAvatarComponent from './spaceAvatarComponent.svelte';
 
 	export let space: Space;
 </script>
 
-<div class="flex flex-row pt-4">
-	<div class="basis-1/12 md:basis-2/12" />
-	<a
-		class="card basis-10/12 md:basis-8/12 flex pl-2 pt-2 pb-2"
-		href="/s/{space.parent_id}/{space.id}"
-	>
-		<!-- <Avatar src={space.small_picture?.url ?? ''} width="w-14" rounded="rounded-full" /> -->
-		<p class="text-lg font-semibold p-3 text-green-400">{space.name}</p>
-		<div class="grow" />
-		<p class="text-lg font-semibold p-3 text-green-400">{space.sub_count}</p>
-	</a>
-	<div class="basis-1/12 md:basis-2/12" />
+
+<div class="flex flex-row pt-2 justify-center">
+	<div class="flex" />
+	<div class="card card-compact grow max-w-xl bg-base-100 shadow-lg">
+		<a
+			class="card-body join join-horizontal flex"
+			href="/s/{space.parent_id}/{space.id}"
+		>
+		<div class="avatar">
+			<div class="w-10 rounded-full">
+			
+			<SpaceAvatarComponent url={space.small_picture?.url} />
+			</div>
+			</div>
+			<p class="pt-2 join-item flex text-lg font-semibold  text-primary">{space.name}</p>
+			<div class="flex"></div>
+			<p class="pt-2 join-item flex text-lg font-semibold  text-primary justify-end">{space.sub_count}</p>
+		</a>	
+	</div>
+	<div class="flex" />
 </div>

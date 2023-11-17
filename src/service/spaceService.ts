@@ -17,3 +17,14 @@ export const getSpaces = async (user: UserMeta, sort: string): Promise<AxiosResp
         });
     return data
 }
+
+export const getSpace = async (user: UserMeta, spaceId: number): Promise<AxiosResponse<Space>> => {
+    const data: AxiosResponse<Space> = await axios.get(`${env.BACK_END}/spaces/${spaceId}`,
+        {
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': `Bearer ${user.token}`,
+            }
+        });
+    return data
+}

@@ -1,6 +1,7 @@
 <script lang="ts">
 	// Most of your app wide CSS should be put in this file
 	import { page } from '$app/stores';
+	import ButtomNavComponent from '$lib/buttomNavComponent.svelte';
 	import FooterComponent from '$lib/footerComponent.svelte';
 	import SideBar from '$lib/sideBar.svelte';
 	import SideDrawer from '$lib/sideDrawer.svelte';
@@ -19,13 +20,12 @@
 		</div> 
 		<div class="flex grow"></div>
 		<div class="backdrop-blur bg-base-300" >
-			<div class=" bottom-10 tabs tabs-boxed tabs-lg flex">
+			<div class=" bottom-10 tabs tabs-boxed tabs-md flex">
 				<a class="tab tab-active" href="/home">Home</a>
 				<a class="tab" href="/following">Following</a>
 			</div>
 		</div>
 		<div class="flex grow"></div>
-
 	  </div>
 	  <slot />
 	</div> 

@@ -4,7 +4,7 @@ export type Post = {
     space_picture: PictureMeta;
     space_parent_id: number;
     space_name: string;
-    poster_id: string;
+    poster_id: number;
     poster_name: string;
     poster_picture: PictureMeta;
     topic: string;
