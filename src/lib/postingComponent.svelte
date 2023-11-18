@@ -8,8 +8,11 @@
 	$: hasTitle = false;
 	$: hasLink = false;
 	let picList: Array<string> = [];
+	let vidList: Array<string> = [];
 	let picFiles: FileList | undefined;
+	let vidFiles: FileList | undefined;
 	let picInput: HTMLInputElement;
+	let videoInput: HTMLInputElement;
 
 	async function onPicChange(e: Event) {
 		console.log(picFiles);
@@ -22,8 +25,21 @@
 					picList = picList;
 				};
 				reader.readAsDataURL(val);
+			}
+		}
+	}
 
-				console.log(val.type.includes('image'));
+	async function onVidChange(e: Event) {
+		console.log(vidFiles);
+		if (vidFiles != undefined) {
+			for (let i = 0; i < vidFiles.length; i++) {
+				const val = vidFiles.item(i)!;
+				const reader = new FileReader();
+				reader.onload = (e) => {
+					vidList.push(e.target!.result!.toString());
+					vidList = vidList;
+				};
+				reader.readAsDataURL(val);
 			}
 		}
 	}
@@ -40,6 +56,12 @@
 		picList.pop();
 		picList = picList;
 		picInput.value = '';
+	}
+
+	function closeVideo() {
+		vidList.pop();
+		vidList = vidList;
+		videoInput.value = '';
 	}
 </script>
 
@@ -86,7 +108,8 @@
 					<div class="join-item pl-1" />
 					<div class="btn btn-xs btn-secondary">@Subspace</div>
 				</div>
-				{#if picList != null && picList.length > 0}
+
+				{#if picList != null && picList.length > 0 && vidList.length == 0}
 					<div class="flex-row flex pb-1 pt-3">
 						<div class="relative bg-gradient-to-r from-gray-900 to-gray-800 rounded-md">
 							<img class="object-scale-down h-24 w-24 p-1" src={picList.at(0)} />
@@ -100,28 +123,69 @@
 						</div>
 					</div>
 				{/if}
+
+				{#if vidList != null && vidList.length > 0 && picList.length == 0}
+					<div class="flex-row flex pb-1 pt-3">
+						<div class="relative bg-gradient-to-r from-gray-900 to-gray-800 rounded-md">
+							<video class="object-scale-down clip-thumbnail h-24 w-24 p-1" src={vidList.at(0)} />
+							<div class="pl-1" />
+							<button
+								type="button"
+								on:click={closeVideo}
+								class="absolute btn btn-xs btn-circle btn-error h-6 w-6 bottom-20 left-20"
+								><XIcon /></button
+							>
+						</div>
+					</div>
+				{/if}
 				<div class="flex-row flex pt-2 pl-1">
-					<label
-						class="btn btn-square btn-neutral btn-outline btn-xs variant-filled-surface h-8 w-8"
-					>
-						<ImageAddFilled />
-						<input
-							id="image-files"
-							type="file"
-							class="hidden"
-							accept="image/*"
-							bind:this={picInput}
-							bind:files={picFiles}
-							on:change={onPicChange}
-						/>
-					</label>
+					{#if vidList.length != 0}
+						<label
+							class="btn btn-square btn-disabled btn-outline btn-xs variant-filled-surface h-8 w-8"
+						>
+							<ImageAddFilled />
+						</label>
+					{:else}
+						<label
+							class="btn btn-square btn-neutral btn-outline btn-xs variant-filled-surface h-8 w-8"
+						>
+							<ImageAddFilled />
+							<input
+								id="image-files"
+								type="file"
+								class="hidden"
+								accept="image/*"
+								bind:this={picInput}
+								bind:files={picFiles}
+								on:change={onPicChange}
+							/>
+						</label>
+					{/if}
+
 					<div class="pl-1" />
-					<label
-						class="btn btn-square btn-neutral btn-outline btn-xs variant-filled-surface h-8 w-8"
-					>
-						<VideoAdd />
-						<input type="file" class="hidden" accept="video/mp4,video/x-m4v,video/*" />
-					</label>
+
+					{#if picList.length != 0}
+						<label
+							class="btn btn-square btn-disabled btn-outline btn-xs variant-filled-surface h-8 w-8"
+						>
+							<VideoAdd />
+						</label>
+					{:else}
+						<label
+							class="btn btn-square btn-neutral btn-outline btn-xs variant-filled-surface h-8 w-8"
+						>
+							<VideoAdd />
+							<input
+								id="video-files"
+								type="file"
+								class="hidden"
+								accept="video/mp4,video/x-m4v,video/*"
+								bind:this={videoInput}
+								bind:files={vidFiles}
+								on:change={onVidChange}
+							/>
+						</label>{/if}
+
 					<div class="pl-1" />
 					<div
 						on:click={toggleLink}
