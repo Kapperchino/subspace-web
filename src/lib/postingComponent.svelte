@@ -3,8 +3,7 @@
 	import VideoAdd from '~icons/bxs/video-plus';
 	import LinkIcon from '~icons/bx/link';
 	import XIcon from '~icons/bx/x';
-	import { textareaAutosizeAction } from "svelte-legos";
-
+	import { textareaAutosizeAction } from 'svelte-legos';
 
 	$: hasTitle = false;
 	$: hasLink = false;
@@ -46,14 +45,14 @@
 
 <div class="flex flex-row pt-2 justify-center">
 	<div class="flex" />
-	<div class="card card-compact shadow-lg bg-primary-content grow max-w-xl">
-		<section class="p-3 col-span-3">
-			<form class="grid grid-cols-1" method="POST" action="?/post">
+	<div class="card card-compact flex shadow-lg bg-primary-content grow max-w-xl">
+		<div class="card-body">
+			<form method="POST" action="?/post">
 				{#if hasTitle}
 					<label class="label">
 						<textarea
-						use:textareaAutosizeAction
-							class="textarea grid-cols-[auto_1fr_auto]"
+							use:textareaAutosizeAction
+							class="textarea textarea-md textarea-secondary textarea-bordered w-full grid-cols-[auto_1fr_auto]"
 							name="Title"
 							placeholder="Title(Optional)"
 							rows="1"
@@ -63,7 +62,7 @@
 				{#if hasLink}
 					<label class="label">
 						<textarea
-							class="textarea grid-cols-[auto_1fr_auto]"
+							class="textarea textarea-md textarea-accent textarea-bordered w-full grid-cols-[auto_1fr_auto]"
 							name="Link"
 							placeholder="Link(Optional)"
 							rows="1"
@@ -78,50 +77,33 @@
 						placeholder="Post here!"
 					/>
 				</label>
-				<div class="flex-row flex pb-2">
+				<div class="flex flex-row pl-1">
 					{#if !hasTitle}
-						<div>
-							<button
-								type="button"
-								class="badge-icon bg-gradient-to-br variant-gradient-secondary-tertiary w-12"
-								on:click={toggleTitle}
-								>+Title
-							</button>
-						</div>
+						<div class="btn btn-xs btn-primary" on:click={toggleTitle}>+Title</div>
 					{:else}
-						<div>
-							<button
-								type="button"
-								class="badge-icon bg-gradient-to-br variant-gradient-error-warning w-12"
-								on:click={toggleTitle}
-								>-Title
-							</button>
-						</div>
+						<div class="btn btn-xs btn-error" on:click={toggleTitle}>-Title</div>
 					{/if}
-					<div class="pl-1">
-						<button
-							type="button"
-							class="badge-icon bg-gradient-to-br variant-gradient-secondary-primary w-20"
-							>@Subspace
-						</button>
-					</div>
+					<div class="join-item pl-1" />
+					<div class="btn btn-xs btn-secondary">@Subspace</div>
 				</div>
 				{#if picList != null && picList.length > 0}
-					<div class="flex-row flex pb-1 pt-1">
+					<div class="flex-row flex pb-1 pt-3">
 						<div class="relative bg-gradient-to-r from-gray-900 to-gray-800 rounded-md">
 							<img class="object-scale-down h-24 w-24 p-1" src={picList.at(0)} />
 							<div class="pl-1" />
 							<button
 								type="button"
 								on:click={closeImage}
-								class="absolute btn-icon variant-filled-error h-6 w-6 bottom-20 left-20"
+								class="absolute btn btn-xs btn-circle btn-error h-6 w-6 bottom-20 left-20"
 								><XIcon /></button
 							>
 						</div>
 					</div>
 				{/if}
-				<div class="flex-row flex">
-					<label class="btn-icon variant-filled-surface h-8 w-8">
+				<div class="flex-row flex pt-2 pl-1">
+					<label
+						class="btn btn-square btn-neutral btn-outline btn-xs variant-filled-surface h-8 w-8"
+					>
 						<ImageAddFilled />
 						<input
 							id="image-files"
@@ -134,23 +116,26 @@
 						/>
 					</label>
 					<div class="pl-1" />
-					<label class="btn-icon variant-filled-surface h-8 w-8">
+					<label
+						class="btn btn-square btn-neutral btn-outline btn-xs variant-filled-surface h-8 w-8"
+					>
 						<VideoAdd />
 						<input type="file" class="hidden" accept="video/mp4,video/x-m4v,video/*" />
 					</label>
 					<div class="pl-1" />
-					<button
-						type="button"
+					<div
 						on:click={toggleLink}
-						class="btn-icon variant-filled-surface h-8 w-8"><LinkIcon /></button
+						class="btn btn-square btn-neutral btn-outline btn-xs variant-filled-surface h-8 w-8"
 					>
+						<LinkIcon />
+					</div>
 					<div class="grow" />
-					<button type="submit" class="btn variant-filled-surface w-18 h-8 justify-self-end"
+					<button type="submit" class="btn btn-primary btn-sm justify-self-end h-10 w-20"
 						>Post
 					</button>
 				</div>
 			</form>
-		</section>
+		</div>
 	</div>
 
 	<div class="flex" />

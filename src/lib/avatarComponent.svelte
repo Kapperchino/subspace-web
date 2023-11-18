@@ -10,7 +10,7 @@ function getAlt() : string{
 }
 </script>
 {#if url == '' || url == null}
-    <img src="./{getAlt()}"/>
+    <img src="/{getAlt()}"/>
 {:else}
     <img src="{url}">
 {/if}
