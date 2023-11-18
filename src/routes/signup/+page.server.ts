@@ -1,3 +1,4 @@
+import { redirect } from '@sveltejs/kit';
 import type { SignUp } from '../../models/signup.type';
 import { signup } from '../../service/loginService';
 import type { Actions } from './$types';
@@ -6,10 +7,10 @@ import type { Actions } from './$types';
 export const actions = {
     signup: async ({ request, cookies }) => {
         const formData = Object.fromEntries(await request.formData());
+        console.log(formData);
         const req: SignUp = formData as SignUp;
         const meta = await signup(req);
-        return {
-            success: true
-        };
+        cookies.set("user", JSON.stringify(meta));
+        throw redirect(302, '/home');
     }
 } satisfies Actions;

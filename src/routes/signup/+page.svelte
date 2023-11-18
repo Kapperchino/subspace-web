@@ -1,59 +1,91 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import SignInComponent from '$lib/signInComponent.svelte';
+	import { onMount } from 'svelte';
+
+	let modal: HTMLDialogElement | undefined;
+
+	onMount(() => {
+		modal?.showModal();
+	});
 </script>
 
-<div class="flex flex-row">
-	<div class="basis-1/12 md:basis-1/4" />
-	<div class="card p-8 col-span-3 basis-10/12 md:basis-2/4 shadow-md">
-		<form class="grid grid-cols-1 gap-4" method="POST" action="?/signup">
-			<label class="label">
-				<span>Display Name</span>
-				<input
-					class="input-group input-group-divider grid-cols-[auto_1fr_auto]"
-					name="display_name"
-					type="text"
-					placeholder="Display Name"
-				/>
-			</label>
-			<label class="label">
-				<span>User @</span>
-				<input
-					class="input-group input-group-divider grid-cols-[auto_1fr_auto]"
-					name="user_address"
-					type="text"
-					placeholder="User @"
-				/>
-			</label>
-			<label class="label">
-				<span>Email</span>
-				<input
-					class="input-group input-group-divider grid-cols-[auto_1fr_auto]"
-					name="email"
-					type="email"
-					placeholder="Email"
-				/>
-			</label>
-			<label class="label">
-				<span>Password</span>
-				<input
-					class="input-group input-group-divider grid-cols-[auto_1fr_auto]"
-					name="password"
-					type="password"
-					placeholder="Password"
-				/>
-			</label>
-			<label class="label">
-				<span>Confirm Password</span>
-				<input
-					class="input-group input-group-divider grid-cols-[auto_1fr_auto]"
-					name="c-password"
-					type="password"
-					placeholder="Confirm Password"
-				/>
-			</label>
-			<button type="submit" class="btn variant-filled-surface mt-5 w-32 justify-self-end">
-				Submit
-			</button>
-		</form>
+<dialog id="my_modal_2" class="modal" bind:this={modal}>
+	<div class="modal-box">
+		<div class="shrink-0 bg-base-100">
+			<form method="POST" action="?/signup">
+				<div class="form-control">
+					<label class="label">
+						<span class="label-text">Display Name</span>
+					</label>
+					<input
+						name="display_name"
+						type="text"
+						placeholder="display name"
+						class="input input-bordered"
+						required
+					/>
+				</div>
+				<div class="form-control">
+					<label class="label">
+						<span class="label-text">User Address</span>
+					</label>
+					<input
+						name="user_address"
+						type="text"
+						placeholder="@user"
+						class="input input-bordered"
+						required
+					/>
+				</div>
+				<div class="form-control">
+					<label class="label">
+						<span class="label-text">Email</span>
+					</label>
+					<input
+						name="email"
+						type="email"
+						placeholder="email"
+						class="input input-bordered"
+						required
+					/>
+				</div>
+				<div class="form-control">
+					<label class="label">
+						<span class="label-text">Password</span>
+					</label>
+					<input
+						name="password"
+						type="password"
+						placeholder="password"
+						class="input input-bordered"
+						required
+					/>
+				</div>
+				<div class="form-control mt-6">
+					<button class="btn btn-secondary" type="submit">Sign up</button>
+				</div>
+
+				<dialog id="my_modal_2" class="modal" bind:this={modal}>
+					<div class="modal-box">
+						<h3 class="font-bold text-lg">Hello!</h3>
+						<p class="py-4">Press ESC key or click outside to close</p>
+					</div>
+					<form method="dialog" class="modal-backdrop">
+						<button>close</button>
+					</form>
+				</dialog>
+			</form>
+		</div>
 	</div>
-	<div class="basis-1/12 md:basis-1/4" />
-</div>
+	<form
+		method="dialog"
+		class="modal-backdrop"
+		on:click={() => {
+			goto('/login');
+		}}
+	>
+		<button>close</button>
+	</form>
+</dialog>
+<SignInComponent />
