@@ -78,14 +78,5 @@
 			</form>
 		</div>
 	</div>
-	<form
-		method="dialog"
-		class="modal-backdrop"
-		on:click={() => {
-			goto('/login');
-		}}
-	>
-		<button>close</button>
-	</form>
 </dialog>
 <SignInComponent />

@@ -75,3 +75,37 @@ export type VotesMeta = {
     is_up_vote: boolean;
     vote_type: VoteType;
 }
+
+export type PostCreation = {
+    space_id: number,
+    poster_id: number,
+    topic: string,
+    body: string,
+    link: string,
+    content_type: ContentType,
+    file_ids: number[]
+}
+
+export type PictureRequestMeta = {
+    height: number,
+    url: string,
+    width: number
+}
+
+export type PictureMetaResult = {
+    height: number,
+    url: string,
+    width: number,
+    id: number,
+    presigned: string
+}
+
+export type FileUploadRequest = {
+    picture_meta: PictureRequestMeta | undefined,
+    file_type: string,
+    is_link: boolean | undefined
+}
+
+export type VideoUploadRequest = {
+    id: number
+}

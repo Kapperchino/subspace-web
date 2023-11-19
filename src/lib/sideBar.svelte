@@ -3,6 +3,18 @@
 	import Search from '~icons/bx/search';
 	import Satellite from '~icons/material-symbols/satellite-alt-outline-sharp';
 	import Bell from '~icons/material-symbols/notifications';
+	import PostingComponent from './postingComponent.svelte';
+	import { invalidateAll } from '$app/navigation';
+	let modal: HTMLDialogElement | undefined;
+
+	function startPost() {
+		modal?.showModal();
+	}
+
+	var onSuccess = async () => {
+		await invalidateAll();
+		modal?.close();
+	};
 </script>
 
 <div class="drawer-side">
@@ -44,7 +56,7 @@
 
 		<a href="/notifications">
 			<li>
-				<div class=" join">
+				<div class="join">
 					<div class="text-lg">
 						<Bell />
 					</div>
@@ -52,5 +64,19 @@
 				</div>
 			</li></a
 		>
+		<div class="btn btn-primary btn-sm h-12 mt-3" on:click={startPost}>
+			<div class="text-lg flex flex-row">Post</div>
+		</div>
 	</ul>
 </div>
+
+<dialog id="my_modal_2" class="modal" bind:this={modal}>
+	<div class="modal-box bg-primary-content">
+		<div class="grow">
+			<PostingComponent onSuccess={onSuccess} />
+		</div>
+	</div>
+	<form method="dialog" class="modal-backdrop">
+		<button>close</button>
+	</form>
+</dialog>

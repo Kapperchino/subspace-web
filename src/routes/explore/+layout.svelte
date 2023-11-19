@@ -4,6 +4,7 @@
 	import FooterComponent from '$lib/footerComponent.svelte';
 	import SideBar from '$lib/sideBar.svelte';
 	import SideDrawer from '$lib/sideDrawer.svelte';
+	import { blur } from 'svelte/transition';
 </script>
 
 <div class="drawer z-50 md:drawer-open">

@@ -6,11 +6,15 @@
 	import SpaceComponent from '$lib/spaceComponent.svelte';
 	import type { Post } from '../../models/post.type';
 	import PostingComponent from '$lib/postingComponent.svelte';
+	import { invalidate, invalidateAll } from '$app/navigation';
 	export let data: PageData;
-	let posts: Post[] = data.posts!;
+
+	var onSuccess = async () => {
+		await invalidateAll();
+	};
 
 	setContext('user', data.user);
 </script>
 
-<PostingComponent></PostingComponent>
-<SpaceComponent {posts} spaceId={1} />
+<PostingComponent {onSuccess} />
+<SpaceComponent posts={data.posts} spaceId={1} />

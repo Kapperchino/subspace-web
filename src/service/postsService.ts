@@ -1,7 +1,8 @@
 import axios, { type AxiosResponse } from 'axios';
-import type { UserMeta } from '../models/signup.type';
-import type { Post } from '../models/post.type';
+import type { PictureMeta, UserMeta } from '../models/signup.type';
+import type { PictureMetaResult, Post } from '../models/post.type';
 import { env } from '$env/dynamic/private';
+import { coockieStore } from '$lib/store/tokenStore';
 
 const url = 'https://subspace-backend.fly.dev';
 

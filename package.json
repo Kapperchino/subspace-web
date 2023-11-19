@@ -39,7 +39,10 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@macfja/svelte-persistent-store": "^2.4.1",
 		"axios": "^1.5.0",
-		"svelte-legos": "^0.2.2"
+		"svelte-french-toast": "^1.2.0",
+		"svelte-legos": "^0.2.2",
+		"svelte-persisted-store": "^0.7.0"
 	}
 }
