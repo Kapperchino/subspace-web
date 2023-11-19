@@ -97,6 +97,14 @@
 		} else if (picList != null && picList.length > 0) {
 			postReq.content_type = ContentType.Picture;
 		}
+		if (postReq.link == '' && vidList.length == 0 && picList.length == 0 && postReq.body == '') {
+			toast.error('Empty post is not allowed!', {
+				icon: '❌',
+				position: 'bottom-center',
+				style: 'border-radius: 300px; background: oklch(var(--b3)); color: oklch(var(--er));'
+			});
+			return;
+		}
 		const user: UserMeta = coockieStore.getValue('cookie');
 		postReq.poster_id = user.user_id;
 		const fileIds: number[] = [];

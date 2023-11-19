@@ -1,5 +1,4 @@
 <script lang="ts">
-
 	import type { PageData } from './$types';
 
 	import VoteComponent from '$lib/voteComponent.svelte';
@@ -7,6 +6,7 @@
 	import { VoteType, type Post, type PictureMeta } from '../../models/post.type';
 	import { page } from '$app/stores';
 	import PostCardComponent from '$lib/postCardComponent.svelte';
+	import NotFoundComponent from '$lib/notFoundComponent.svelte';
 
 	export let data: PageData;
 	let posts: Post[] = data.posts!;
@@ -25,11 +25,15 @@
 	setContext('user', data.user);
 </script>
 
-{#each posts as post, index}
-<div class="flex flex-row pt-2 justify-center">
-	<div class="flex" />
-	<div class="grow max-w-xl">
-		<PostCardComponent {post} spaceId={1} />
-	</div>
-	<div class="flex" />
-</div>{/each}
+{#if posts != null && posts.length > 0}
+	{#each posts as post, index}
+		<div class="flex flex-row pt-2 justify-center">
+			<div class="flex" />
+			<div class="grow max-w-xl">
+				<PostCardComponent {post} spaceId={1} />
+			</div>
+			<div class="flex" />
+		</div>{/each}
+{:else}
+		<NotFoundComponent></NotFoundComponent>
+{/if}

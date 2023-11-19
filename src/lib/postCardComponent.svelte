@@ -6,6 +6,9 @@
 	import PostCardMetaComponent from './postCardMetaComponent.svelte';
 	import TimeComponent from './timeComponent.svelte';
 
+	import CommentsIcon from '~icons/mdi/comment-text-multiple-outline';
+
+
 	export let post: Post | undefined;
 	export let spaceId: number | undefined;
 	export let imgHeight: number = 500;
@@ -87,6 +90,12 @@
 		<div class="card-actions">
 			<div class="pt-2"><TimeComponent time={post?.created} /></div>
 			<div class="grow" />
+			<div class="btn btn-sm h-8">
+				<div class="join join-horizontal">
+					<div class="text-primary"><CommentsIcon /></div>
+					<p class="pl-2 font-semibold">{post?.comments_count}</p>
+				</div>
+			</div>
 			<div class="z-10">
 				<VoteComponent
 					upVotes={post?.up_votes}

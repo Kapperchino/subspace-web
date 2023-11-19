@@ -1,6 +1,7 @@
 <script lang="ts">
 	import PostCardComponent from './postCardComponent.svelte';
 	import type { Post } from '../models/post.type';
+	import NotFoundComponent from './notFoundComponent.svelte';
 
 	export let posts: Post[];
 	export let spaceId: number;
@@ -17,5 +18,5 @@
 		</div>
 	{/each}
 {:else}
-	shits empty bro
+	<NotFoundComponent />
 {/if}
