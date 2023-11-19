@@ -16,5 +16,9 @@
 	setContext('user', data.user);
 </script>
 
-<PostingComponent {onSuccess} />
+<div class="flex flex-row pt-2 justify-center">
+	<div class="flex" />
+	<div class="grow max-w-md md:max-w-lg"><PostingComponent {onSuccess} /></div>
+	<div class="flex" />
+</div>
 <SpaceComponent posts={data.posts} spaceId={1} />

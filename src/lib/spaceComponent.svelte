@@ -10,7 +10,7 @@
 	{#each posts as post, index}
 		<div class="flex flex-row pt-2 justify-center">
 			<div class="flex" />
-			<div class="grow max-w-xl">
+			<div class="grow max-w-md md:max-w-lg">
 				<PostCardComponent {post} {spaceId} />
 			</div>
 			<div class="flex" />
