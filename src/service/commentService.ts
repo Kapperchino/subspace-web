@@ -14,6 +14,9 @@ export const getCommentsForPost = async (user: UserMeta, postId: number): Promis
             }
         });
     const comments = data.data;
+    if (comments == null) {
+        return [];
+    }
     const commentsData: CommentData[] = comments.map((e) => <CommentData>{ comment: e, children: [] });
     const map: Map<number, CommentData> = new Map<number, CommentData>();
     const resList: CommentData[] = [];

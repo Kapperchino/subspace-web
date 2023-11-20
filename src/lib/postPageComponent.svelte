@@ -54,7 +54,7 @@
 		{/if}
 		{#if post?.body != ''}
 			<a href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}">
-				<section class="p-2">{post?.body}</section>
+				<section class="p-2 break-words subpixel-antialiased">{post?.body}</section>
 			</a>
 		{/if}
 		{#if post?.post_pictures != null}

@@ -5,11 +5,11 @@
 	import Downvote from '~icons/bx/downvote';
 	import VoteComponent from '$lib/voteComponent.svelte';
 	import { setContext } from 'svelte';
-	import { VoteType, type PictureMeta, type VideoMeta } from '../../../../../../models/post.type';
 	import AvatarComponent from '$lib/avatarComponent.svelte';
 	import PostCardComponent from '$lib/postCardComponent.svelte';
 	import PostPageComponent from '$lib/postPageComponent.svelte';
 	import CommentComponent from '$lib/commentComponent.svelte';
+	import type { PictureMeta, VideoMeta } from '../../../../../../models/post.type';
 
 	export let data: PageData;
 	const imgHeight = 800;
@@ -75,13 +75,12 @@
 	<div class="flex" />
 </div>
 
-<div class="w-full border-opacity-50 pt-4">
-	<div class="divider divider-start divider-neutral pl-5">
-		<p class="text-xl font-semi-bold subpixel-antialiased">Comments</p>
-	</div>
-</div>
-
 {#if data.comments != undefined && data.comments.length > 0}
+	<div class="w-full border-opacity-50 pt-4">
+		<div class="divider divider-start divider-neutral pl-5">
+			<p class="text-xl font-semi-bold subpixel-antialiased">Comments</p>
+		</div>
+	</div>
 	{#each data.comments as comment, index}
 		<div class="flex flex-row pt-4 justify-center">
 			<div class="flex" />
