@@ -64,7 +64,7 @@
 </div>
 <div class="flex flex-row pt-2 justify-center">
 	<div class="flex" />
-	<div class="grow max-w-xl">
+	<div class="grow max-w-md md:max-w-xl">
 		<PostPageComponent
 			post={data.post}
 			comments={data.comments}
