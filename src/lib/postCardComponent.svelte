@@ -37,7 +37,7 @@
 	}
 
 	function clickTo() {
-		goto(`/s/${post?.space_parent_id}/${post?.space_id}/p/${post?.id}`);
+		goto(`/s/${post?.space_parent_id}/${post?.space_id}/p/${post?.id}`, {noScroll: true});
 	}
 </script>
 
@@ -49,14 +49,14 @@
 		</div>
 
 		{#if post?.topic != ''}
-			<a class="card-title" href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}">
+			<a class="card-title" href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}" data-sveltekit-noscroll>
 				<h3>
 					{post?.topic}
 				</h3>
 			</a>
 		{/if}
 		{#if post?.body != ''}
-			<a href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}">
+			<a href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}" data-sveltekit-noscroll>
 				<section class="p-2 break-words subpixel-antialiased">
 					{post?.body}
 				</section>

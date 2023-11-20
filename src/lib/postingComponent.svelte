@@ -60,7 +60,6 @@
 	}
 
 	async function onPicChange(e: Event) {
-		console.log(picFiles);
 		if (picFiles != undefined) {
 			for (let i = 0; i < picFiles.length; i++) {
 				const val = picFiles.item(i)!;
@@ -75,7 +74,6 @@
 	}
 
 	async function onVidChange(e: Event) {
-		console.log(vidFiles);
 		if (vidFiles != undefined) {
 			for (let i = 0; i < vidFiles.length; i++) {
 				const val = vidFiles.item(i)!;
@@ -125,7 +123,6 @@
 			};
 			var picRes = await uploadMedia(fileUploadReq);
 			var uploadRes = await uploadFile(picList[0][1], picRes.data.presigned, picList[0][1].type);
-			console.log(uploadRes.statusText);
 			fileIds.push(picRes.data.id);
 		} else if (postReq.content_type === ContentType.Video) {
 			const fileUploadReq: FileUploadRequest = {
@@ -135,7 +132,6 @@
 			};
 			var videoRes = await uploadMedia(fileUploadReq);
 			var uploadRes = await uploadFile(vidList[0][1], videoRes.data.presigned, vidList[0][1].type);
-			console.log(uploadRes.statusText);
 			var videoProcess = await processVideo(videoRes.data.id);
 			fileIds.push(videoRes.data.id);
 		}

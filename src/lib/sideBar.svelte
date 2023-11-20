@@ -21,7 +21,7 @@
 	<label for="my-drawer-3" aria-label="close sidebar" class="drawer-overlay lg:hidden" />
 	<ul class="menu p-4 w-60 min-h-full bg-base-200">
 		<!-- Sidebar content here -->
-		<a href="/home">
+		<a href="/home" data-sveltekit-noscroll>
 			<li>
 				<div class=" join">
 					<div class="text-lg">
@@ -32,7 +32,7 @@
 			</li></a
 		>
 
-		<a href="/explore">
+		<a href="/explore" data-sveltekit-noscroll>
 			<li>
 				<div class=" join">
 					<div class="text-lg">
@@ -43,7 +43,7 @@
 			</li></a
 		>
 
-		<a href="/spaces">
+		<a href="/spaces" data-sveltekit-noscroll>
 			<li>
 				<div class=" join">
 					<div class="text-lg">
@@ -54,7 +54,7 @@
 			</li></a
 		>
 
-		<a href="/notifications">
+		<a href="/notifications" data-sveltekit-noscroll>
 			<li>
 				<div class="join">
 					<div class="text-lg">

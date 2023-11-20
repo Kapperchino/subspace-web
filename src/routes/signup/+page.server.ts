@@ -7,7 +7,6 @@ import type { Actions } from './$types';
 export const actions = {
     signup: async ({ request, cookies }) => {
         const formData = Object.fromEntries(await request.formData());
-        console.log(formData);
         const req: SignUp = formData as SignUp;
         const meta = await signup(req);
         cookies.set("user", JSON.stringify(meta));

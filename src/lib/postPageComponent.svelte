@@ -1,14 +1,16 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 
-
 	import VoteComponent from '$lib/voteComponent.svelte';
+	import type { CommentData } from '../models/comment.type';
 	import { VoteType, type PictureMeta, type Post, type VideoMeta } from '../models/post.type';
+	import CommentComponent from './commentComponent.svelte';
 	import PostCardMetaComponent from './postCardMetaComponent.svelte';
 	import TimeComponent from './timeComponent.svelte';
-
+	import ReplyIcon from '~icons/gridicons/reply';
 
 	export let post: Post | undefined;
+	export let comments: CommentData[] | undefined;
 	export let spaceId: number | undefined;
 	export let imgHeight: number = 500;
 
@@ -34,68 +36,67 @@
 		});
 		return url;
 	}
-
 </script>
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<div class="card card-compact shadow-lg bg-base-100">
-		<div class="card-body">
-			<div class="flex-row flex">
-				<div ><PostCardMetaComponent {post} {spaceId} /></div>
+
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<div class="card card-compact shadow-lg bg-base-100">
+	<div class="card-body">
+		<div class="flex-row flex">
+			<div><PostCardMetaComponent {post} {spaceId} /></div>
+		</div>
+
+		{#if post?.topic != ''}
+			<a class="card-title" href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}">
+				<h3>
+					{post?.topic}
+				</h3>
+			</a>
+		{/if}
+		{#if post?.body != ''}
+			<a href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}">
+				<section class="p-2">{post?.body}</section>
+			</a>
+		{/if}
+		{#if post?.post_pictures != null}
+			<div class="flex justify-center">
+				<div class="basis-1/4 rounded-md bg-gradient-to-r from-gray-900 to-gray-800" />
+				<img
+					class="rounded-md"
+					alt="The project logo"
+					height={getDimention(post?.post_pictures?.at(0)).height}
+					width={getDimention(post?.post_pictures?.at(0)).width}
+					src={post?.post_pictures?.at(0)?.url}
+				/>
+
+				<div class="basis-1/4 rounded-md bg-gradient-to-l from-gray-900 to-gray-800" />
 			</div>
-	
-			{#if post?.topic != ''}
-				<a class="card-title" href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}">
-					<h3>
-						{post?.topic}
-					</h3>
-				</a>
-			{/if}
-			{#if post?.body != ''}
-				<a href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}">
-					<section class="p-2">{post?.body}</section>
-				</a>
-			{/if}
-			{#if post?.post_pictures != null}
-				<div
-					class="flex justify-center"
-				>
-					<div class="basis-1/4 rounded-md bg-gradient-to-r from-gray-900 to-gray-800" />
-					<img
-						class="rounded-md"
-						alt="The project logo"
-						height={getDimention(post?.post_pictures?.at(0)).height}
-						width={getDimention(post?.post_pictures?.at(0)).width}
-						src={post?.post_pictures?.at(0)?.url}
-					/>
-	
-					<div class="basis-1/4 rounded-md bg-gradient-to-l from-gray-900 to-gray-800" />
-				</div>
-			{/if}
-			{#if post?.post_videos != null}
-				
-				<div style="position: relative; padding-top: 80%;">
-					<!-- svelte-ignore a11y-missing-attribute -->
-					<iframe
-						src={getVideoUrl(post.post_videos[0])}
-						style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
-						allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-						allowfullscreen={true}
-					/>
-				</div>
-			{/if}
-			<div class="card-actions">
-				<div class="pt-2"><TimeComponent time={post?.created} /></div>
-				<div class="grow" />
-				<div class="z-10">
-					<VoteComponent
-						upVotes={post?.up_votes}
-						downVotes={post?.down_votes}
-						voteData={post?.vote}
-						id={post?.id}
-						voteType={VoteType.Post}
-					/>
-				</div>
+		{/if}
+		{#if post?.post_videos != null}
+			<div style="position: relative; padding-top: 80%;">
+				<!-- svelte-ignore a11y-missing-attribute -->
+				<iframe
+					src={getVideoUrl(post.post_videos[0])}
+					style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+					allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+					allowfullscreen={true}
+				/>
+			</div>
+		{/if}
+		<div class="card-actions">
+			<div class="pt-2"><TimeComponent time={post?.created} /></div>
+			<div class="grow" />
+			<div class="btn btn-sm btn-secondary h-8">
+				<div class="text-md font-bold subpixel-antialiased"><ReplyIcon /></div>
+			</div>
+			<div class="z-10">
+				<VoteComponent
+					upVotes={post?.up_votes}
+					downVotes={post?.down_votes}
+					voteData={post?.vote}
+					id={post?.id}
+					voteType={VoteType.Post}
+				/>
 			</div>
 		</div>
 	</div>
-
+</div>
