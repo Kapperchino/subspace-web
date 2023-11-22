@@ -41,7 +41,7 @@
 			<div class="flex grow" />
 			<SortPostComponent />
 		</div>
-		<div transition:blur={{ duration: 30 }}><slot /></div>
+		<div><slot /></div>
 	</div>
 	<SideBar />
 </div>

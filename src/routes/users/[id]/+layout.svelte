@@ -12,9 +12,9 @@
 	export let data: LayoutData;
 </script>
 
-<div class="drawer z-50 md:drawer-open" >
+<div class="drawer z-50 md:drawer-open">
 	<input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
-	<div class="drawer-content flex flex-col" transition:blur={{ duration: 30 }}>
+	<div class="drawer-content flex flex-col">
 		<div class="w-full navbar bg-base-300">
 			<div class="flex-none md:hidden">
 				<label for="my-drawer-3" aria-label="open sidebar" class="btn btn-square btn-ghost">
@@ -39,11 +39,11 @@
 		<div class="flex flex-row mt-2">
 			<div class="flex grow" />
 			<div class="flex grow card card-compact max-w-md md:max-w-xl bg-base-300">
-					<div class="avatar pt-2 pl-2">
-						<div class="w-24 rounded-full">
-							<AvatarComponent url={data.user.picture_meta?.url} userId={data.user.user_id} />
-						</div>
+				<div class="avatar pt-2 pl-2">
+					<div class="w-24 rounded-full">
+						<AvatarComponent url={data.user.picture_meta?.url} userId={data.user.user_id} />
 					</div>
+				</div>
 				<div class="card-title pl-2 pt-2">
 					{data.user.display_name}
 				</div>
