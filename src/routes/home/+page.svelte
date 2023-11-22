@@ -6,7 +6,7 @@
 	import SpaceComponent from '$lib/spaceComponent.svelte';
 	import type { Post } from '../../models/post.type';
 	import PostingComponent from '$lib/postingComponent.svelte';
-	import { invalidate, invalidateAll } from '$app/navigation';
+	import { invalidateAll } from '$app/navigation';
 	export let data: PageData;
 
 	var onSuccess = async () => {

@@ -12,9 +12,9 @@
 	export let data: LayoutData;
 </script>
 
-<div class="drawer z-50 md:drawer-open">
+<div class="drawer z-50 md:drawer-open" >
 	<input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
-	<div class="drawer-content flex flex-col" transition:blur>
+	<div class="drawer-content flex flex-col" transition:blur={{ duration: 30 }}>
 		<div class="w-full navbar bg-base-300">
 			<div class="flex-none md:hidden">
 				<label for="my-drawer-3" aria-label="open sidebar" class="btn btn-square btn-ghost">

@@ -33,10 +33,7 @@
 
   <div class="card card-compact shadow-lg bg-base-100">
 	<div class="card-body">
-	
-
 			{data.subspace.description}
-		
 	</div>
 </div>
 

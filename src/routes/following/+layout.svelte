@@ -37,7 +37,7 @@
 			</div>
 			<div class="flex grow" />
 		</div>
-		<div transition:blur><slot /></div>
+		<div transition:blur={{ duration: 30 }}><slot /></div>
 	</div>
 	<SideBar />
 </div>
