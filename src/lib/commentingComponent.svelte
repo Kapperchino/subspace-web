@@ -23,14 +23,11 @@
 	} from '../service/postingService';
 
 	import toast, { Toaster } from 'svelte-french-toast';
-	import PostCardComponent from './postCardComponent.svelte';
-	import TimeComponent from './timeComponent.svelte';
 	import PostCardMetaComponent from './postCardMetaComponent.svelte';
 	import CommentMetaComponent from './commentMetaComponent.svelte';
-	import CommentComponent from './commentComponent.svelte';
-	import type { Comment } from '../models/comment.type';
+	import type { Comment, CommentRequest } from '../models/comment.type';
+	import { createCommentClient } from '../service/commentingService';
 
-	$: hasTitle = false;
 	$: hasLink = false;
 
 	export let imgHeight: number = 500;
@@ -42,33 +39,29 @@
 	let vidFiles: FileList | undefined;
 	let picInput: HTMLInputElement;
 	let videoInput: HTMLInputElement;
-	let postReq: PostCreation = {
-		space_id: 1,
+	let commentReq: CommentRequest = {
 		poster_id: 0,
-		topic: '',
+		post_id: 0,
 		body: '',
-		link: '',
-		content_type: ContentType.Text,
-		file_ids: []
+		content: '',
+		parent_id: 0,
+		content_type: ContentType.Text
 	};
 
 	export let onSuccess = () => {}; // no-operation function;
 
 	export let post: Post | undefined;
-    export let comment: Comment | undefined;
-
+	export let comment: Comment | undefined;
 
 	function resetPost() {
-		postReq = {
-			space_id: 1,
+		commentReq = {
 			poster_id: 0,
-			topic: '',
+			post_id: 0,
 			body: '',
-			link: '',
-			content_type: ContentType.Text,
-			file_ids: []
+			content: '',
+			parent_id: 0,
+			content_type: ContentType.Text
 		};
-		hasTitle = false;
 		hasLink = false;
 		closeImage();
 		closeVideo();
@@ -127,15 +120,8 @@
 	}
 
 	async function createComment(e: Event) {
-		if (postReq.link != '') {
-			postReq.content_type = ContentType.Link;
-		} else if (vidList != null && vidList.length > 0) {
-			postReq.content_type = ContentType.Video;
-		} else if (picList != null && picList.length > 0) {
-			postReq.content_type = ContentType.Picture;
-		}
-		if (postReq.link == '' && vidList.length == 0 && picList.length == 0 && postReq.body == '') {
-			toast.error('Empty post is not allowed!', {
+		if (commentReq.body == '') {
+			toast.error('Empty comment is not allowed!', {
 				icon: '❌',
 				position: 'bottom-center',
 				style: 'border-radius: 300px; background: oklch(var(--b3)); color: oklch(var(--er));'
@@ -143,9 +129,9 @@
 			return;
 		}
 		const user: UserMeta = coockieStore.getValue('cookie');
-		postReq.poster_id = user.user_id;
+		commentReq.poster_id = user.user_id;
 		const fileIds: number[] = [];
-		if (postReq.content_type === ContentType.Picture) {
+		if (commentReq.content_type === ContentType.Picture) {
 			const memoryImg = document.createElement('img');
 			memoryImg.src = picList[0][0];
 			const width = memoryImg.width;
@@ -163,7 +149,7 @@
 			var picRes = await uploadMedia(fileUploadReq);
 			var uploadRes = await uploadFile(picList[0][1], picRes.data.presigned, picList[0][1].type);
 			fileIds.push(picRes.data.id);
-		} else if (postReq.content_type === ContentType.Video) {
+		} else if (commentReq.content_type === ContentType.Video) {
 			const fileUploadReq: FileUploadRequest = {
 				picture_meta: undefined,
 				file_type: 'video',
@@ -174,20 +160,25 @@
 			var videoProcess = await processVideo(videoRes.data.id);
 			fileIds.push(videoRes.data.id);
 		}
+
+		if (comment != undefined) {
+			commentReq.parent_id = comment.id;
+			commentReq.post_id = comment.post_id;
+		}
+		if (post != undefined) {
+			commentReq.parent_id = 1;
+			commentReq.post_id = post.id;
+		}
 		//at this point everything should be uploaded
-		postReq.file_ids = fileIds;
-		await createPostClient(postReq);
+		// commentReq.file_ids = fileIds;
+		await createCommentClient(commentReq);
 		resetPost();
-		toast.success('Post Successful!', {
+		toast.success('Comment Successful!', {
 			icon: '🎉',
 			position: 'bottom-center',
 			style: 'border-radius: 200px; background: oklch(var(--b3)); color: oklch(var(--su));'
 		});
 		onSuccess();
-	}
-
-	function toggleTitle() {
-		hasTitle = !hasTitle;
 	}
 
 	function toggleLink() {
@@ -276,7 +267,6 @@
 					{comment?.body}
 				</section>
 			{/if}
-
 		</div>
 	</div>
 {/if}
@@ -291,7 +281,6 @@
 						name="Link"
 						placeholder="Link(Optional)"
 						rows="1"
-						bind:value={postReq.link}
 					/>
 				</label>
 			{/if}
@@ -301,7 +290,8 @@
 					class="textarea textarea-md textarea-primary textarea-bordered w-full grid-cols-[auto_1fr_auto]"
 					name="Comment"
 					placeholder="Comment here!"
-					bind:value={postReq.body}
+					bind:value={commentReq.body}
+					autofocus
 				/>
 			</label>
 			{#if picList != null && picList.length > 0 && vidList.length == 0}

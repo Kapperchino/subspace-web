@@ -20,3 +20,12 @@ export type CommentData = {
     comment: Comment;
     children: CommentData[];
 }
+
+export type CommentRequest = {
+    poster_id: number;
+    post_id: number;
+    body: string;
+    content: string;
+    parent_id: number;
+    content_type: ContentType;
+}

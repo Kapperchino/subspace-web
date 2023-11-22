@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 
 	import VoteComponent from '$lib/voteComponent.svelte';
 	import type { CommentData } from '../models/comment.type';
@@ -38,6 +38,11 @@
 		});
 		return url;
 	}
+
+	var onSuccess = async () => {
+		await invalidateAll();
+		modal?.close();
+	};
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -88,7 +93,7 @@
 <dialog id="my_modal" class="modal" bind:this={modal}>
 	<div class="modal-box p-0">
 		<div class="grow">
-			<CommentingComponent post={undefined} comment={comment?.comment} />
+			<CommentingComponent post={undefined} comment={comment?.comment} {onSuccess} />
 		</div>
 	</div>
 	<form method="dialog" class="modal-backdrop">
