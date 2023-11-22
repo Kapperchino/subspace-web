@@ -4,6 +4,7 @@
 	import FooterComponent from '$lib/footerComponent.svelte';
 	import SideBar from '$lib/sideBar.svelte';
 	import SideDrawer from '$lib/sideDrawer.svelte';
+	import SortPostComponent from '$lib/sortPostComponent.svelte';
 	import { blur } from 'svelte/transition';
 </script>
 
@@ -29,6 +30,8 @@
 				</label>
 			</div>
 			<div class="flex grow" />
+			<div class="flex grow" />
+
 			<div class="backdrop-blur bg-base-300">
 				<div class=" bottom-10 tabs tabs-boxed tabs-md flex">
 					<a class="tab" href="/home">Home</a>
@@ -36,6 +39,7 @@
 				</div>
 			</div>
 			<div class="flex grow" />
+			<SortPostComponent />
 		</div>
 		<div transition:blur={{ duration: 30 }}><slot /></div>
 	</div>

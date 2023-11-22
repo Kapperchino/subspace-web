@@ -5,10 +5,9 @@
 	import { page } from '$app/stores';
 	import SpaceComponent from '$lib/spaceComponent.svelte';
 	import type { Post } from '../../../../models/post.type';
-
+	import SortPostComponent from '$lib/sortPostComponent.svelte';
 
 	export let data: PageData;
-	let posts: Post[] = data.posts!;
 	let spaceId: number = data.spaceId;
 	let parentId: number = data.subspace.parent_id;
 	setContext('user', data.user);
@@ -43,9 +42,12 @@
 		</div>
 	</div>
 	<div class="flex grow" />
+	<div class="flex grow" />
+
+	<SortPostComponent />
 </div>
 <!-- <TabGroup justify="justify-center">
 	<TabAnchor href="/s/1/1" selected={$page.url.pathname === '/s/1/1'}>Posts</TabAnchor>
 	<TabAnchor href="/following" selected={$page.url.pathname === '/following'}>About</TabAnchor>
 </TabGroup> -->
-<SpaceComponent {posts} {spaceId} />
+<SpaceComponent posts={data.posts} {spaceId} />

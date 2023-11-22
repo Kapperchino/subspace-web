@@ -3,13 +3,12 @@
 
 	import VoteComponent from '$lib/voteComponent.svelte';
 	import { setContext } from 'svelte';
-	import { VoteType, type Post, type PictureMeta } from '../../models/post.type';
 	import { page } from '$app/stores';
 	import PostCardComponent from '$lib/postCardComponent.svelte';
 	import NotFoundComponent from '$lib/notFoundComponent.svelte';
+	import type { PictureMeta } from '../../models/signup.type';
 
 	export let data: PageData;
-	let posts: Post[] = data.posts!;
 	const imgHeight = 500;
 
 	export function getDimention(meta: PictureMeta | undefined) {
@@ -25,8 +24,8 @@
 	setContext('user', data.user);
 </script>
 
-{#if posts != null && posts.length > 0}
-	{#each posts as post, index}
+{#if data.posts != null && data.posts.length > 0}
+	{#each data.posts as post, index}
 		<div class="flex flex-row pt-2 justify-center">
 			<div class="flex" />
 			<div class="grow max-w-xl">

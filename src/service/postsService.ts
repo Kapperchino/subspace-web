@@ -17,8 +17,8 @@ export const getPost = async (user: UserMeta, postId: number): Promise<Post> => 
     return data.data
 }
 
-export const getPosts = async (user: UserMeta, spaceId: number): Promise<AxiosResponse<Array<Post>>> => {
-    const data: AxiosResponse<Array<Post>> = await axios.get(`${env.BACK_END}/posts/spaces/${spaceId}?sort=latest&days=7&userId=${user!.user_id}`,
+export const getPosts = async (user: UserMeta, spaceId: number, days: number, sortType: string): Promise<AxiosResponse<Array<Post>>> => {
+    const data: AxiosResponse<Array<Post>> = await axios.get(`${env.BACK_END}/posts/spaces/${spaceId}?sort=${sortType}&days=${days}&userId=${user!.user_id}`,
         {
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
@@ -28,8 +28,8 @@ export const getPosts = async (user: UserMeta, spaceId: number): Promise<AxiosRe
     return data
 }
 
-export const getSubscriptions = async (user: UserMeta): Promise<AxiosResponse<Array<Post>>> => {
-    const data: AxiosResponse<Array<Post>> = await axios.get(`${env.BACK_END}/posts/users/${user!.user_id}/subscriptions`,
+export const getSubscriptions = async (user: UserMeta, days: number, sortType: string): Promise<AxiosResponse<Array<Post>>> => {
+    const data: AxiosResponse<Array<Post>> = await axios.get(`${env.BACK_END}/posts/users/${user!.user_id}/subscriptions?sort=${sortType}&days=${days}`,
         {
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',

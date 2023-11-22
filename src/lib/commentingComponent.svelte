@@ -3,7 +3,7 @@
 	import VideoAdd from '~icons/bxs/video-plus';
 	import LinkIcon from '~icons/bx/link';
 	import XIcon from '~icons/bx/x';
-	import { textareaAutosizeAction } from 'svelte-legos';
+	import { lazyLoadImageAction, textareaAutosizeAction } from 'svelte-legos';
 	import {
 		ContentType,
 		type FileUploadRequest,
@@ -230,11 +230,12 @@
 				<div class="flex justify-center">
 					<div class="basis-1/4 rounded-md bg-gradient-to-r from-gray-900 to-gray-800" />
 					<img
+						use:lazyLoadImageAction
 						class="rounded-md"
 						alt="The project logo"
 						height={getDimention(post?.post_pictures?.at(0)).height}
 						width={getDimention(post?.post_pictures?.at(0)).width}
-						src={post?.post_pictures?.at(0)?.url}
+						data-src={post?.post_pictures?.at(0)?.url}
 					/>
 
 					<div class="basis-1/4 rounded-md bg-gradient-to-l from-gray-900 to-gray-800" />
@@ -297,7 +298,11 @@
 			{#if picList != null && picList.length > 0 && vidList.length == 0}
 				<div class="flex-row flex pb-1 pt-3">
 					<div class="relative bg-gradient-to-r from-gray-900 to-gray-800 rounded-md">
-						<img class="object-scale-down h-24 w-24 p-1" src={picList.at(0)?.[0]} />
+						<img
+							use:lazyLoadImageAction
+							class="object-scale-down h-24 w-24 p-1"
+							data-src={picList.at(0)?.[0]}
+						/>
 						<div class="pl-1" />
 						<button
 							type="button"
