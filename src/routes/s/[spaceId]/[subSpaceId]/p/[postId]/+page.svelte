@@ -12,31 +12,7 @@
 	import type { PictureMeta, VideoMeta } from '../../../../../../models/post.type';
 
 	export let data: PageData;
-	const imgHeight = 800;
-
-	export function getDimention(meta: PictureMeta | undefined) {
-		const ratio = meta!.width / meta!.height;
-		const width = imgHeight * ratio;
-		const height = Math.min(imgHeight, meta!.height);
-		return {
-			width: width,
-			height: height
-		};
-	}
-
-	function getVideoUrl(meta: VideoMeta): string {
-		let url = '';
-		let list = meta.url.split('/');
-		list.pop();
-		list.pop();
-		list.push('/iframe');
-		list.forEach((element) => {
-			url += element;
-			url += '/';
-		});
-		return url;
-	}
-
+	
 	setContext('user', data.user);
 </script>
 
@@ -67,7 +43,6 @@
 	<div class="grow max-w-md md:max-w-xl">
 		<PostPageComponent
 			post={data.post}
-			comments={data.comments}
 			spaceId={data.post?.space_id}
 			imgHeight={700}
 		/>

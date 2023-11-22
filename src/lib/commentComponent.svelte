@@ -5,6 +5,7 @@
 	import type { CommentData } from '../models/comment.type';
 	import { VoteType, type PictureMeta, type Post, type VideoMeta } from '../models/post.type';
 	import CommentMetaComponent from './commentMetaComponent.svelte';
+	import CommentingComponent from './commentingComponent.svelte';
 	import PostCardMetaComponent from './postCardMetaComponent.svelte';
 	import TimeComponent from './timeComponent.svelte';
 	import ReplyIcon from '~icons/gridicons/reply';
@@ -13,6 +14,7 @@
 
 	export let comment: CommentData | undefined;
 	export let imgHeight: number = 500;
+	let modal: HTMLDialogElement | undefined;
 
 	export function getDimention(meta: PictureMeta | undefined) {
 		const ratio = meta!.width / meta!.height;
@@ -54,7 +56,7 @@
 		<div class="card-actions">
 			<div class="pt-2"><TimeComponent time={comment?.comment.created} /></div>
 			<div class="grow" />
-			<div class="btn btn-sm btn-secondary h-8">
+			<div class="btn btn-sm btn-secondary h-8" on:click={() => modal?.showModal()}>
 				<div class="text-md font-bold subpixel-antialiased"><ReplyIcon /></div>
 			</div>
 			<div class="z-10">
@@ -74,7 +76,7 @@
 	{#each comment?.children as child, index}
 		<div class="flex flex-row pt-2 justify-center">
 			<div class="flex" />
-			<div class="divider divider-neutral divider-horizontal"></div>
+			<div class="divider divider-neutral divider-horizontal" />
 			<div class="grow flex-row max-w-md md:max-w-xl">
 				<svelte:self comment={child} />
 			</div>
@@ -82,3 +84,14 @@
 		</div>
 	{/each}
 {/if}
+
+<dialog id="my_modal" class="modal" bind:this={modal}>
+	<div class="modal-box p-0">
+		<div class="grow">
+			<CommentingComponent post={undefined} comment={comment?.comment} />
+		</div>
+	</div>
+	<form method="dialog" class="modal-backdrop">
+		<button>close</button>
+	</form>
+</dialog>

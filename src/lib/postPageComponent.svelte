@@ -2,21 +2,24 @@
 	import { goto } from '$app/navigation';
 
 	import VoteComponent from '$lib/voteComponent.svelte';
-	import type { CommentData } from '../models/comment.type';
 	import { VoteType, type PictureMeta, type Post, type VideoMeta } from '../models/post.type';
-	import CommentComponent from './commentComponent.svelte';
+	import CommentingComponent from './commentingComponent.svelte';
 	import PostCardMetaComponent from './postCardMetaComponent.svelte';
 	import TimeComponent from './timeComponent.svelte';
 	import ReplyIcon from '~icons/gridicons/reply';
 
 	export let post: Post | undefined;
-	export let comments: CommentData[] | undefined;
 	export let spaceId: number | undefined;
 	export let imgHeight: number = 500;
+	export let imgMinHeight: number = 300;
+
+	let modal: HTMLDialogElement | undefined;
+
 
 	export function getDimention(meta: PictureMeta | undefined) {
 		const ratio = meta!.width / meta!.height;
-		const height = Math.min(imgHeight, meta!.height);
+		var height = Math.min(imgHeight, meta!.height);
+		height = Math.max(imgMinHeight, height);
 		const width = height * ratio;
 		return {
 			width: width,
@@ -85,7 +88,7 @@
 		<div class="card-actions">
 			<div class="pt-2"><TimeComponent time={post?.created} /></div>
 			<div class="grow" />
-			<div class="btn btn-sm btn-secondary h-8">
+			<div class="btn btn-sm btn-secondary h-8" on:click={()=> modal?.showModal()}>
 				<div class="text-md font-bold subpixel-antialiased"><ReplyIcon /></div>
 			</div>
 			<div class="z-10">
@@ -100,3 +103,15 @@
 		</div>
 	</div>
 </div>
+
+<dialog id="my_modal" class="modal" bind:this={modal}>
+	<div class="modal-box p-0">
+		<div class="grow">
+			<CommentingComponent {post} />
+		</div>
+	</div>
+	<form method="dialog" class="modal-backdrop">
+		<button>close</button>
+	</form>
+</dialog>
+
