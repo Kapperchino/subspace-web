@@ -1,6 +1,6 @@
 import { setContext } from 'svelte';
 import type { PageServerLoad } from './$types';
-import { redirect } from '@sveltejs/kit';
+import { redirect, type Actions } from '@sveltejs/kit';
 import type { UserMeta } from '../../models/signup.type';
 import { getPosts } from '../../service/postsService';
 import { getTags } from '../../service/trendingService';
@@ -20,3 +20,11 @@ export const load: PageServerLoad = async ({ params, cookies }) => {
         params: params
     };
 };
+
+export const actions = {
+    search: async ({ request, cookies }) => {
+        const formData = await request.formData();
+        const term = formData.get('search');
+        throw redirect(302, `/search/posts?term=${term}`);
+    }
+} satisfies Actions;

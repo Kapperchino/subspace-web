@@ -1,10 +1,14 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+
 	// Most of your app wide CSS should be put in this file
 	import { page } from '$app/stores';
 	import FooterComponent from '$lib/footerComponent.svelte';
 	import SideBar from '$lib/sideBar.svelte';
 	import SideDrawer from '$lib/sideDrawer.svelte';
 	import { blur } from 'svelte/transition';
+
+	let term: string;
 </script>
 
 <div class="drawer z-50 md:drawer-open">
@@ -32,7 +36,17 @@
 			<div class="flex grow" />
 			<div class="flex flex-row pt-3">
 				<div class="basis-1/6" />
-				<input class="input basis-4/6" type="search" name="search" placeholder="Search..." />
+				<form method="POST" action="?/search">
+					<div class="form-control">
+						<input
+							name="search"
+							type="text"
+							bind:value={term}
+							placeholder="Search"
+							class="input input-bordered"
+						/>
+					</div>
+				</form>
 				<div class="basis-1/6" />
 			</div>
 			<div class="flex grow" />

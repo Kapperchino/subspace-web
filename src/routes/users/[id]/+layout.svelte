@@ -47,6 +47,7 @@
 				<div class="card-title pl-2 pt-2">
 					{data.user.display_name}
 				</div>
+				<div class="pl-2 text-primary">@{data.user.user_address}</div>
 				<div class="card-body">
 					{data.user.bio}
 				</div>
