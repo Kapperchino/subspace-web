@@ -1,14 +1,17 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 
-	import { setContext } from 'svelte';
-	import { page } from '$app/stores';
+	import { onMount, setContext } from 'svelte';
 	import SpaceComponent from '$lib/spaceComponent.svelte';
-	import type { Post } from '../../models/post.type';
 	import PostingComponent from '$lib/postingComponent.svelte';
 	import { goto, invalidateAll } from '$app/navigation';
-	import SortPostComponent from '$lib/sortPostComponent.svelte';
+	import { coockieStore } from '$lib/store/tokenStore';
+	import SkeletonPosts from '$lib/skeletonPosts.svelte';
 	export let data: PageData;
+
+	onMount(() => {
+		coockieStore.setValue('cookie', data.user);
+	});
 
 	var onSuccess = async () => {
 		await invalidateAll();
@@ -22,4 +25,11 @@
 	<div class="grow max-w-md md:max-w-xl"><PostingComponent {onSuccess} /></div>
 	<div class="flex" />
 </div>
-<SpaceComponent posts={data.posts} spaceId={1} />
+
+{#await data.streamed.posts}
+	<SkeletonPosts />
+{:then value}
+	<SpaceComponent posts={value} spaceId={1} />
+{:catch error}
+	{error.message}
+{/await}
