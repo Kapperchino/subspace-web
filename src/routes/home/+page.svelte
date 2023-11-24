@@ -30,6 +30,7 @@
 	<SkeletonPosts />
 {:then value}
 	<SpaceComponent posts={value} spaceId={1} />
+	
 {:catch error}
 	{error.message}
 {/await}

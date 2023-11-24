@@ -6,6 +6,7 @@ module.exports = {
 		themes: ["light", "dark", "cupcake"],
 	},
 	plugins: [
-		require("daisyui")
+		require("daisyui"),
+		require('vidstack/tailwind.cjs')
 	],
 }

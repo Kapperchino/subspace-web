@@ -6,9 +6,11 @@
 	import SideDrawer from '$lib/sideDrawer.svelte';
 	import { Toaster } from 'svelte-french-toast';
 	import '../app.css';
-
+	import 'vidstack/player';
+	import 'vidstack/player/layouts';
+	import 'vidstack/player/ui';
 </script>
-	<slot />
-	<FooterComponent></FooterComponent>
-	<Toaster />
 
+<slot />
+<FooterComponent />
+<Toaster />

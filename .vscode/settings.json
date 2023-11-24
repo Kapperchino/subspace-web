@@ -107,5 +107,8 @@
 		"track",
 		"width",
 		"zIndex"
+	],
+	"html.customData": [
+		"./node_modules/vidstack/vscode.html-data.json"
 	]
 }

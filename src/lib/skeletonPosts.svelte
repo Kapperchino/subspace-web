@@ -1,4 +1,4 @@
-{#each { length: 20 } as _, i}
+{#each { length: 10 } as _, i}
 	<div class="flex flex-row pt-2 justify-center mt-2">
 		<div class="flex" />
 		<div class="grow max-w-md md:max-w-xl">
