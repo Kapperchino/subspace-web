@@ -9,4 +9,7 @@ module.exports = {
 		require("daisyui"),
 		require('vidstack/tailwind.cjs')
 	],
+	experimental: {
+		optimizeUniversalDefaults: true
+	}
 }
