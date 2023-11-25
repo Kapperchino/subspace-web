@@ -230,12 +230,13 @@
 				<div class="flex justify-center">
 					<div class="basis-1/4 rounded-md bg-gradient-to-r from-gray-900 to-gray-800" />
 					<img
-						
+						loading="lazy"
 						class="rounded-md"
 						alt="The project logo"
 						height={getDimention(post?.post_pictures?.at(0)).height}
 						width={getDimention(post?.post_pictures?.at(0)).width}
-						data-src={post?.post_pictures?.at(0)?.url}
+						src={'https://subspace.place/cdn-cgi/image/fit=scale-down,width=550,format=auto/' +
+							post?.post_pictures?.at(0)?.url}
 					/>
 
 					<div class="basis-1/4 rounded-md bg-gradient-to-l from-gray-900 to-gray-800" />
@@ -298,10 +299,7 @@
 			{#if picList != null && picList.length > 0 && vidList.length == 0}
 				<div class="flex-row flex pb-1 pt-3">
 					<div class="relative bg-gradient-to-r from-gray-900 to-gray-800 rounded-md">
-						<img
-							class="object-scale-down h-24 w-24 p-1"
-							data-src={picList.at(0)?.[0]}
-						/>
+						<img class="object-scale-down h-24 w-24 p-1" data-src={picList.at(0)?.[0]} />
 						<div class="pl-1" />
 						<button
 							type="button"
