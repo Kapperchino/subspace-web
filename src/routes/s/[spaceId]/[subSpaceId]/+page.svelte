@@ -6,12 +6,21 @@
 	import SpaceComponent from '$lib/spaceComponent.svelte';
 	import type { Post } from '../../../../models/post.type';
 	import SortPostComponent from '$lib/sortPostComponent.svelte';
+	import SeoComponent from '$lib/seoComponent.svelte';
 
 	export let data: PageData;
 	let spaceId: number = data.spaceId;
 	let parentId: number = data.subspace.parent_id;
 	setContext('user', data.user);
 </script>
+
+<svelte:head>
+	<SeoComponent
+		title={data.subspace.name}
+		description={data.subspace.description}
+		img={data.subspace.small_picture?.url}
+	/>
+</svelte:head>
 
 <div class="w-full navbar bg-base-300">
 	<div class="flex-none md:hidden">

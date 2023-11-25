@@ -10,11 +10,20 @@
 	import PostPageComponent from '$lib/postPageComponent.svelte';
 	import CommentComponent from '$lib/commentComponent.svelte';
 	import type { PictureMeta, VideoMeta } from '../../../../../../models/post.type';
+	import SeoComponent from '$lib/seoComponent.svelte';
 
 	export let data: PageData;
-	
+
 	setContext('user', data.user);
 </script>
+
+<svelte:head>
+	<SeoComponent
+		title={data.post?.topic ?? 'Subspace Post'}
+		description={data.post?.body ?? ''}
+		img={data.post?.post_pictures?.at(0)?.url}
+	/>
+</svelte:head>
 
 <!-- Navbar -->
 <div class="w-full navbar bg-base-300">
@@ -41,11 +50,7 @@
 <div class="flex flex-row pt-2 justify-center">
 	<div class="flex" />
 	<div class="grow max-w-md md:max-w-xl">
-		<PostPageComponent
-			post={data.post}
-			spaceId={data.post?.space_id}
-			imgHeight={700}
-		/>
+		<PostPageComponent post={data.post} spaceId={data.post?.space_id} imgHeight={700} />
 	</div>
 	<div class="flex" />
 </div>
