@@ -7,12 +7,16 @@
 
 	function getAlt(): string {
 		const num = userId! % 6;
-		return 'default_profile_' + num + '.png';
+		return 'https://subspaceimg.com/default_profile_' + num + '.png';
 	}
 </script>
 
 {#if url == '' || url == null}
-	<img loading="lazy" src="/{getAlt()}" alt="avatar" />
+	<img
+		loading="lazy"
+		src="https://subspace.place/cdn-cgi/image/fit=scale-down,width=150,format=auto/{getAlt()}"
+		alt="avatar"
+	/>
 {:else}
 	<img
 		loading="lazy"
