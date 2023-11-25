@@ -99,11 +99,12 @@
 				<!-- svelte-ignore a11y-missing-attribute -->
 				<iframe
 					src={getVideoUrl(post.post_videos[0])}
+					loading="lazy"
 					style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
 					allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
 					allowfullscreen={true}
 				/>
-			</div>
+			</div>g
 		{/if}
 		<div class="card-actions">
 			<div class="pt-2"><TimeComponent time={post?.created} /></div>
