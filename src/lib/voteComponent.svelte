@@ -8,6 +8,8 @@
 	import { getContext, onMount } from 'svelte';
 	import type { UserMeta } from '../models/signup.type';
 	import { getVotes, vote } from '../service/voteService';
+	import { goto } from '$app/navigation';
+	import { coockieStore } from './store/tokenStore';
 	export let voteData: Vote | undefined;
 	export let id: number | undefined;
 	export let upVotes: number = 0;
@@ -18,6 +20,7 @@
 	$: totalVotes = upVotes - downVotes;
 	$: voteState = voteData == null || voteData.is_deleted ? 'none' : voteStateInit;
 	async function onLike(event: Event) {
+		await commentClick();
 		if (voteData == null) {
 			voteData = {
 				vote_id: 0,
@@ -43,6 +46,7 @@
 	}
 
 	async function onDislike(event: Event) {
+		await commentClick();
 		if (voteData == null) {
 			voteData = {
 				vote_id: 0,
@@ -64,6 +68,14 @@
 			voteState = 'none';
 		} else {
 			voteState = 'down';
+		}
+	}
+
+	async function commentClick() {
+		const user: UserMeta = coockieStore.getValue('cookie');
+		if (user == undefined) {
+			await goto('/login');
+			return;
 		}
 	}
 </script>

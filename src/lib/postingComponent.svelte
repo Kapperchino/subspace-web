@@ -62,6 +62,14 @@
 		closeVideo();
 	}
 
+	async function checkAuth() {
+		const user: UserMeta = coockieStore.getValue('cookie');
+		if (user == undefined) {
+			await goto('/login');
+			return;
+		}
+	}
+
 	async function onPicChange(e: Event) {
 		if (picFiles != undefined) {
 			for (let i = 0; i < picFiles.length; i++) {
@@ -219,6 +227,7 @@
 			<label class="label">
 				<textarea
 					use:textareaAutosizeAction
+					on:focus={checkAuth}
 					class="textarea textarea-md textarea-primary textarea-bordered w-full grid-cols-[auto_1fr_auto]"
 					name="Post"
 					placeholder="Post here!"

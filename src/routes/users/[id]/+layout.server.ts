@@ -5,15 +5,13 @@ import type { UserMeta } from '../../../models/signup.type';
 import { getUser } from '../../../service/userService';
 
 export const load: LayoutServerLoad = async ({ params, cookies }) => {
-    if (cookies.get("user") == undefined) {
-        throw redirect(302, '/login');
+    const userJson = cookies.get("user");
+    let curUser: UserMeta | undefined;
+    if (userJson != undefined) {
+        curUser = JSON.parse(userJson);
     }
-    const curUser: UserMeta = JSON.parse(cookies.get("user")!);
     const userId = Number(params.id);
-    const user = await getUser(curUser, userId);
-    if (user.status == 401) {
-        throw redirect(302, '/login');
-    }
+    const user = await getUser(userId);
     return {
         curUser: curUser,
         user: user.data,

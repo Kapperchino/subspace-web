@@ -4,9 +4,11 @@
 	import VoteComponent from '$lib/voteComponent.svelte';
 	import type { CommentData } from '../models/comment.type';
 	import { VoteType, type PictureMeta, type Post, type VideoMeta } from '../models/post.type';
+	import type { UserMeta } from '../models/signup.type';
 	import CommentMetaComponent from './commentMetaComponent.svelte';
 	import CommentingComponent from './commentingComponent.svelte';
 	import PostCardMetaComponent from './postCardMetaComponent.svelte';
+	import { coockieStore } from './store/tokenStore';
 	import TimeComponent from './timeComponent.svelte';
 	import ReplyIcon from '~icons/gridicons/reply';
 
@@ -39,6 +41,15 @@
 		return url;
 	}
 
+	async function checkAuth() {
+		const user: UserMeta = coockieStore.getValue('cookie');
+		if (user == undefined) {
+			await goto('/login');
+			return;
+		}
+		modal?.showModal();
+	}
+
 	var onSuccess = async () => {
 		await invalidateAll();
 		modal?.close();
@@ -61,7 +72,7 @@
 		<div class="card-actions">
 			<div class="pt-2"><TimeComponent time={comment?.comment.created} /></div>
 			<div class="grow" />
-			<div class="btn btn-sm btn-secondary h-8" on:click={() => modal?.showModal()}>
+			<div class="btn btn-sm btn-secondary h-8" on:click={checkAuth}>
 				<div class="text-md font-bold subpixel-antialiased"><ReplyIcon /></div>
 			</div>
 			<div class="z-10">

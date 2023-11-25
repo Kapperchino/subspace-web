@@ -3,8 +3,10 @@
 
 	import VoteComponent from '$lib/voteComponent.svelte';
 	import { VoteType, type PictureMeta, type Post, type VideoMeta } from '../models/post.type';
+	import type { UserMeta } from '../models/signup.type';
 	import CommentingComponent from './commentingComponent.svelte';
 	import PostCardMetaComponent from './postCardMetaComponent.svelte';
+	import { coockieStore } from './store/tokenStore';
 	import TimeComponent from './timeComponent.svelte';
 
 	import CommentsIcon from '~icons/mdi/comment-text-multiple-outline';
@@ -45,7 +47,12 @@
 	}
 
 	async function commentClick() {
-		modal?.show();
+		const user: UserMeta = coockieStore.getValue('cookie');
+		if (user == undefined) {
+			await goto('/login');
+			return;
+		}
+		modal?.showModal();
 	}
 
 	var onSuccess = async () => {
@@ -104,12 +111,13 @@
 					allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
 					allowfullscreen={true}
 				/>
-			</div>g
+			</div>
+			g
 		{/if}
 		<div class="card-actions">
 			<div class="pt-2"><TimeComponent time={post?.created} /></div>
 			<div class="grow" />
-			<div class="btn btn-sm h-8" on:click|stopPropagation={() => modal?.showModal()}>
+			<div class="btn btn-sm h-8" on:click|stopPropagation={commentClick}>
 				<div class="join join-horizontal">
 					<div class="text-primary"><CommentsIcon /></div>
 					<p class="pl-2 font-semibold">{post?.comments_count}</p>

@@ -5,19 +5,14 @@ import { getUser, getUserPosts } from '../../../../service/userService';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params, cookies }) => {
-    if (cookies.get("user") == undefined) {
-        throw redirect(302, '/login');
+    const userJson = cookies.get("user");
+    let curUser: UserMeta | undefined;
+    if (userJson != undefined) {
+        curUser = JSON.parse(userJson);
     }
-    const curUser: UserMeta = JSON.parse(cookies.get("user")!);
     const userId = Number(params.id);
-    const user = await getUser(curUser, userId);
-    if (user.status == 401) {
-        throw redirect(302, '/login');
-    }
-    const posts = await getUserPosts(curUser, userId);
-    if (posts.status == 401) {
-        throw redirect(302, '/login');
-    }
+    const user = await getUser(userId);
+    const posts = await getUserPosts(userId);
     return {
         curUser: curUser,
         user: user.data,

@@ -5,23 +5,21 @@ import { env } from "$env/dynamic/private";
 import type { Post } from "../models/post.type";
 
 
-export const getUser = async (user: UserMeta, userId: number): Promise<AxiosResponse<UserMeta>> => {
+export const getUser = async (userId: number): Promise<AxiosResponse<UserMeta>> => {
     const data: AxiosResponse<UserMeta> = await axios.get(`${env.BACK_END}/users/${userId}`,
         {
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': `Bearer ${user.token}`,
             }
         });
     return data
 }
 
-export const getUserPosts = async (user: UserMeta, userId: number): Promise<AxiosResponse<Array<Post>>> => {
+export const getUserPosts = async ( userId: number): Promise<AxiosResponse<Array<Post>>> => {
     const data: AxiosResponse<Array<Post>> = await axios.get(`${env.BACK_END}/posts/users/${userId}?sort=latest&days=7`,
         {
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': `Bearer ${user.token}`,
             }
         });
     return data
