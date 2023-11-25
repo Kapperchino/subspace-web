@@ -4,7 +4,7 @@
 	import { onMount, setContext } from 'svelte';
 	import SpaceComponent from '$lib/spaceComponent.svelte';
 	import PostingComponent from '$lib/postingComponent.svelte';
-	import { goto, invalidateAll } from '$app/navigation';
+	import { invalidateAll } from '$app/navigation';
 	import { coockieStore } from '$lib/store/tokenStore';
 	import SkeletonPosts from '$lib/skeletonPosts.svelte';
 	import SeoComponent from '$lib/seoComponent.svelte';

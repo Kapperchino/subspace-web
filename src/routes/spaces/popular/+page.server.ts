@@ -7,14 +7,12 @@ import { getSpaces } from '../../../service/spaceService';
 
 
 export const load: PageServerLoad = async ({ params, cookies }) => {
-    if (cookies.get("user") == undefined) {
-        throw redirect(302, '/login');
+    const userJson = cookies.get("user");
+    let user: UserMeta | undefined;
+    if (userJson != undefined) {
+        user = JSON.parse(userJson);
     }
-    const user: UserMeta = JSON.parse(cookies.get("user")!);
-    const spaces = await getSpaces(user, 'popular');
-    if (spaces.status == 401) {
-        throw redirect(302, '/login');
-    }
+    const spaces = await getSpaces('popular');
     return {
         user: user,
         spaces: spaces.data,

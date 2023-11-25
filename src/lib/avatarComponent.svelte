@@ -14,5 +14,8 @@
 {#if url == '' || url == null}
 	<img loading="lazy" src="/{getAlt()}" />
 {:else}
-	<img loading="lazy" src={"https://subspace.place/cdn-cgi/image/fit=scale-down,width=150,format=auto/" + url} />
+	<img
+		loading="lazy"
+		src={'https://subspace.place/cdn-cgi/image/fit=scale-down,width=150,format=auto/' + url}
+	/>
 {/if}

@@ -82,9 +82,9 @@
 			<div class="flex justify-center">
 				<div class="basis-1/4 rounded-md bg-gradient-to-r from-gray-900 to-gray-800" />
 				<img
-					loading="lazy"
+					
 					class="rounded-md"
-					alt="The project logo"
+					alt="Postcard pic"
 					height={getDimention(post?.post_pictures?.at(0)).height}
 					width={getDimention(post?.post_pictures?.at(0)).width}
 					src={'https://subspace.place/cdn-cgi/image/fit=scale-down,width=550,format=auto/' +

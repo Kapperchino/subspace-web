@@ -21,7 +21,10 @@
 
 	import toast, { Toaster } from 'svelte-french-toast';
 	import { onMount } from 'svelte';
-	import { invalidate, invalidateAll } from '$app/navigation';
+	import { goto, invalidate, invalidateAll } from '$app/navigation';
+	import Page from '../routes/+page.svelte';
+	import { redirect } from '@sveltejs/kit';
+	import axios from 'axios';
 
 	$: hasTitle = false;
 	$: hasLink = false;
@@ -104,7 +107,12 @@
 			return;
 		}
 		const user: UserMeta = coockieStore.getValue('cookie');
-		postReq.poster_id = user.user_id;
+		if (user == undefined) {
+			await goto('/login');
+			return;
+		}
+		postReq.poster_id = user?.user_id;
+
 		const fileIds: number[] = [];
 		if (postReq.content_type === ContentType.Picture) {
 			const memoryImg = document.createElement('img');
@@ -137,7 +145,17 @@
 		}
 		//at this point everything should be uploaded
 		postReq.file_ids = fileIds;
-		await createPostClient(postReq);
+		try {
+			const res = await createPostClient(postReq);
+		} catch (error) {
+			if (axios.isAxiosError(error)) {
+				console.log(error);
+				if (error.response?.status == 401) {
+					await goto('/login');
+					return;
+				}
+			}
+		}
 		resetPost();
 		toast.success('Post Successful!', {
 			icon: '🎉',
@@ -220,7 +238,7 @@
 			{#if picList != null && picList.length > 0 && vidList.length == 0}
 				<div class="flex-row flex pb-1 pt-3">
 					<div class="relative bg-gradient-to-r from-gray-900 to-gray-800 rounded-md">
-						<img loading="lazy" class="object-scale-down h-24 w-24 p-1" src={picList.at(0)?.[0]} />
+						<img loading="lazy"  class="object-scale-down h-24 w-24 p-1" src={picList.at(0)?.[0]} />
 						<div class="pl-1" />
 						<button
 							type="button"

@@ -6,22 +6,20 @@ import { coockieStore } from '$lib/store/tokenStore';
 
 const url = 'https://subspace-backend.fly.dev';
 
-export const getPost = async (user: UserMeta, postId: number): Promise<Post> => {
-    const data: AxiosResponse<Post> = await axios.get(`${env.BACK_END}/posts/${postId}?userId=${user.user_id}`,
+export const getPost = async (userId: number, postId: number): Promise<Post> => {
+    const data: AxiosResponse<Post> = await axios.get(`${env.BACK_END}/posts/${postId}?userId=${userId}`,
         {
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': `Bearer ${user.token}`,
             }
         });
     return data.data
 }
 
-export const getPosts = async (user: UserMeta, spaceId: number, days: number, sortType: string): Promise<Response> => {
-    const data = await fetch(`${env.BACK_END}/posts/spaces/${spaceId}?sort=${sortType}&days=${days}&userId=${user!.user_id}`, {
+export const getPosts = async (userId: number, spaceId: number, days: number, sortType: string): Promise<Response> => {
+    const data = await fetch(`${env.BACK_END}/posts/spaces/${spaceId}?sort=${sortType}&days=${days}&userId=${userId}`, {
         headers: {
             'Content-Type': 'application/json; charset=UTF-8',
-            'Authorization': `Bearer ${user.token}`,
         }
     })
     return data;

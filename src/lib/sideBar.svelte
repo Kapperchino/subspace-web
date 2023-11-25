@@ -24,6 +24,10 @@
 		await goto(`/users/${user.user_id}`);
 	}
 
+	async function login() {
+		await goto(`/login`);
+	}
+
 	let user: UserMeta;
 	onMount(() => {
 		user = coockieStore.getValue('cookie');
@@ -80,24 +84,30 @@
 		<div class="btn btn-primary btn-sm h-12 mt-3" on:click={startPost}>
 			<div class="text-lg flex flex-row">Post</div>
 		</div>
-		<div class="flex flex-col mt-auto hover:cursor-pointer" on:click={onClick} >
-			<div class="grow" />
-			<div class="card card-compact bg-base-300">
-				<div class="card-body">
-					<div class="flex-row flex">
-						<div class="avatar">
-							<div class="w-10 rounded-full">
-								<AvatarComponent url={user?.picture_meta?.url} userId={user?.user_id} />
+
+		{#if user == undefined}
+			<div class="flex flex-col mt-auto " on:click={login}>
+				<div class="btn btn-secondary">Log in here!</div>
+			</div>{:else}
+			<div class="flex flex-col mt-auto hover:cursor-pointer" on:click={onClick}>
+				<div class="grow" />
+				<div class="card card-compact bg-base-300">
+					<div class="card-body">
+						<div class="flex-row flex">
+							<div class="avatar">
+								<div class="w-10 rounded-full">
+									<AvatarComponent url={user?.picture_meta?.url} userId={user?.user_id} />
+								</div>
 							</div>
-						</div>
-						<div class="pl-2">
-							<div class="pl-1 font-semibold">{user?.display_name}</div>
-							<div class="pl-0.5 text-primary">@{user?.user_address}</div>
+							<div class="pl-2">
+								<div class="pl-1 font-semibold">{user?.display_name}</div>
+								<div class="pl-0.5 text-primary">@{user?.user_address}</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		{/if}
 	</ul>
 </div>
 

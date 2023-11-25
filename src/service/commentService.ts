@@ -5,12 +5,11 @@ import axios from "axios";
 import { env } from "$env/dynamic/private";
 
 
-export const getCommentsForPost = async (user: UserMeta, postId: number): Promise<Array<CommentData>> => {
-    const data: AxiosResponse<Array<Comment>> = await axios.get(`${env.BACK_END}/comments?postId=${postId}&userId=${user.user_id}&sort=popular&days=365`,
+export const getCommentsForPost = async (userId: number, postId: number): Promise<Array<CommentData>> => {
+    const data: AxiosResponse<Array<Comment>> = await axios.get(`${env.BACK_END}/comments?postId=${postId}&userId=${userId}&sort=popular&days=365`,
         {
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': `Bearer ${user.token}`,
             }
         });
     const comments = data.data;

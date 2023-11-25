@@ -6,11 +6,12 @@ import { getPosts } from '../../service/postsService';
 import { getTags } from '../../service/trendingService';
 
 export const load: PageServerLoad = async ({ params, cookies }) => {
-    if (cookies.get("user") == undefined) {
-        throw redirect(302, '/login');
+    const userJson = cookies.get("user");
+    let user: UserMeta | undefined;
+    if (userJson != undefined) {
+        user = JSON.parse(userJson);
     }
-    const user: UserMeta = JSON.parse(cookies.get("user")!);
-    const tags = await getTags(user);
+    const tags = await getTags();
     if (tags.status == 401) {
         throw redirect(302, '/login');
     }

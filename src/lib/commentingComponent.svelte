@@ -230,7 +230,7 @@
 				<div class="flex justify-center">
 					<div class="basis-1/4 rounded-md bg-gradient-to-r from-gray-900 to-gray-800" />
 					<img
-						use:lazyLoadImageAction
+						
 						class="rounded-md"
 						alt="The project logo"
 						height={getDimention(post?.post_pictures?.at(0)).height}
@@ -299,7 +299,6 @@
 				<div class="flex-row flex pb-1 pt-3">
 					<div class="relative bg-gradient-to-r from-gray-900 to-gray-800 rounded-md">
 						<img
-							use:lazyLoadImageAction
 							class="object-scale-down h-24 w-24 p-1"
 							data-src={picList.at(0)?.[0]}
 						/>

@@ -13,7 +13,7 @@ export const createPostClient = async (req: PostCreation): Promise<AxiosResponse
         {
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': `Bearer ${user.token}`,
+                'Authorization': `Bearer ${user?.token}`,
             }
         });
     return data

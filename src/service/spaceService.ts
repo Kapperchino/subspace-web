@@ -7,12 +7,11 @@ import { env } from "$env/dynamic/private";
 
 const url = 'https://subspace-backend.fly.dev';
 
-export const getSpaces = async (user: UserMeta, sort: string): Promise<AxiosResponse<Array<Space>>> => {
+export const getSpaces = async (sort: string): Promise<AxiosResponse<Array<Space>>> => {
     const data: AxiosResponse<Array<Space>> = await axios.get(`${env.BACK_END}/spaces/sort?sortBy=${sort}`,
         {
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': `Bearer ${user.token}`,
             }
         });
     return data
