@@ -12,10 +12,11 @@
 </script>
 
 {#if url == '' || url == null}
-	<img loading="lazy" src="/{getAlt()}" />
+	<img loading="lazy" src="/{getAlt()}" alt="avatar" />
 {:else}
 	<img
 		loading="lazy"
 		src={'https://subspace.place/cdn-cgi/image/fit=scale-down,width=150,format=auto/' + url}
+		alt="avatar"
 	/>
 {/if}
