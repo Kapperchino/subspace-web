@@ -7,6 +7,7 @@
 	import PostCardMetaComponent from './postCardMetaComponent.svelte';
 	import TimeComponent from './timeComponent.svelte';
 	import ReplyIcon from '~icons/gridicons/reply';
+	import VideoLayout from './video/layouts/VideoLayout.svelte';
 
 	export let post: Post | undefined;
 	export let spaceId: number | undefined;
@@ -68,7 +69,6 @@
 			<div class="flex justify-center">
 				<div class="basis-1/4 rounded-md bg-gradient-to-r from-gray-900 to-gray-800" />
 				<img
-					
 					class="rounded-md"
 					alt="The project logo"
 					height={getDimention(post?.post_pictures?.at(0)).height}
@@ -80,14 +80,25 @@
 			</div>
 		{/if}
 		{#if post?.post_videos != null}
-			<div style="position: relative; padding-top: 80%;">
-				<!-- svelte-ignore a11y-missing-attribute -->
-				<iframe
-					src={getVideoUrl(post.post_videos[0])}
-					style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
-					allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-					allowfullscreen={true}
-				/>
+			<div class="flex">
+				<media-player
+					class="h-full w-full aspect-video bg-slate-900 text-white font-sans overflow-hidden rounded-md ring-media-focus data-[focus]:ring-4"
+					title={post.topic ?? 'epic video'}
+					load="visible"
+					src={post?.post_videos[0].url}
+					crossorigin
+					playsinline
+					on:click|stopPropagation
+				>
+					<media-provider>
+						<media-poster
+							class="absolute inset-0 block h-full w-full rounded-md opacity-0 transition-opacity data-[visible]:opacity-100 [&>img]:h-full [&>img]:w-full [&>img]:object-cover"
+							src={post?.post_videos[0].thumbnail}
+							alt="Video thumbnail"
+						/>
+					</media-provider>
+					<VideoLayout />
+				</media-player>
 			</div>
 		{/if}
 		<div class="card-actions">
