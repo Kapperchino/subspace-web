@@ -7,7 +7,6 @@ module.exports = {
 	},
 	plugins: [
 		require("daisyui"),
-		require('vidstack/tailwind.cjs')
 	],
 	experimental: {
 		optimizeUniversalDefaults: true
