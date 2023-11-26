@@ -9,3 +9,17 @@ export type Space = {
     background_picture: PictureMeta;
     sub_count: number;
 }
+
+export type SpacePrefixRes = {
+    id: number;
+    parent_id: number;
+    name: string;
+    small_picture: PictureMeta;
+    sub_count: number;
+}
+
+export enum SpacePrefixState {
+    Init,
+    Selecting,
+    Selected
+}

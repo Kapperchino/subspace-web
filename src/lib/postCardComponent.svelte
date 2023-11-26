@@ -112,7 +112,6 @@
 					allowfullscreen={true}
 				/>
 			</div>
-			g
 		{/if}
 		<div class="card-actions">
 			<div class="pt-2"><TimeComponent time={post?.created} /></div>

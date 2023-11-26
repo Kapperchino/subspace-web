@@ -25,6 +25,8 @@
 	import Page from '../routes/+page.svelte';
 	import { redirect } from '@sveltejs/kit';
 	import axios from 'axios';
+	import SubspaceAtComponent from './subspaceAtComponent.svelte';
+	import { SpacePrefixState, type SpacePrefixRes } from '../models/space.type';
 
 	$: hasTitle = false;
 	$: hasLink = false;
@@ -44,6 +46,10 @@
 		file_ids: []
 	};
 
+	let spacePrefixState: SpacePrefixState;
+	let selectedSpace: SpacePrefixRes;
+	let clickOutside: () => void;
+
 	export let onSuccess = () => {}; // no-operation function;
 
 	function resetPost() {
@@ -60,6 +66,7 @@
 		hasLink = false;
 		closeImage();
 		closeVideo();
+		clickOutside();
 	}
 
 	async function checkAuth() {
@@ -153,11 +160,13 @@
 		}
 		//at this point everything should be uploaded
 		postReq.file_ids = fileIds;
+		if (spacePrefixState == SpacePrefixState.Selected) {
+			postReq.space_id = selectedSpace.id;
+		}
 		try {
 			const res = await createPostClient(postReq);
 		} catch (error) {
 			if (axios.isAxiosError(error)) {
-				console.log(error);
 				if (error.response?.status == 401) {
 					await goto('/login');
 					return;
@@ -241,13 +250,13 @@
 					<div class="btn btn-xs btn-error" on:click={toggleTitle}>-Title</div>
 				{/if}
 				<div class="join-item pl-1" />
-				<div class="btn btn-xs btn-secondary">@Subspace</div>
+				<SubspaceAtComponent bind:state={spacePrefixState} bind:selectedSpace bind:clickOutside />
 			</div>
 
 			{#if picList != null && picList.length > 0 && vidList.length == 0}
 				<div class="flex-row flex pb-1 pt-3">
 					<div class="relative bg-gradient-to-r from-gray-900 to-gray-800 rounded-md">
-						<img loading="lazy"  class="object-scale-down h-24 w-24 p-1" src={picList.at(0)?.[0]} />
+						<img loading="lazy" class="object-scale-down h-24 w-24 p-1" src={picList.at(0)?.[0]} />
 						<div class="pl-1" />
 						<button
 							type="button"
