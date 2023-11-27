@@ -4,10 +4,10 @@
 	import SortPostComponent from '$lib/sortPostComponent.svelte';
 </script>
 
-<div class="drawer z-50 md:drawer-open">
+<div class="drawer md:drawer-open">
 	<input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
 	<div class="drawer-content flex flex-col">
-		<div class="w-full navbar bg-base-300">
+		<div class="w-full navbar bg-base-300 sticky top-0 z-40">
 			<div class="flex-none md:hidden">
 				<label for="my-drawer-3" aria-label="open sidebar" class="btn btn-square btn-ghost">
 					<svg
@@ -25,7 +25,7 @@
 				</label>
 			</div>
 			<div class="flex-1" />
-			<div class="flex-1" />
+			<div class="md:flex-1" />
 			<div class="flex backdrop-blur bg-base-300 ml-3">
 				<div class=" bottom-10 tabs tabs-boxed tabs-md flex">
 					<a class="tab tab-active" href="/home">Home</a>

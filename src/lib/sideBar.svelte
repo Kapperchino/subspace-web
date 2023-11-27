@@ -34,7 +34,7 @@
 	});
 </script>
 
-<div class="drawer-side">
+<div class="drawer-side z-50">
 	<label for="my-drawer-3" aria-label="close sidebar" class="drawer-overlay lg:hidden" />
 	<ul class="menu p-4 w-60 min-h-full bg-base-200">
 		<!-- Sidebar content here -->
