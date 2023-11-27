@@ -67,27 +67,16 @@
 			</div>
 		{/if}
 		{#if post?.post_videos != null}
-			<div class="flex">
-				<media-player
-					class="h-full w-full aspect-square md:aspect-video bg-slate-900 text-white font-sans overflow-hidden rounded-md ring-media-focus data-[focus]:ring-4"
-					title={post.topic ?? 'epic video'}
-					load="visible"
-					src={post?.post_videos[0].url}
-					crossorigin
-					playsinline
-					on:click|stopPropagation
-				>
-					<media-provider>
-						<media-poster
-							class="absolute inset-0 block h-full w-full rounded-md opacity-0 transition-opacity data-[visible]:opacity-100 [&>img]:h-full [&>img]:w-full [&>img]:object-cover"
-							src={'https://subspace.place/cdn-cgi/image/fit=scale-down,width=650,format=auto/' +
-								post?.post_videos[0].thumbnail}
-							alt="Video thumbnail"
+				<div class="flex">
+					{#await import('./video/VideoPlayer.svelte') then { default: Player }}
+						<svelte:component
+							this={Player}
+							src={post.post_videos[0].url}
+							thumbnail={post?.post_videos[0].thumbnail}
+							title={post.topic ?? 'video'}
 						/>
-					</media-provider>
-					<VideoLayout />
-				</media-player>
-			</div>
+					{/await}
+				</div>
 		{/if}
 		<div class="card-actions">
 			<div class="pt-2"><TimeComponent time={post?.created} /></div>

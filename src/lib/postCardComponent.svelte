@@ -9,19 +9,13 @@
 	import { coockieStore } from './store/tokenStore';
 	import TimeComponent from './timeComponent.svelte';
 
-	// Import styles.
-	import 'vidstack/player/styles/base.css';
-	// Register elements.
-	import 'vidstack/player';
-	import 'vidstack/player/ui';
-	import 'vidstack/icons';
-
 	import { onMount } from 'svelte';
 	import { isHLSProvider, type MediaCanPlayEvent, type MediaProviderChangeEvent } from 'vidstack';
 	import type { MediaPlayerElement } from 'vidstack/elements';
 
 	import CommentsIcon from '~icons/mdi/comment-text-multiple-outline';
 	import VideoLayout from './video/layouts/VideoLayout.svelte';
+	import VideoPlayer from './video/VideoPlayer.svelte';
 
 	let modal: HTMLDialogElement | undefined;
 
@@ -102,25 +96,14 @@
 		{/if}
 		{#if post?.post_videos != null}
 			<div class="flex">
-				<media-player
-					class="h-full w-full aspect-video bg-slate-900 text-white font-sans overflow-hidden rounded-md ring-media-focus data-[focus]:ring-4"
-					title={post.topic ?? 'epic video'}
-					src={post?.post_videos[0].url}
-					crossorigin
-					playsinline
-					load="visible"
-					on:click|stopPropagation
-				>
-					<media-provider>
-						<media-poster
-							class="absolute inset-0 block h-full w-full rounded-md opacity-0 transition-opacity data-[visible]:opacity-100 [&>img]:h-full [&>img]:w-full [&>img]:object-cover"
-							src={'https://subspace.place/cdn-cgi/image/fit=scale-down,width=650,format=auto/' +
-								post?.post_videos[0].thumbnail}
-							alt="Video thumbnail"
-						/>
-					</media-provider>
-					<VideoLayout />
-				</media-player>
+				{#await import('./video/VideoPlayer.svelte') then { default: Player }}
+					<svelte:component
+						this={Player}
+						src={post.post_videos[0].url}
+						thumbnail={post?.post_videos[0].thumbnail}
+						title={post.topic ?? 'video'}
+					/>
+				{/await}
 			</div>
 		{/if}
 		<div class="card-actions">
