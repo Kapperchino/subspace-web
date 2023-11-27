@@ -2,16 +2,21 @@
 	import { goto } from '$app/navigation';
 	import SignInComponent from '$lib/signInComponent.svelte';
 	import { onMount } from 'svelte';
+	import { clickOutsideAction } from 'svelte-legos';
 
 	let modal: HTMLDialogElement | undefined;
 
 	onMount(() => {
 		modal?.showModal();
 	});
+
+	async function handleClickOutside() {
+		await goto('/login');
+	}
 </script>
 
 <dialog id="my_modal_2" class="modal" bind:this={modal}>
-	<div class="modal-box">
+	<div class="modal-box" use:clickOutsideAction on:clickoutside={handleClickOutside}>
 		<div class="shrink-0 bg-base-100">
 			<form method="POST" action="?/signup">
 				<div class="form-control">

@@ -49,6 +49,10 @@
 			const type = $page.url.searchParams.get('type') ?? 'popular';
 			const user: UserMeta | undefined = coockieStore.getValue('cookie');
 			const newPosts = await fetchFunction(user?.user_id ?? 0, days, type, offset, spaceId);
+			if (newPosts == null || newPosts == undefined || newPosts?.length == 0) {
+				loaded = true;
+				return;
+			}
 			posts = posts.concat(newPosts);
 			if (newPosts?.length != 10) {
 				loaded = true;
