@@ -8,21 +8,22 @@
 	export let onSortChange = async () => {
 		$page.url.searchParams.set('days', days);
 		$page.url.searchParams.set('type', sortBy);
-		await goto(`?${$page.url.searchParams.toString()}`, { invalidateAll: true ,replaceState:true});
+		await goto(`?${$page.url.searchParams.toString()}`, {
+			invalidateAll: true,
+			replaceState: true
+		});
 	};
 </script>
 
-<select class="select select-ghost select-sm max-w-xs" bind:value={sortBy} on:change={onSortChange}>
-	<option value="popular">Popular</option>
-	<option value="latest">Latest</option>
-</select>
-<select
-	bind:value={days}
-	on:change={onSortChange}
-	class="select select-ghost select-sm max-w-xs ml-1"
->
-	<option value="1">Today</option>
-	<option value="7">This Week</option>
-	<option value="30">This Month</option>
-	<option value="365">This Year</option>
-</select>
+<div class="flex flex-col md:flex-row">
+	<select class="select select-ghost select-sm w-full max-w-xs" bind:value={sortBy} on:change={onSortChange}>
+		<option value="popular">Popular</option>
+		<option value="latest">Latest</option>
+	</select>
+	<select bind:value={days} on:change={onSortChange} class="select select-ghost select-sm max-w-xs md:ml-2">
+		<option value="1">Today</option>
+		<option value="7">This Week</option>
+		<option value="30">This Month</option>
+		<option value="365">This Year</option>
+	</select>
+</div>
