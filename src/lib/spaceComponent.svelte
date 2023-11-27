@@ -35,7 +35,6 @@
 
 	async function loadItems() {
 		if (!loaded) {
-			console.log('joe');
 			offset += 10;
 			const days = $page.url.searchParams.get('days') ?? '7';
 			const type = $page.url.searchParams.get('type') ?? 'popular';
