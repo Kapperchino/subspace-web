@@ -35,10 +35,4 @@
 	<div class="flex" />
 </div>
 
-{#await data.streamed.posts}
-	<SkeletonPosts />
-{:then value}
-	<SpaceComponent posts={value} spaceId={1} />
-{:catch error}
-	{error.message}
-{/await}
+<SpaceComponent posts={data.posts} spaceId={1} />

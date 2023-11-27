@@ -3,13 +3,11 @@ import type { AxiosResponse } from "axios";
 import type { CommentRequest } from "../models/comment.type";
 import type { UserMeta } from "../models/signup.type";
 import axios from "axios";
-
-const url = 'https://subspace-backend.fly.dev';
-
+import { backendUrl } from "$lib/store/clientBackendUrl";
 
 export const createCommentClient = async (req: CommentRequest): Promise<AxiosResponse<any>> => {
     const user: UserMeta = coockieStore.getValue("cookie");
-    const data: AxiosResponse<any> = await axios.post(`${url}/comments/`,
+    const data: AxiosResponse<any> = await axios.post(`${backendUrl}/comments/`,
         req,
         {
             headers: {

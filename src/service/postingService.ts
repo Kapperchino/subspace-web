@@ -3,12 +3,11 @@ import type { PictureMeta, UserMeta } from "../models/signup.type";
 import type { FileUploadRequest, PictureMetaResult, PictureRequestMeta, Post, PostCreation, VideoUploadRequest } from "../models/post.type";
 import axios from "axios";
 import { coockieStore } from "$lib/store/tokenStore";
-
-const url = 'https://subspace-backend.fly.dev';
+import { backendUrl } from "$lib/store/clientBackendUrl";
 
 export const createPostClient = async (req: PostCreation): Promise<AxiosResponse<any>> => {
     const user: UserMeta = coockieStore.getValue("cookie");
-    const data: AxiosResponse<any> = await axios.post(`${url}/posts/`,
+    const data: AxiosResponse<any> = await axios.post(`${backendUrl}/posts/`,
         req,
         {
             headers: {
@@ -21,7 +20,7 @@ export const createPostClient = async (req: PostCreation): Promise<AxiosResponse
 
 export const uploadMedia = async (req: FileUploadRequest): Promise<AxiosResponse<PictureMetaResult>> => {
     const user: UserMeta = coockieStore.getValue("cookie");
-    const data: AxiosResponse<PictureMetaResult> = await axios.put(`${url}/files`,
+    const data: AxiosResponse<PictureMetaResult> = await axios.put(`${backendUrl}/files`,
         req,
         {
             headers: {
@@ -46,7 +45,7 @@ export const uploadFile = async (file: File, url: string, mime: string): Promise
 export const processVideo = async (id: number): Promise<AxiosResponse<any>> => {
     const req: VideoUploadRequest = { id: id };
     const user: UserMeta = coockieStore.getValue("cookie");
-    const data: AxiosResponse<any> = await axios.post(`${url}/videos`,
+    const data: AxiosResponse<any> = await axios.post(`${backendUrl}/videos`,
         req,
         {
             headers: {

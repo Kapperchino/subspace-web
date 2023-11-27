@@ -114,7 +114,8 @@
 					<media-provider>
 						<media-poster
 							class="absolute inset-0 block h-full w-full rounded-md opacity-0 transition-opacity data-[visible]:opacity-100 [&>img]:h-full [&>img]:w-full [&>img]:object-cover"
-							src={post?.post_videos[0].thumbnail}
+							src={'https://subspace.place/cdn-cgi/image/fit=scale-down,width=650,format=auto/' +
+								post?.post_videos[0].thumbnail}
 							alt="Video thumbnail"
 						/>
 					</media-provider>

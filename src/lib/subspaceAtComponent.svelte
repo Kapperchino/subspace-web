@@ -4,6 +4,7 @@
 	import { prefixSearchSpaces } from '../service/searchService';
 	import SpaceAvatarComponent from './spaceAvatarComponent.svelte';
 	import User from '~icons/mdi/account';
+	import debounce from 'lodash/debounce';
 
 	let closeDropdown: boolean = false;
 	let input: string;
@@ -20,6 +21,10 @@
 			list = (await prefixSearchSpaces(input)).data;
 		}
 	}
+
+	const handleInput = debounce(async (e) => {
+		await process();
+	}, 300);
 
 	export function clickOutside() {
 		closeDropdown = true;
@@ -46,6 +51,12 @@
 				autofocus
 				bind:value={input}
 				on:input={process}
+				on:keydown={(e) => {
+					if (e.key == 'Enter') {
+						e.preventDefault();
+						selectItem(list[0]);
+					}
+				}}
 			/>
 			<ul
 				tabindex="0"
@@ -75,9 +86,14 @@
 			class="input input-bordered input-xs input-secondary w-40"
 			autofocus
 			bind:value={input}
-			on:input={process}
+			on:input={handleInput}
 			use:clickOutsideAction
 			on:clickoutside={clickOutside}
+			on:keydown={(e) => {
+				if (e.key == 'Enter') {
+					e.preventDefault();
+				}
+			}}
 		/>
 	{/if}
 {/if}

@@ -4,8 +4,6 @@ import type { PictureMetaResult, Post } from '../models/post.type';
 import { env } from '$env/dynamic/private';
 import { coockieStore } from '$lib/store/tokenStore';
 
-const url = 'https://subspace-backend.fly.dev';
-
 export const getPost = async (userId: number, postId: number): Promise<Post> => {
     const data: AxiosResponse<Post> = await axios.get(`${env.BACK_END}/posts/${postId}?userId=${userId}`,
         {
@@ -16,8 +14,8 @@ export const getPost = async (userId: number, postId: number): Promise<Post> => 
     return data.data
 }
 
-export const getPosts = async (userId: number, spaceId: number, days: number, sortType: string): Promise<Response> => {
-    const data = await fetch(`${env.BACK_END}/posts/spaces/${spaceId}?sort=${sortType}&days=${days}&userId=${userId}`, {
+export const getPosts = async (fetch: any, userId: number, spaceId: number, days: number, sortType: string, offset: number): Promise<Response> => {
+    const data = await fetch(`${env.BACK_END}/posts/spaces/${spaceId}?sort=${sortType}&days=${days}&userId=${userId}&start=${offset}`, {
         headers: {
             'Content-Type': 'application/json; charset=UTF-8',
         }

@@ -1,11 +1,10 @@
 import { coockieStore } from "$lib/store/tokenStore";
 import axios, { type AxiosResponse } from "axios";
 import type { UserMeta } from "../models/signup.type";
-
-const url = 'https://subspace-backend.fly.dev';
+import { backendUrl } from "$lib/store/clientBackendUrl";
 
 export const getSubscription = async (subspaceId: number, user: UserMeta): Promise<AxiosResponse<any>> => {
-    const data = await axios.get(`${url}/subscriptions/users/${user.user_id}?spaceId=${subspaceId}`, {
+    const data = await axios.get(`${backendUrl}/subscriptions/users/${user.user_id}?spaceId=${subspaceId}`, {
         headers: {
             'Content-Type': 'application/json; charset=UTF-8',
             'Authorization': `Bearer ${user.token}`,
@@ -17,7 +16,7 @@ export const getSubscription = async (subspaceId: number, user: UserMeta): Promi
 
 export const subscribe = async (subspaceId: number): Promise<any> => {
     const user: UserMeta = coockieStore.getValue("cookie");
-    const data = await axios.put(`${url}/subscriptions/`,
+    const data = await axios.put(`${backendUrl}/subscriptions/`,
         { user_id: user.user_id, space_id: subspaceId }, {
         headers: {
             'Content-Type': 'application/json; charset=UTF-8',
@@ -29,7 +28,7 @@ export const subscribe = async (subspaceId: number): Promise<any> => {
 
 export const deleteSubscription = async (subspaceId: number): Promise<any> => {
     const user: UserMeta = coockieStore.getValue("cookie");
-    const data = await axios.delete(`${url}/subscriptions/?spaceId=${subspaceId}&userId=${user.user_id}`, {
+    const data = await axios.delete(`${backendUrl}/subscriptions/?spaceId=${subspaceId}&userId=${user.user_id}`, {
         headers: {
             'Content-Type': 'application/json; charset=UTF-8',
             'Authorization': `Bearer ${user.token}`,

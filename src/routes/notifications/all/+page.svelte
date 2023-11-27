@@ -1,12 +1,5 @@
 <script lang="ts">
 
-	import type { PageData } from './$types';
-
-	import { setContext } from 'svelte';
-	import { page } from '$app/stores';
-	import SpaceComponent from '$lib/spaceComponent.svelte';
-	import SideBar from '$lib/sideBar.svelte';
-	import ExploreComponent from '$lib/exploreComponent.svelte';
 </script>
 
 <!-- <TabGroup justify="justify-center">

@@ -2,10 +2,6 @@
 	import type { PageData } from './$types';
 
 	import { setContext } from 'svelte';
-	import { page } from '$app/stores';
-	import SpaceComponent from '$lib/spaceComponent.svelte';
-	import type { Post } from '../../models/post.type';
-	import SideBar from '$lib/sideBar.svelte';
 	import type { TagMeta } from '../../models/trending.type';
 	import ExploreComponent from '$lib/exploreComponent.svelte';
 
