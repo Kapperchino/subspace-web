@@ -8,7 +8,7 @@
 	export let onSortChange = async () => {
 		$page.url.searchParams.set('days', days);
 		$page.url.searchParams.set('type', sortBy);
-		await goto(`?${$page.url.searchParams.toString()}`, { invalidateAll: true });
+		await goto(`?${$page.url.searchParams.toString()}`, { invalidateAll: true ,replaceState:true});
 	};
 </script>
 

@@ -3,16 +3,17 @@
 	import type { Post } from '../models/post.type';
 	import NotFoundComponent from './notFoundComponent.svelte';
 	import { infiniteScrollAction } from 'svelte-legos';
-	import { applyAction, enhance } from '$app/forms';
 	import { page } from '$app/stores';
 	import { backendUrl } from './store/clientBackendUrl';
 	import { coockieStore } from './store/tokenStore';
 	import type { UserMeta } from '../models/signup.type';
+	import axios from 'axios';
 
 	export let posts: Post[];
 	export let spaceId: number;
 	let offset: number = 0;
 	let loaded = false;
+	let isLoading = false;
 
 	export const getPostsClient = async (
 		userId: number,
@@ -20,8 +21,8 @@
 		days: number,
 		sortType: string,
 		offset: number
-	): Promise<Response> => {
-		const data = await fetch(
+	): Promise<Post[]> => {
+		const data = await axios.get(
 			`${backendUrl}/posts/spaces/${spaceId}?sort=${sortType}&days=${days}&userId=${userId}&start=${offset}`,
 			{
 				headers: {
@@ -29,33 +30,34 @@
 				}
 			}
 		);
-		return data;
+		return data.data;
 	};
-
-	async function fetchFunction(
-		userId: number,
-		days: string,
-		type: string,
-		offset: number,
-		spaceId: number
-	): Promise<Post[]> {
-		return (await getPostsClient(userId, spaceId, Number(days), type, offset)).json();
-	}
 
 	async function loadItems() {
 		if (!loaded) {
+			console.log('joe');
 			offset += 10;
 			const days = $page.url.searchParams.get('days') ?? '7';
 			const type = $page.url.searchParams.get('type') ?? 'popular';
 			const user: UserMeta | undefined = coockieStore.getValue('cookie');
-			const newPosts = await fetchFunction(user?.user_id ?? 0, days, type, offset, spaceId);
+			isLoading = true;
+			const newPosts = await getPostsClient(
+				user?.user_id ?? 0,
+				spaceId,
+				Number(days),
+				type,
+				offset
+			);
 			if (newPosts == null || newPosts == undefined || newPosts?.length == 0) {
 				loaded = true;
+				isLoading = false;
 				return;
 			}
 			posts = posts.concat(newPosts);
+			isLoading = false;
 			if (newPosts?.length != 10) {
 				loaded = true;
+				isLoading = false;
 				return;
 			}
 		}
@@ -66,7 +68,7 @@
 	<div
 		use:infiniteScrollAction={{
 			// boolean, default: false
-			distance: 600,
+			// distance: 600,
 			cb: loadItems,
 			disabled: loaded
 		}}
@@ -83,4 +85,12 @@
 	</div>
 {:else}
 	<NotFoundComponent />
+{/if}
+
+{#if isLoading}
+	<div class="flex flex-row pt-2 pb-4 justify-center">
+		<div class="flex" />
+		<span class="flex content-center loading loading-spinner text-primary" />
+		<div class="flex" />
+	</div>
 {/if}
