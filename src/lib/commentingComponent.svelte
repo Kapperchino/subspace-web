@@ -243,15 +243,14 @@
 				</div>
 			{/if}
 			{#if post?.post_videos != null}
-				<div style="position: relative; padding-top: 80%;">
-					<!-- svelte-ignore a11y-missing-attribute -->
-					<iframe
-						src={getVideoUrl(post.post_videos[0])}
-						style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
-						allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-						allowfullscreen={true}
+				{#await import('./video/VideoPlayer.svelte') then { default: Player }}
+					<svelte:component
+						this={Player}
+						src={post.post_videos[0].url}
+						thumbnail={post?.post_videos[0].thumbnail}
+						title={post.topic ?? 'video'}
 					/>
-				</div>
+				{/await}
 			{/if}
 		</div>
 	</div>
