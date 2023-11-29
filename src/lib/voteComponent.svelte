@@ -80,9 +80,13 @@
 	}
 </script>
 
-<div class="join join-horizontal">
+<div class="join join-horizontal" on:click|stopPropagation|preventDefault>
 	{#if voteState == 'none'}
-		<button class="btn btn-sm btn-square join-item" on:click|stopPropagation={onLike}>
+		<button
+			type="button"
+			class="btn btn-sm btn-square join-item"
+			on:click|stopPropagation|preventDefault={onLike}
+		>
 			<Upvote />
 		</button>
 		<div class="divider-neutral join-item" />
@@ -91,11 +95,13 @@
 		</div>
 		<div class="divider-neutral join-item" />
 		<button
+			type="button"
 			class="btn btn-sm btn-square join-item"
 			on:click|stopPropagation|preventDefault={onDislike}><Downvote /></button
 		>
 	{:else if voteState == 'up'}
 		<button
+			type="button"
 			class="btn btn-sm btn-square btn-primary join-item"
 			on:click|stopPropagation|preventDefault={onLike}
 		>
@@ -108,11 +114,13 @@
 		<div class="divider-neutral join-item" />
 
 		<button
+			type="button"
 			class="btn btn-sm btn-square join-item"
 			on:click|stopPropagation|preventDefault={onDislike}><Downvote /></button
 		>
 	{:else}
 		<button
+			type="button"
 			class="btn btn-sm btn-square join-item"
 			on:click|stopPropagation|preventDefault={onLike}
 		>
@@ -124,6 +132,7 @@
 		</div>
 		<div class="divider-neutral join-item" />
 		<button
+			type="button"
 			class="btn btn-sm btn-square btn-error join-item"
 			on:click|stopPropagation|preventDefault={onDislike}><DownvoteFilled /></button
 		>
