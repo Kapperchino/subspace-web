@@ -27,7 +27,7 @@
 	playsinline
 	load="visible"
 	bind:this={player}
-	on:click|stopPropagation
+	on:click|stopPropagation|preventDefault
 >
 	<media-provider>
 		<media-poster

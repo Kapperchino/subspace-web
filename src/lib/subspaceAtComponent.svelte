@@ -99,19 +99,21 @@
 {/if}
 
 {#if state == SpacePrefixState.Init}
-	<div
+	<button
+		type="button"
 		class="btn btn-xs btn-secondary shadow-lg shadow-secondary"
 		on:click={() => {
 			state = SpacePrefixState.Selecting;
 		}}
 	>
 		@Subspace
-	</div>
+	</button>
 {/if}
 
 {#if state == SpacePrefixState.Selected}
-	<div
+	<button
 		class="btn btn-xs btn-secondary"
+		type="button"
 		on:click={() => {
 			state = SpacePrefixState.Selecting;
 		}}
@@ -124,5 +126,5 @@
 			</div>
 			<div class="pl-1 flex text-sm">{selectedSpace.name}</div>
 		</div>
-	</div>
+	</button>
 {/if}
