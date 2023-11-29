@@ -106,19 +106,6 @@
 		};
 	}
 
-	function getVideoUrl(meta: VideoMeta): string {
-		let url = '';
-		let list = meta.url.split('/');
-		list.pop();
-		list.pop();
-		list.push('/iframe');
-		list.forEach((element) => {
-			url += element;
-			url += '/';
-		});
-		return url;
-	}
-
 	async function createComment(e: Event) {
 		if (commentReq.body == '') {
 			toast.error('Empty comment is not allowed!', {

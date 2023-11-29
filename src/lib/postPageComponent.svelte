@@ -7,14 +7,17 @@
 	import PostCardMetaComponent from './postCardMetaComponent.svelte';
 	import TimeComponent from './timeComponent.svelte';
 	import ReplyIcon from '~icons/gridicons/reply';
+	import X from '~icons/bx/x';
+
 	import VideoLayout from './video/layouts/VideoLayout.svelte';
+	import { createDialog, melt } from '@melt-ui/svelte';
 
 	export let post: Post | undefined;
 	export let spaceId: number | undefined;
 	export let imgHeight: number = 500;
 	export let imgMinHeight: number = 300;
 
-	let modal: HTMLDialogElement | undefined;
+	let btn: HTMLButtonElement;
 
 	export function getDimention(meta: PictureMeta | undefined) {
 		const ratio = meta!.width / meta!.height;
@@ -29,8 +32,15 @@
 
 	var onSuccess = async () => {
 		await invalidateAll();
-		modal?.close();
+		btn.click();
 	};
+
+	const {
+		elements: { trigger, overlay, content, title, description, close, portalled },
+		states: { open }
+	} = createDialog({
+		forceVisible: true
+	});
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -67,21 +77,21 @@
 			</div>
 		{/if}
 		{#if post?.post_videos != null}
-				<div class="flex">
-					{#await import('./video/VideoPlayer.svelte') then { default: Player }}
-						<svelte:component
-							this={Player}
-							src={post.post_videos[0].url}
-							thumbnail={post?.post_videos[0].thumbnail}
-							title={post.topic ?? 'video'}
-						/>
-					{/await}
-				</div>
+			<div class="flex">
+				{#await import('./video/VideoPlayer.svelte') then { default: Player }}
+					<svelte:component
+						this={Player}
+						src={post.post_videos[0].url}
+						thumbnail={post?.post_videos[0].thumbnail}
+						title={post.topic ?? 'video'}
+					/>
+				{/await}
+			</div>
 		{/if}
 		<div class="card-actions">
 			<div class="pt-2"><TimeComponent time={post?.created} /></div>
 			<div class="grow" />
-			<div class="btn btn-sm btn-secondary h-8" on:click={() => modal?.showModal()}>
+			<div class="btn btn-sm btn-secondary h-8" use:melt={$trigger}>
 				<div class="text-md font-bold subpixel-antialiased"><ReplyIcon /></div>
 			</div>
 			<div class="z-10">
@@ -97,13 +107,23 @@
 	</div>
 </div>
 
-<dialog id="my_modal" class="modal" bind:this={modal}>
-	<div class="modal-box p-0">
-		<div class="grow">
-			<CommentingComponent {post} {onSuccess} comment={undefined} />
+<div use:melt={$portalled}>
+	{#if $open}
+		<div use:melt={$overlay} class="fixed inset-0 z-50 bg-black/50" />
+		<div
+			class="fixed left-[50%] top-[50%] z-50 max-h-[85vh] w-[90vw]
+			  max-w-xl translate-x-[-50%] translate-y-[-50%] rounded-xl bg-base-200
+			  p-3 shadow-lg"
+			use:melt={$content}
+		>
+			<div class="flex flex-row">
+				<h2 use:melt={$title} class="flex pb-2 text-lg font-semibold">Comment</h2>
+				<div class="grow" />
+				<button type="button" class="btn btn-sm btn-circle" use:melt={$close} bind:this={btn}
+					><X /></button
+				>
+			</div>
+			<CommentingComponent {post} comment={undefined} {onSuccess} />
 		</div>
-	</div>
-	<form method="dialog" class="modal-backdrop">
-		<button>close</button>
-	</form>
-</dialog>
+	{/if}
+</div>

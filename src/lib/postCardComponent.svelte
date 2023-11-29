@@ -8,6 +8,7 @@
 	import PostCardMetaComponent from './postCardMetaComponent.svelte';
 	import { coockieStore } from './store/tokenStore';
 	import TimeComponent from './timeComponent.svelte';
+	import X from '~icons/bx/x';
 
 	import { onMount } from 'svelte';
 	import { isHLSProvider, type MediaCanPlayEvent, type MediaProviderChangeEvent } from 'vidstack';
@@ -16,8 +17,9 @@
 	import CommentsIcon from '~icons/mdi/comment-text-multiple-outline';
 	import VideoLayout from './video/layouts/VideoLayout.svelte';
 	import VideoPlayer from './video/VideoPlayer.svelte';
+	import { createDialog, melt } from '@melt-ui/svelte';
 
-	let modal: HTMLDialogElement | undefined;
+	let btn: HTMLButtonElement;
 
 	export let post: Post | undefined;
 	export let spaceId: number | undefined;
@@ -35,27 +37,24 @@
 		};
 	}
 
-	async function clickTo() {
-		await goto(`/s/${post?.space_parent_id}/${post?.space_id}/p/${post?.id}`);
-	}
-
-	async function commentClick() {
-		const user: UserMeta = coockieStore.getValue('cookie');
-		if (user == undefined) {
-			await goto('/login');
-			return;
-		}
-		modal?.showModal();
-	}
-
 	var onSuccess = async () => {
-		modal?.close();
+		btn.click();
 	};
+
+	const {
+		elements: { trigger, overlay, content, title, description, close, portalled },
+		states: { open }
+	} = createDialog({
+		forceVisible: true
+	});
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div class="card card-compact shadow-lg bg-base-100 hover:cursor-pointer" on:click={clickTo}>
+<a
+	class="card card-compact shadow-lg bg-base-100 hover:cursor-pointer"
+	href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}"
+>
 	<div class="card-body">
 		<div class="flex-row flex">
 			<div><PostCardMetaComponent {post} {spaceId} /></div>
@@ -109,7 +108,7 @@
 		<div class="card-actions">
 			<div class="pt-2"><TimeComponent time={post?.created} /></div>
 			<div class="grow" />
-			<div class="btn btn-sm h-8" on:click|stopPropagation={commentClick}>
+			<div class="btn btn-sm h-8" on:click|preventDefault use:melt={$trigger}>
 				<div class="join join-horizontal">
 					<div class="text-primary"><CommentsIcon /></div>
 					<p class="pl-2 font-semibold">{post?.comments_count}</p>
@@ -126,15 +125,25 @@
 			</div>
 		</div>
 	</div>
-</div>
+</a>
 
-<dialog id="my_modal" class="modal" bind:this={modal}>
-	<div class="modal-box p-0">
-		<div class="grow">
+<div use:melt={$portalled}>
+	{#if $open}
+		<div use:melt={$overlay} class="fixed inset-0 z-50 bg-black/50" />
+		<div
+			class="fixed left-[50%] top-[50%] z-50 max-h-[85vh] w-[90vw]
+			  max-w-xl translate-x-[-50%] translate-y-[-50%] rounded-xl bg-base-200
+			  p-3 shadow-lg"
+			use:melt={$content}
+		>
+			<div class="flex flex-row">
+				<h2 use:melt={$title} class="flex pb-2 text-lg font-semibold">Comment</h2>
+				<div class="grow" />
+				<button type="button" bind:this={btn} class="btn btn-sm btn-circle" use:melt={$close}
+					><X /></button
+				>
+			</div>
 			<CommentingComponent {post} comment={undefined} {onSuccess} />
 		</div>
-	</div>
-	<form method="dialog" class="modal-backdrop">
-		<button>close</button>
-	</form>
-</dialog>
+	{/if}
+</div>

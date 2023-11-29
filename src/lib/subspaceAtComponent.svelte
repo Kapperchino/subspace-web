@@ -100,7 +100,7 @@
 
 {#if state == SpacePrefixState.Init}
 	<div
-		class="btn btn-xs btn-secondary"
+		class="btn btn-xs btn-secondary shadow-lg shadow-secondary"
 		on:click={() => {
 			state = SpacePrefixState.Selecting;
 		}}

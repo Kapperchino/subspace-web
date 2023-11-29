@@ -4,19 +4,16 @@
 	import VoteComponent from '$lib/voteComponent.svelte';
 	import type { CommentData } from '../models/comment.type';
 	import { VoteType, type PictureMeta, type Post, type VideoMeta } from '../models/post.type';
-	import type { UserMeta } from '../models/signup.type';
 	import CommentMetaComponent from './commentMetaComponent.svelte';
 	import CommentingComponent from './commentingComponent.svelte';
-	import PostCardMetaComponent from './postCardMetaComponent.svelte';
-	import { coockieStore } from './store/tokenStore';
 	import TimeComponent from './timeComponent.svelte';
 	import ReplyIcon from '~icons/gridicons/reply';
-
-	import CommentsIcon from '~icons/mdi/comment-text-multiple-outline';
+	import { createDialog, melt } from '@melt-ui/svelte';
+	import X from '~icons/bx/x';
 
 	export let comment: CommentData | undefined;
 	export let imgHeight: number = 500;
-	let modal: HTMLDialogElement | undefined;
+	let btn: HTMLButtonElement;
 
 	export function getDimention(meta: PictureMeta | undefined) {
 		const ratio = meta!.width / meta!.height;
@@ -28,32 +25,17 @@
 		};
 	}
 
-	function getVideoUrl(meta: VideoMeta): string {
-		let url = '';
-		let list = meta.url.split('/');
-		list.pop();
-		list.pop();
-		list.push('/iframe');
-		list.forEach((element) => {
-			url += element;
-			url += '/';
-		});
-		return url;
-	}
-
-	async function checkAuth() {
-		const user: UserMeta = coockieStore.getValue('cookie');
-		if (user == undefined) {
-			await goto('/login');
-			return;
-		}
-		modal?.showModal();
-	}
-
 	var onSuccess = async () => {
 		await invalidateAll();
-		modal?.close();
+		btn.click();
 	};
+
+	const {
+		elements: { trigger, overlay, content, title, description, close, portalled },
+		states: { open }
+	} = createDialog({
+		forceVisible: true
+	});
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -72,7 +54,7 @@
 		<div class="card-actions">
 			<div class="pt-2"><TimeComponent time={comment?.comment.created} /></div>
 			<div class="grow" />
-			<div class="btn btn-sm btn-secondary h-8" on:click={checkAuth}>
+			<div class="btn btn-sm btn-secondary h-8" use:melt={$trigger}>
 				<div class="text-md font-bold subpixel-antialiased"><ReplyIcon /></div>
 			</div>
 			<div class="z-10">
@@ -101,13 +83,23 @@
 	{/each}
 {/if}
 
-<dialog id="my_modal" class="modal" bind:this={modal}>
-	<div class="modal-box p-0">
-		<div class="grow">
+<div use:melt={$portalled}>
+	{#if $open}
+		<div use:melt={$overlay} class="fixed inset-0 z-50 bg-black/50" />
+		<div
+			class="fixed left-[50%] top-[50%] z-50 max-h-[85vh] w-[90vw]
+			  max-w-xl translate-x-[-50%] translate-y-[-50%] rounded-xl bg-base-200
+			  p-3 shadow-lg"
+			use:melt={$content}
+		>
+			<div class="flex flex-row">
+				<h2 use:melt={$title} class="flex pb-2 text-lg font-semibold">Comment</h2>
+				<div class="grow" />
+				<button type="button" bind:this={btn} class="btn btn-sm btn-circle" use:melt={$close}
+					><X /></button
+				>
+			</div>
 			<CommentingComponent post={undefined} comment={comment?.comment} {onSuccess} />
 		</div>
-	</div>
-	<form method="dialog" class="modal-backdrop">
-		<button>close</button>
-	</form>
-</dialog>
+	{/if}
+</div>
