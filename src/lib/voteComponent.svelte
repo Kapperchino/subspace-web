@@ -15,10 +15,18 @@
 	export let upVotes: number = 0;
 	export let downVotes: number = 0;
 	export let voteType: VoteType;
+
+	enum VoteState {
+		None,
+		Upvote,
+		Downvote
+	}
+
 	let user: UserMeta = getContext('user');
-	let voteStateInit = voteData?.is_up_vote ? 'up' : 'down';
+
+	$: voteStateInit = voteData?.is_up_vote ? VoteState.Upvote : VoteState.Downvote;
 	$: totalVotes = upVotes - downVotes;
-	$: voteState = voteData == null || voteData.is_deleted ? 'none' : voteStateInit;
+	$: voteState = voteData == null || voteData.is_deleted ? VoteState.None : voteStateInit;
 	async function onLike(event: Event) {
 		await commentClick();
 		if (voteData == null) {
@@ -39,9 +47,9 @@
 		upVotes = voteVal.up_votes;
 		downVotes = voteVal.down_votes;
 		if (voteVal.is_deleted) {
-			voteState = 'none';
+			voteState = VoteState.None;
 		} else {
-			voteState = 'up';
+			voteState = VoteState.Upvote;
 		}
 	}
 
@@ -65,9 +73,9 @@
 		upVotes = voteVal.up_votes;
 		downVotes = voteVal.down_votes;
 		if (voteVal.is_deleted) {
-			voteState = 'none';
+			voteState = VoteState.None;
 		} else {
-			voteState = 'down';
+			voteState = VoteState.Downvote;
 		}
 	}
 
@@ -81,7 +89,7 @@
 </script>
 
 <div class="join join-horizontal" on:click|stopPropagation|preventDefault>
-	{#if voteState == 'none'}
+	{#if voteState == VoteState.None}
 		<button
 			type="button"
 			class="btn btn-sm btn-square join-item"
@@ -99,7 +107,7 @@
 			class="btn btn-sm btn-square join-item"
 			on:click|stopPropagation|preventDefault={onDislike}><Downvote /></button
 		>
-	{:else if voteState == 'up'}
+	{:else if voteState == VoteState.Upvote}
 		<button
 			type="button"
 			class="btn btn-sm btn-square btn-primary join-item"

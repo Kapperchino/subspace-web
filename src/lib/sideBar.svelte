@@ -20,14 +20,6 @@
 		modal?.close();
 	};
 
-	async function onClick() {
-		await goto(`/users/${user.user_id}`);
-	}
-
-	async function login() {
-		await goto(`/login`);
-	}
-
 	let user: UserMeta;
 	onMount(() => {
 		user = coockieStore.getValue('cookie');
@@ -86,10 +78,10 @@
 		</div>
 
 		{#if user == undefined}
-			<div class="flex flex-col mt-auto " on:click={login}>
-				<div class="btn btn-secondary">Log in here!</div>
-			</div>{:else}
-			<div class="flex flex-col mt-auto hover:cursor-pointer" on:click={onClick}>
+			<a class="flex flex-col mt-auto" href="/login">
+				<div class="btn btn-info shadow-md shadow-info">Log in here!</div>
+			</a>{:else}
+			<a class="flex flex-col mt-auto hover:cursor-pointer" href="/users/{user.user_id}">
 				<div class="grow" />
 				<div class="card card-compact bg-base-300">
 					<div class="card-body">
@@ -106,7 +98,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</a>
 		{/if}
 	</ul>
 </div>

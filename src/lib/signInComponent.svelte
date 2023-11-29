@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { goto } from "$app/navigation";
+	import { goto } from '$app/navigation';
 
 	let modal: HTMLDialogElement;
 </script>
@@ -44,11 +44,8 @@
 				</div>
 				<div class="divider">or</div>
 				<div class="form-control">
-					<button class="btn btn-secondary" on:click={() => goto('/signup')} type="button"
-						>Join us!</button
-					>
+					<a class="btn btn-info shadow-md shadow-info" href="/signup">Join us!</a>
 				</div>
-
 			</form>
 		</div>
 	</div>

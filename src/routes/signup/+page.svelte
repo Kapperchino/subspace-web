@@ -68,7 +68,7 @@
 					/>
 				</div>
 				<div class="form-control mt-6">
-					<button class="btn btn-secondary" type="submit">Sign up</button>
+					<button class="btn btn-info" type="submit">Sign up</button>
 				</div>
 
 				<dialog id="my_modal_2" class="modal" bind:this={modal}>

@@ -245,9 +245,10 @@
 			</label>
 			<div class="flex flex-row pl-1">
 				{#if !hasTitle}
-					<div class="btn btn-xs btn-primary" on:click={toggleTitle}>+Title</div>
+					<button type="button" class="btn btn-xs btn-primary" on:click={toggleTitle}>+Title</button
+					>
 				{:else}
-					<div class="btn btn-xs btn-error" on:click={toggleTitle}>-Title</div>
+					<button type="button" class="btn btn-xs btn-error" on:click={toggleTitle}>-Title</button>
 				{/if}
 				<div class="join-item pl-1" />
 				<SubspaceAtComponent bind:state={spacePrefixState} bind:selectedSpace bind:clickOutside />

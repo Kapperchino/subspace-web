@@ -27,7 +27,7 @@
 
 	var onSuccess = async () => {
 		await invalidateAll();
-		btn.click();
+		$open = false;
 	};
 
 	const {

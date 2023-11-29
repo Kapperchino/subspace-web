@@ -285,7 +285,11 @@
 			{#if picList != null && picList.length > 0 && vidList.length == 0}
 				<div class="flex-row flex pb-1 pt-3">
 					<div class="relative bg-gradient-to-r from-gray-900 to-gray-800 rounded-md">
-						<img class="object-scale-down h-24 w-24 p-1" data-src={picList.at(0)?.[0]} />
+						<img
+							class="object-scale-down h-24 w-24 p-1"
+							data-src={picList.at(0)?.[0]}
+							alt="image thumbnail"
+						/>
 						<div class="pl-1" />
 						<button
 							type="button"
@@ -363,12 +367,13 @@
 					</label>{/if}
 
 				<div class="pl-1" />
-				<div
+				<button
+					type="button"
 					on:click={toggleLink}
 					class="btn btn-square btn-neutral btn-outline btn-xs variant-filled-surface h-8 w-8"
 				>
 					<LinkIcon />
-				</div>
+				</button>
 				<div class="grow" />
 				<button
 					type="button"
