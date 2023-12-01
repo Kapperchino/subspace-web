@@ -275,7 +275,7 @@
 			<label class="label">
 				<textarea
 					use:textareaAutosizeAction
-					class="textarea textarea-md textarea-primary textarea-bordered w-full grid-cols-[auto_1fr_auto]"
+					class="textarea textarea-md text-lg textarea-primary textarea-bordered w-full"
 					name="Comment"
 					placeholder="Comment here!"
 					bind:value={commentReq.body}

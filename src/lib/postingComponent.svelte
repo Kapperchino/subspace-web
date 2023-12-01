@@ -214,7 +214,7 @@
 				<label class="label">
 					<textarea
 						use:textareaAutosizeAction
-						class="textarea textarea-md textarea-secondary textarea-bordered w-full grid-cols-[auto_1fr_auto]"
+						class="textarea textarea-md textarea-info textarea-bordered text-lg w-full grid-cols-[auto_1fr_auto]"
 						name="Title"
 						placeholder="Title(Optional)"
 						rows="1"
@@ -225,7 +225,7 @@
 			{#if hasLink}
 				<label class="label">
 					<textarea
-						class="textarea textarea-md textarea-accent textarea-bordered w-full grid-cols-[auto_1fr_auto]"
+						class="textarea textarea-md textarea-accent textarea-bordered text-lg w-full grid-cols-[auto_1fr_auto]"
 						name="Link"
 						placeholder="Link(Optional)"
 						rows="1"
@@ -233,16 +233,22 @@
 					/>
 				</label>
 			{/if}
-			<label class="label">
-				<textarea
-					use:textareaAutosizeAction
-					on:focus={checkAuth}
-					class="textarea textarea-md textarea-primary textarea-bordered w-full grid-cols-[auto_1fr_auto]"
-					name="Post"
-					placeholder="Post here!"
-					bind:value={postReq.body}
-				/>
-			</label>
+			<div class="flex flex-row ">
+				<div class="flex pt-2">
+					<SubspaceAtComponent bind:state={spacePrefixState} bind:selectedSpace bind:clickOutside />
+				</div>
+				<label class="label grow">
+					<textarea
+						use:textareaAutosizeAction
+						on:focus={checkAuth}
+						class="textarea textarea-md text-lg textarea-primary textarea-bordered w-full"
+						name="Post"
+						placeholder="Post here!"
+						bind:value={postReq.body}
+					/>
+				</label>
+			</div>
+
 			<div class="flex flex-row pl-1">
 				{#if !hasTitle}
 					<button type="button" class="btn btn-xs btn-primary" on:click={toggleTitle}>+Title</button
@@ -251,7 +257,6 @@
 					<button type="button" class="btn btn-xs btn-error" on:click={toggleTitle}>-Title</button>
 				{/if}
 				<div class="join-item pl-1" />
-				<SubspaceAtComponent bind:state={spacePrefixState} bind:selectedSpace bind:clickOutside />
 			</div>
 
 			{#if picList != null && picList.length > 0 && vidList.length == 0}

@@ -63,8 +63,8 @@
 			use:clickOutsideAction
 			on:clickoutside={clickOutside}
 			type="text"
-			placeholder="Type here"
-			class="input input-bordered input-xs input-secondary w-60"
+			placeholder="Search"
+			class="input input-bordered input-lg text-lg input-secondary w-60 max-h-[54px]"
 			autofocus
 		/>
 	</div>
@@ -108,37 +108,12 @@
 			</div>
 		</ul>
 	{/if}
-	<!-- {#if $open}
-		<ul use:melt={$menu} class="z-20 p-0 m-0 menu shadow bg-base-100 rounded-box">
-			{#each list as item, _}
-				<li
-					class="flex flex-row"
-					use:melt={$option({
-						value: item,
-						label: item.name,
-						disabled: item.name === 'SubSpace'
-					})}
-				>
-					<div class="grow flex-row bg-base-100 max-w-md">
-						<div class="flex avatar p-0">
-							<div class="w-6 rounded-full">
-								<SpaceAvatarComponent url={item.small_picture?.url} />
-							</div>
-						</div>
-						<div class="flex">{item.name}</div>
-						<User />
-						<div class="flex justify-end">{item.sub_count}</div>
-					</div>
-				</li>
-			{/each}
-		</ul>
-	{/if} -->
 {/if}
 
 {#if state == SpacePrefixState.Init}
 	<button
 		type="button"
-		class="btn btn-xs btn-secondary shadow-lg shadow-secondary"
+		class="btn btn-secondary shadow-md shadow-secondary h-[54px]"
 		on:click={() => {
 			state = SpacePrefixState.Selecting;
 		}}
@@ -149,19 +124,20 @@
 
 {#if state == SpacePrefixState.Selected}
 	<button
-		class="btn btn-xs btn-secondary"
+		class="btn btn-secondary shadow-md shadow-secondary h-[54px]"
 		type="button"
 		on:click={() => {
 			state = SpacePrefixState.Selecting;
 		}}
 	>
 		<div class="flex flex-row">
+			<div class="pr-0.5 flex text-base">@</div>
 			<div class="flex avatar p-0">
 				<div class="w-5 rounded-full">
 					<SpaceAvatarComponent url={selectedSpace.small_picture?.url} />
 				</div>
 			</div>
-			<div class="pl-1 flex text-sm">{selectedSpace.name}</div>
+			<div class="pl-1 flex text-base">{selectedSpace.name}</div>
 		</div>
 	</button>
 {/if}

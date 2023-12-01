@@ -36,5 +36,7 @@
 			alt="Video thumbnail"
 		/>
 	</media-provider>
-	<media-video-layout small-when="(width < 500)" /></media-player
->
+	<media-video-layout
+		small-when="(width < 500)"
+	/>
+</media-player>

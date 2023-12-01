@@ -54,6 +54,7 @@
 <a
 	class="card card-compact shadow-lg bg-base-100 hover:cursor-pointer"
 	href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}"
+	draggable="false"
 >
 	<div class="card-body">
 		<div class="flex-row flex">
