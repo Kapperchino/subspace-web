@@ -73,9 +73,9 @@
 				</div>
 			</li></a
 		>
-		<div class="btn btn-primary btn-sm h-12 mt-3" on:click={startPost}>
+		<button type="button" class="btn btn-primary btn-sm h-12 mt-3" on:click={startPost}>
 			<div class="text-lg flex flex-row">Post</div>
-		</div>
+		</button>
 
 		{#if user == undefined}
 			<a class="flex flex-col mt-auto" href="/login">

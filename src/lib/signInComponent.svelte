@@ -1,7 +1,9 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
+	import { createLabel, melt } from '@melt-ui/svelte';
 
-	let modal: HTMLDialogElement;
+	const {
+		elements: { root }
+	} = createLabel();
 </script>
 
 <div class="hero min-h-screen bg-base-200">
@@ -12,32 +14,30 @@
 		</div>
 		<div class="card shrink-0 w-96 max-w-md shadow-2xl bg-base-100">
 			<form class="card-body" method="POST" action="?/login">
-				<div class="form-control">
-					<label class="label">
+				<div class="flex flex-col">
+					<label for="email" class="label" use:melt={$root}>
 						<span class="label-text">Email</span>
 					</label>
 					<input
 						name="email"
+						id="email"
 						type="email"
 						placeholder="email"
 						class="input input-bordered"
 						required
 					/>
-				</div>
-				<div class="form-control">
-					<label class="label">
+					<label for="password" class="label" use:melt={$root}>
 						<span class="label-text">Password</span>
 					</label>
 					<input
 						name="password"
 						type="password"
+						id="password"
 						placeholder="password"
 						class="input input-bordered"
 						required
 					/>
-					<label class="label">
-						<a href="#" class="label-text-alt link link-hover">Forgot password?</a>
-					</label>
+					<a href="#" class="label-text-alt link link-hover pt-2">Forgot password?</a>
 				</div>
 				<div class="form-control mt-3">
 					<button class="btn btn-primary" type="submit">Login</button>
