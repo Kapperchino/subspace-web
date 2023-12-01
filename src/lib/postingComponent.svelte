@@ -241,7 +241,7 @@
 					<textarea
 						use:textareaAutosizeAction
 						on:focus={checkAuth}
-						class="textarea textarea-md text-lg textarea-primary textarea-bordered w-full"
+						class="textarea textarea-md text-lg textarea-primary textarea-bordered w-full shadow-md shadow-primary"
 						name="Post"
 						placeholder="Post here!"
 						bind:value={postReq.body}
