@@ -10,13 +10,7 @@
 	import TimeComponent from './timeComponent.svelte';
 	import X from '~icons/bx/x';
 
-	import { onMount } from 'svelte';
-	import { isHLSProvider, type MediaCanPlayEvent, type MediaProviderChangeEvent } from 'vidstack';
-	import type { MediaPlayerElement } from 'vidstack/elements';
-
 	import CommentsIcon from '~icons/mdi/comment-text-multiple-outline';
-	import VideoLayout from './video/layouts/VideoLayout.svelte';
-	import VideoPlayer from './video/VideoPlayer.svelte';
 	import { createDialog, melt } from '@melt-ui/svelte';
 
 	let btn: HTMLButtonElement;

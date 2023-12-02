@@ -2,18 +2,16 @@
 	import Home from '~icons/bx/home';
 	import Search from '~icons/bx/search';
 	import Satellite from '~icons/material-symbols/satellite-alt-outline-sharp';
-	import Bell from '~icons/material-symbols/notifications';
+	import Bell from '~icons/ic/round-notifications-none';
 	import PostingComponent from './postingComponent.svelte';
 	import { goto, invalidateAll } from '$app/navigation';
 	import { coockieStore } from './store/tokenStore';
 	import { onMount } from 'svelte';
 	import type { UserMeta } from '../models/signup.type';
 	import AvatarComponent from './avatarComponent.svelte';
+	import { createDialog, melt } from '@melt-ui/svelte';
+	import X from '~icons/bx/x';
 	let modal: HTMLDialogElement | undefined;
-
-	function startPost() {
-		modal?.showModal();
-	}
 
 	var onSuccess = async () => {
 		await invalidateAll();
@@ -23,6 +21,13 @@
 	let user: UserMeta;
 	onMount(() => {
 		user = coockieStore.getValue('cookie');
+	});
+
+	const {
+		elements: { trigger, overlay, content, title, description, close, portalled },
+		states: { open }
+	} = createDialog({
+		forceVisible: true
 	});
 </script>
 
@@ -73,7 +78,7 @@
 				</div>
 			</li></a
 		>
-		<button type="button" class="btn btn-primary btn-sm h-12 mt-3" on:click={startPost}>
+		<button type="button" class="btn btn-primary btn-sm h-12 mt-3" use:melt={$trigger}>
 			<div class="text-lg flex flex-row">Post</div>
 		</button>
 
@@ -103,13 +108,21 @@
 	</ul>
 </div>
 
-<dialog id="my_modal_2" class="modal" bind:this={modal}>
-	<div class="modal-box bg-primary-content">
-		<div class="grow">
+<div use:melt={$portalled}>
+	{#if $open}
+		<div use:melt={$overlay} class="fixed inset-0 z-50 bg-black/50" />
+		<div
+			class="fixed left-[50%] top-[50%] z-50 max-h-[85vh] w-[90vw]
+			  max-w-xl translate-x-[-50%] translate-y-[-50%] rounded-xl bg-base-300
+			  p-3 shadow-lg"
+			use:melt={$content}
+		>
+			<div class="flex flex-row">
+				<h2 use:melt={$title} class="flex pb-2 text-lg font-semibold">Comment</h2>
+				<div class="grow" />
+				<button type="button" class="btn btn-sm btn-circle" use:melt={$close}><X /></button>
+			</div>
 			<PostingComponent {onSuccess} />
 		</div>
-	</div>
-	<form method="dialog" class="modal-backdrop">
-		<button>close</button>
-	</form>
-</dialog>
+	{/if}
+</div>

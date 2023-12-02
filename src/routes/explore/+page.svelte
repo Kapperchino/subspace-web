@@ -15,7 +15,6 @@
 	<div class="flex tabs tabs-boxed tabs-md ">
 		<a class="tab tab-active" href="/home">Trending</a>
 		<a class="tab" href="/news">News</a>
-		<a class="tab" href="/sports">Sports</a>
 	</div>
 	<div class="flex grow"></div>
 

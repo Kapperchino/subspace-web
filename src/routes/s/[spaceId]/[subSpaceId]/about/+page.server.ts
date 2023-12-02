@@ -12,10 +12,7 @@ export const load: PageServerLoad = async ({ params, cookies }) => {
     }
     const user: UserMeta = JSON.parse(cookies.get("user")!);
     const spaceId = Number(params.subSpaceId);
-    const subspace = await getSpace(user, spaceId);
-    if (subspace.status == 401) {
-        throw redirect(302, '/login');
-    }
+    const subspace = await getSpace(spaceId);
     const subRes = await getSubscription(spaceId, user);
     const isSubbed = subRes.status == 200;
     return {

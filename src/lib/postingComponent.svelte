@@ -233,8 +233,8 @@
 					/>
 				</label>
 			{/if}
-			<div class="flex flex-row ">
-				<div class="flex pt-2">
+			<div class="flex flex-row">
+				<div class="flex pt-2 ml-1">
 					<SubspaceAtComponent bind:state={spacePrefixState} bind:selectedSpace bind:clickOutside />
 				</div>
 				<label class="label grow">
