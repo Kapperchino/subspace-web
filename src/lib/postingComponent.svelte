@@ -20,13 +20,14 @@
 	} from '../service/postingService';
 
 	import toast, { Toaster } from 'svelte-french-toast';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { goto, invalidate, invalidateAll } from '$app/navigation';
-	import Page from '../routes/+page.svelte';
-	import { redirect } from '@sveltejs/kit';
 	import axios from 'axios';
 	import SubspaceAtComponent from './subspaceAtComponent.svelte';
 	import { SpacePrefixState, type SpacePrefixRes } from '../models/space.type';
+	import { Editor } from '@tiptap/core';
+	import StarterKit from '@tiptap/starter-kit';
+	import Placeholder from '@tiptap/extension-placeholder';
 
 	$: hasTitle = false;
 	$: hasLink = false;
@@ -62,6 +63,7 @@
 			content_type: ContentType.Text,
 			file_ids: []
 		};
+		editor?.commands.clearContent(true);
 		hasTitle = false;
 		hasLink = false;
 		closeImage();
@@ -113,7 +115,7 @@
 		} else if (picList != null && picList.length > 0) {
 			postReq.content_type = ContentType.Picture;
 		}
-		if (postReq.link == '' && vidList.length == 0 && picList.length == 0 && postReq.body == '') {
+		if (postReq.link == '' && vidList.length == 0 && picList.length == 0 && editor?.isEmpty) {
 			toast.error('Empty post is not allowed!', {
 				icon: '❌',
 				position: 'bottom-center',
@@ -127,6 +129,7 @@
 			return;
 		}
 		postReq.poster_id = user?.user_id;
+		postReq.body = editor?.getHTML() ?? '';
 
 		const fileIds: number[] = [];
 		if (postReq.content_type === ContentType.Picture) {
@@ -205,16 +208,45 @@
 			videoInput.value = '';
 		}
 	}
+
+	let editor: Editor | undefined;
+	let editorDiv: HTMLElement;
+
+	onMount(() => {
+		editor = new Editor({
+			element: editorDiv,
+			extensions: [
+				StarterKit,
+				Placeholder.configure({
+					placeholder: 'Post here!',
+					emptyEditorClass:
+						'cursor-text text-xl before:content-[attr(data-placeholder)] before:absolute  before:opacity-70 before-pointer-events-none'
+				})
+			],
+			editorProps: {
+				attributes: {
+					class: 'prose dark:prose-invert prose-base focus:outline-none'
+				}
+			}
+		});
+	});
+
+	onDestroy(() => {
+		editor?.destroy();
+	});
 </script>
 
 <div class="card card-compact flex shadow-lg bg-primary-content grow max-w-xl">
 	<div class="card-body">
 		<form method="POST" action="?/post">
+			<div class="flex mb-1.5 pl-1">
+				<SubspaceAtComponent bind:state={spacePrefixState} bind:selectedSpace bind:clickOutside />
+			</div>
 			{#if hasTitle}
 				<label class="label">
 					<textarea
 						use:textareaAutosizeAction
-						class="textarea textarea-md textarea-info textarea-bordered text-lg w-full grid-cols-[auto_1fr_auto]"
+						class="textarea textarea-md textarea-info textarea-bordered text-lg w-full"
 						name="Title"
 						placeholder="Title(Optional)"
 						rows="1"
@@ -225,7 +257,7 @@
 			{#if hasLink}
 				<label class="label">
 					<textarea
-						class="textarea textarea-md textarea-accent textarea-bordered text-lg w-full grid-cols-[auto_1fr_auto]"
+						class="textarea textarea-md textarea-accent textarea-bordered text-lg w-full"
 						name="Link"
 						placeholder="Link(Optional)"
 						rows="1"
@@ -233,21 +265,15 @@
 					/>
 				</label>
 			{/if}
-			<div class="flex flex-row">
-				<div class="flex pt-2 ml-1">
-					<SubspaceAtComponent bind:state={spacePrefixState} bind:selectedSpace bind:clickOutside />
-				</div>
-				<label class="label grow">
-					<textarea
-						use:textareaAutosizeAction
-						on:focus={checkAuth}
-						class="textarea textarea-md text-lg textarea-primary textarea-bordered w-full shadow-md shadow-primary"
-						name="Post"
-						placeholder="Post here!"
-						bind:value={postReq.body}
-					/>
-				</label>
-			</div>
+			<label class="label">
+				<div
+					bind:this={editorDiv}
+					class="tiptap textarea textarea-md textarea-bordered textarea-primary w-full cursor-text"
+					on:click={() => {
+						editor?.chain().focus().run();
+					}}
+				/>
+			</label>
 
 			<div class="flex flex-row pl-1">
 				{#if !hasTitle}
@@ -256,7 +282,6 @@
 				{:else}
 					<button type="button" class="btn btn-xs btn-error" on:click={toggleTitle}>-Title</button>
 				{/if}
-				<div class="join-item pl-1" />
 			</div>
 
 			{#if picList != null && picList.length > 0 && vidList.length == 0}

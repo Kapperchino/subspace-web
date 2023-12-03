@@ -66,10 +66,8 @@
 			</a>
 		{/if}
 		{#if post?.body != ''}
-			<a href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}" data-sveltekit-noscroll>
-				<section class="p-2 break-words subpixel-antialiased">
-					{post?.body}
-				</section>
+			<a href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}" data-sveltekit-noscroll class="prose">
+				{@html post?.body}
 			</a>
 		{/if}
 		{#if post?.post_pictures != null}

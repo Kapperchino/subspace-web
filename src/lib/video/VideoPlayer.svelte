@@ -20,7 +20,7 @@
 </script>
 
 <media-player
-	class="h-full w-full aspect-video bg-slate-900 text-white font-sans overflow-hidden rounded-md ring-media-focus data-[focus]:ring-4"
+	class="h-full w-full aspect-square md:aspect-video bg-slate-900 text-white font-sans overflow-hidden rounded-md ring-media-focus data-[focus]:ring-4"
 	{title}
 	{src}
 	crossorigin
@@ -36,7 +36,5 @@
 			alt="Video thumbnail"
 		/>
 	</media-provider>
-	<media-video-layout
-		small-when="(width < 500)"
-	/>
+	<media-video-layout small-when="(width < 500)" />
 </media-player>

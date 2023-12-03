@@ -14,12 +14,13 @@ module.exports = {
 		themes: ["light", "dark"],
 	},
 	plugins: [
-		require("daisyui"),
 		require('tailwindcss-animate'),
+		require('@tailwindcss/typography'),
 		require('vidstack/tailwind.cjs')({
 			prefix: 'media',
 			webComponents: true,
 		}),
+		require("daisyui"),
 	],
 	experimental: {
 		optimizeUniversalDefaults: true

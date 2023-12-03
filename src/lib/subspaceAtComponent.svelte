@@ -113,7 +113,7 @@
 {#if state == SpacePrefixState.Init}
 	<button
 		type="button"
-		class="btn btn-secondary shadow-md shadow-secondary h-[52px] px-1"
+		class="btn btn-secondary btn-sm shadow-md shadow-secondary px-1"
 		on:click={() => {
 			state = SpacePrefixState.Selecting;
 		}}
@@ -124,7 +124,7 @@
 
 {#if state == SpacePrefixState.Selected}
 	<button
-		class="btn btn-secondary shadow-md shadow-secondary h-[52px] px-1"
+		class="btn btn-secondary shadow-md btn-sm shadow-secondary px-1"
 		type="button"
 		on:click={() => {
 			state = SpacePrefixState.Selecting;
