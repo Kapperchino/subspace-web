@@ -9,7 +9,6 @@
 	import ReplyIcon from '~icons/gridicons/reply';
 	import X from '~icons/bx/x';
 
-	import VideoLayout from './video/layouts/VideoLayout.svelte';
 	import { createDialog, melt } from '@melt-ui/svelte';
 
 	export let post: Post | undefined;
@@ -58,9 +57,9 @@
 			</a>
 		{/if}
 		{#if post?.body != ''}
-			<a href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}" class="prose">
+			<div class="prose max-w-xl break-words">
 				{@html post?.body}
-			</a>
+			</div>
 		{/if}
 		{#if post?.post_pictures != null}
 			<div class="flex justify-center">

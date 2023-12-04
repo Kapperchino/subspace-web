@@ -12,6 +12,7 @@
 
 	import CommentsIcon from '~icons/mdi/comment-text-multiple-outline';
 	import { createDialog, melt } from '@melt-ui/svelte';
+	import { onMount } from 'svelte';
 
 	let btn: HTMLButtonElement;
 
@@ -66,7 +67,11 @@
 			</a>
 		{/if}
 		{#if post?.body != ''}
-			<a href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}" data-sveltekit-noscroll class="prose">
+			<a
+				href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}"
+				data-sveltekit-noscroll
+				class="prose max-w-xl break-words subpixel-antialiased"
+			>
 				{@html post?.body}
 			</a>
 		{/if}

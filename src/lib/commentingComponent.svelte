@@ -207,11 +207,9 @@
 				</a>
 			{/if}
 			{#if post?.body != ''}
-				<a href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}" data-sveltekit-noscroll>
-					<section class="p-2 break-words subpixel-antialiased">
-						{post?.body}
-					</section>
-				</a>
+				<div class="prose max-w-xl break-words">
+					{@html post?.body}
+				</div>
 			{/if}
 			{#if post?.post_pictures != null}
 				<div class="flex justify-center">

@@ -83,7 +83,7 @@
 							disabled: item.name == 'SubSpace'
 						})}
 						class="relative cursor-pointer scroll-my-2 rounded-md py-2 pl-2 pr-2
-        data-[highlighted]:bg-neutral data-[highlighted]:text-magnum-900
+        data-[highlighted]:bg-secondary data-[highlighted]:text-magnum-900
           data-[disabled]:opacity-50"
 					>
 						<div class="flex flex-row">
@@ -96,13 +96,6 @@
 								<span class="text-lg">{item.name}</span>
 							</div>
 						</div>
-					</li>
-				{:else}
-					<li
-						class="relative cursor-pointer rounded-md py-1 pl-8 pr-4
-        data-[highlighted]:bg-magnum-100 data-[highlighted]:text-magnum-700"
-					>
-						No results found
 					</li>
 				{/each}
 			</div>

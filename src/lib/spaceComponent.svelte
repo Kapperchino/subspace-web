@@ -8,6 +8,9 @@
 	import { coockieStore } from './store/tokenStore';
 	import type { UserMeta } from '../models/signup.type';
 	import axios from 'axios';
+	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+	import { getUserByAddress } from '../service/userServiceClient';
 
 	export let posts: Post[];
 	export let spaceId: number;
@@ -61,6 +64,19 @@
 			}
 		}
 	}
+
+	onMount(() => {
+		const list = document.getElementsByClassName('mentions');
+		for (let i = 0; i < list.length; i++) {
+			const element = list.item(i);
+			const name = element?.getAttribute('data-id');
+			element?.addEventListener('click', async (e) => {
+				e.preventDefault();
+				const user = await getUserByAddress(name!);
+				await goto(`/users/${user.data.user_id}`);
+			});
+		}
+	});
 </script>
 
 {#if posts != null && posts.length > 0}

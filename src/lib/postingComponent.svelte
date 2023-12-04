@@ -28,6 +28,9 @@
 	import { Editor } from '@tiptap/core';
 	import StarterKit from '@tiptap/starter-kit';
 	import Placeholder from '@tiptap/extension-placeholder';
+	import Mention from '@tiptap/extension-mention';
+	import { mentionRenderer } from './mention/mentionRenderer';
+	import { prefixSearchUsers } from '../service/searchService';
 
 	$: hasTitle = false;
 	$: hasLink = false;
@@ -218,9 +221,23 @@
 			extensions: [
 				StarterKit,
 				Placeholder.configure({
-					placeholder: 'Post here!',
+					placeholder: 'Post here! (Markdown supported)',
 					emptyEditorClass:
 						'cursor-text text-xl before:content-[attr(data-placeholder)] before:absolute  before:opacity-70 before-pointer-events-none'
+				}),
+				Mention.configure({
+					suggestion: {
+						items: async (e) => {
+							if (e.query == '') {
+								return [];
+							}
+							return (await prefixSearchUsers(e.query)).data;
+						},
+						render: mentionRenderer
+					},
+					HTMLAttributes: {
+						class: 'text-primary font-semi-bold mentions',
+					}
 				})
 			],
 			editorProps: {

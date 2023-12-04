@@ -20,6 +20,14 @@ export type UserMeta = {
     user_address: string;
 }
 
+export type UserInfo = {
+    user_id: number;
+    display_name: string;
+    picture_meta: PictureMeta;
+    bio: string;
+    user_address: string;
+}
+
 export type PictureMeta = {
     url: string;
     width: number;

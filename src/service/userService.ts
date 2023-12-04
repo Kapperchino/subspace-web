@@ -15,7 +15,7 @@ export const getUser = async (userId: number): Promise<AxiosResponse<UserMeta>> 
     return data
 }
 
-export const getUserPosts = async ( userId: number): Promise<AxiosResponse<Array<Post>>> => {
+export const getUserPosts = async (userId: number): Promise<AxiosResponse<Array<Post>>> => {
     const data: AxiosResponse<Array<Post>> = await axios.get(`${env.BACK_END}/posts/users/${userId}?sort=latest&days=7`,
         {
             headers: {
