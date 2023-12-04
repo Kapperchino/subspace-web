@@ -10,6 +10,8 @@
 	import X from '~icons/bx/x';
 
 	import { createDialog, melt } from '@melt-ui/svelte';
+	import { onMount } from 'svelte';
+	import { getUserByAddress } from '../service/userServiceClient';
 
 	export let post: Post | undefined;
 	export let spaceId: number | undefined;
@@ -39,6 +41,19 @@
 		states: { open }
 	} = createDialog({
 		forceVisible: true
+	});
+
+	onMount(() => {
+		const list = document.getElementsByClassName('mentions');
+		for (let i = 0; i < list.length; i++) {
+			const element = list.item(i);
+			const name = element?.getAttribute('data-id');
+			element?.addEventListener('click', async (e) => {
+				e.preventDefault();
+				const user = await getUserByAddress(name!);
+				await goto(`/users/${user.data.user_id}`);
+			});
+		}
 	});
 </script>
 
