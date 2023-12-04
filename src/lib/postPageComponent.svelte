@@ -48,6 +48,7 @@
 		for (let i = 0; i < list.length; i++) {
 			const element = list.item(i);
 			const name = element?.getAttribute('data-id');
+			element!.className = element!.className.concat(' cursor-pointer');
 			element?.addEventListener('click', async (e) => {
 				e.preventDefault();
 				const user = await getUserByAddress(name!);

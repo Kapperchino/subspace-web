@@ -7,7 +7,7 @@
 	import { onDestroy, onMount } from 'svelte';
 	import AvatarComponent from '$lib/avatarComponent.svelte';
 	import type { UserInfo } from '../../models/signup.type';
-	import MentionItem from './mentionItem.svelte';
+	import HashTagItem from './hashTagItem.svelte';
 
 	export let props: SuggestionProps<any>;
 	const SCROLL_HEIGHT = 400;
@@ -36,6 +36,11 @@
 			return true;
 		}
 
+		if (event.key === ' ') {
+			spaceHandler();
+			return true;
+		}
+
 		return false;
 	};
 	const upHandler = () => {
@@ -48,6 +53,10 @@
 
 	const enterHandler = () => {
 		onSelect(selectedIndex);
+	};
+
+	const spaceHandler = () => {
+		props.command({ id: query });
 	};
 
 	const onActiveChange = (element: CustomEvent<HTMLElement>, idx: number) => {
@@ -67,7 +76,7 @@
 	const onSelect = (idx: number) => {
 		const item = props.items[idx];
 		if (item) {
-			props.command({ id: item.user_address });
+			props.command({ id: item.name });
 		}
 	};
 
@@ -93,9 +102,9 @@
 	data-[highlighted]:bg-neutral data-[highlighted]:text-magnum-900
 	  data-[disabled]:opacity-50"
 				>
-					<MentionItem
+					<HashTagItem
 						on:active={(event) => onActiveChange(event, index)}
-						user={item}
+						tag={item}
 						active={selectedIndex === index}
 						onClick={() => onSelect(index)}
 					/>

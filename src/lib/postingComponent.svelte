@@ -30,7 +30,9 @@
 	import Placeholder from '@tiptap/extension-placeholder';
 	import Mention from '@tiptap/extension-mention';
 	import { mentionRenderer } from './mention/mentionRenderer';
-	import { prefixSearchUsers } from '../service/searchService';
+	import { prefixSearchTags, prefixSearchUsers } from '../service/searchService';
+	import { PluginKey } from '@tiptap/pm/state';
+	import { hashTagsRenderer } from './hashtags/hashTagRenderer';
 
 	$: hasTitle = false;
 	$: hasLink = false;
@@ -216,6 +218,24 @@
 	let editorDiv: HTMLElement;
 
 	onMount(() => {
+		const hashtagPlugin = Mention.extend({
+			name: 'hashtagPlugin'
+		}).configure({
+			suggestion: {
+				char: '#',
+				pluginKey: new PluginKey('suggestionOne'),
+				items: async (e) => {
+					if (e.query == '') {
+						return [];
+					}
+					return (await prefixSearchTags(e.query)).data;
+				},
+				render: hashTagsRenderer
+			},
+			HTMLAttributes: {
+				class: 'text-primary font-semi-bold hashtags'
+			}
+		});
 		editor = new Editor({
 			element: editorDiv,
 			extensions: [
@@ -236,9 +256,10 @@
 						render: mentionRenderer
 					},
 					HTMLAttributes: {
-						class: 'text-primary font-semi-bold mentions',
+						class: 'text-primary font-semi-bold mentions'
 					}
-				})
+				}),
+				hashtagPlugin
 			],
 			editorProps: {
 				attributes: {
