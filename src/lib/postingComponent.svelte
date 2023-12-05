@@ -21,7 +21,7 @@
 
 	import toast, { Toaster } from 'svelte-french-toast';
 	import { onDestroy, onMount } from 'svelte';
-	import { goto, invalidate, invalidateAll } from '$app/navigation';
+	import { goto } from '$app/navigation';
 	import axios from 'axios';
 	import SubspaceAtComponent from './subspaceAtComponent.svelte';
 	import { SpacePrefixState, type SpacePrefixRes } from '../models/space.type';
@@ -274,7 +274,7 @@
 	});
 </script>
 
-<div class="card card-compact flex shadow-lg bg-primary-content grow max-w-xl">
+<div class="card card-compact flex shadow-lg bg-primary-content grow">
 	<div class="card-body">
 		<form method="POST" action="?/post">
 			<div class="flex mb-1.5 pl-1">

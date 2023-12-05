@@ -70,7 +70,7 @@
 			<a
 				href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}"
 				data-sveltekit-noscroll
-				class="prose max-w-md md:max-w-xl break-words subpixel-antialiased"
+				class="prose grow max-w-none break-words subpixel-antialiased"
 			>
 				{@html post?.body}
 			</a>

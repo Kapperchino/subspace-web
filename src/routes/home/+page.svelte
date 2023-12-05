@@ -31,7 +31,7 @@
 
 <div class="flex flex-row pt-2 justify-center">
 	<div class="flex" />
-	<div class="grow max-w-md md:max-w-xl"><PostingComponent {onSuccess} /></div>
+	<div class="grow max-w-full md:max-w-xl"><PostingComponent {onSuccess} /></div>
 	<div class="flex" />
 </div>
 

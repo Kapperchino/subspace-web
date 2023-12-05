@@ -37,6 +37,9 @@
 		}
 
 		if (event.key === ' ') {
+			if (query.length == 0) {
+				return false;
+			}
 			spaceHandler();
 			return true;
 		}

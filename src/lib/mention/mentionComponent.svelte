@@ -5,8 +5,6 @@
 	import { lockscroll, createLockScrollStore } from '@svelte-put/lockscroll';
 
 	import { onDestroy, onMount } from 'svelte';
-	import AvatarComponent from '$lib/avatarComponent.svelte';
-	import type { UserInfo } from '../../models/signup.type';
 	import MentionItem from './mentionItem.svelte';
 
 	export let props: SuggestionProps<any>;
