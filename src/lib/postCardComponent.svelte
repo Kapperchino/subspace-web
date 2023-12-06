@@ -1,18 +1,14 @@
 <script lang="ts">
-	import { goto, invalidateAll } from '$app/navigation';
 
 	import VoteComponent from '$lib/voteComponent.svelte';
 	import { VoteType, type PictureMeta, type Post, type VideoMeta } from '../models/post.type';
-	import type { UserMeta } from '../models/signup.type';
 	import CommentingComponent from './commentingComponent.svelte';
 	import PostCardMetaComponent from './postCardMetaComponent.svelte';
-	import { coockieStore } from './store/tokenStore';
 	import TimeComponent from './timeComponent.svelte';
 	import X from '~icons/bx/x';
 
 	import CommentsIcon from '~icons/mdi/comment-text-multiple-outline';
 	import { createDialog, melt } from '@melt-ui/svelte';
-	import { onMount } from 'svelte';
 
 	let btn: HTMLButtonElement;
 
@@ -70,7 +66,7 @@
 			<a
 				href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}"
 				data-sveltekit-noscroll
-				class="prose grow max-w-none break-words subpixel-antialiased"
+				class="prose grow max-w-sm md:max-w-none break-words subpixel-antialiased"
 			>
 				{@html post?.body}
 			</a>

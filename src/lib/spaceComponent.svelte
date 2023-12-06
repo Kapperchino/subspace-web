@@ -8,9 +8,10 @@
 	import { coockieStore } from './store/tokenStore';
 	import type { UserMeta } from '../models/signup.type';
 	import axios from 'axios';
-	import { onMount } from 'svelte';
+	import { afterUpdate, onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { getUserByAddress } from '../service/userServiceClient';
+	import hljs from 'highlight.js/lib/common';
 
 	export let posts: Post[];
 	export let spaceId: number;
@@ -76,6 +77,10 @@
 				await goto(`/users/${user.data.user_id}`);
 			});
 		}
+	});
+
+	afterUpdate(() => {
+		hljs.highlightAll();
 	});
 </script>
 

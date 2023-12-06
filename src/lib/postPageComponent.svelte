@@ -10,8 +10,9 @@
 	import X from '~icons/bx/x';
 
 	import { createDialog, melt } from '@melt-ui/svelte';
-	import { onMount } from 'svelte';
+	import { afterUpdate, onMount } from 'svelte';
 	import { getUserByAddress } from '../service/userServiceClient';
+	import hljs from 'highlight.js/lib/common';
 
 	export let post: Post | undefined;
 	export let spaceId: number | undefined;
@@ -56,6 +57,10 @@
 			});
 		}
 	});
+
+	afterUpdate(() => {
+		hljs.highlightAll();
+	});
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -73,7 +78,7 @@
 			</a>
 		{/if}
 		{#if post?.body != ''}
-			<div class="prose max-w-none break-words">
+			<div class="prose max-w-sm md:max-w-none break-words">
 				{@html post?.body}
 			</div>
 		{/if}

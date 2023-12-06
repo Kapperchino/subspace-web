@@ -5,7 +5,10 @@
 	import SideBar from '$lib/sideBar.svelte';
 	import SideDrawer from '$lib/sideDrawer.svelte';
 	import '../app.css';
+	import 'highlight.js/styles/atom-one-dark.css';
 </script>
 
 <slot />
-<FooterComponent />
+<div class="flex grow">
+	<FooterComponent />
+</div>
