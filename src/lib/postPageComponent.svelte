@@ -78,7 +78,7 @@
 			</a>
 		{/if}
 		{#if post?.body != ''}
-			<div class="prose max-w-sm md:max-w-none break-words">
+			<div class="prose max-w-[26rem] sm:max-w-none break-words">
 				{@html post?.body}
 			</div>
 		{/if}

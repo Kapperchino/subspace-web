@@ -49,7 +49,7 @@
 </div>
 <div class="flex flex-row pt-2 justify-center">
 	<div class="flex" />
-	<div class="grow max-w-md md:max-w-xl">
+	<div class="grow max-w-full md:max-w-xl">
 		<PostPageComponent post={data.post} spaceId={data.post?.space_id} imgHeight={700} />
 	</div>
 	<div class="flex" />

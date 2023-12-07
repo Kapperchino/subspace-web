@@ -1,5 +1,4 @@
 <script lang="ts">
-
 	import VoteComponent from '$lib/voteComponent.svelte';
 	import { VoteType, type PictureMeta, type Post, type VideoMeta } from '../models/post.type';
 	import CommentingComponent from './commentingComponent.svelte';
@@ -66,7 +65,7 @@
 			<a
 				href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}"
 				data-sveltekit-noscroll
-				class="prose grow max-w-sm md:max-w-none break-words subpixel-antialiased"
+				class="prose max-w-[26rem] sm:max-w-none break-words subpixel-antialiased"
 			>
 				{@html post?.body}
 			</a>

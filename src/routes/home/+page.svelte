@@ -6,7 +6,6 @@
 	import PostingComponent from '$lib/postingComponent.svelte';
 	import { invalidateAll } from '$app/navigation';
 	import { coockieStore } from '$lib/store/tokenStore';
-	import SkeletonPosts from '$lib/skeletonPosts.svelte';
 	import SeoComponent from '$lib/seoComponent.svelte';
 	export let data: PageData;
 
