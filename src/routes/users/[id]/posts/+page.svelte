@@ -3,7 +3,6 @@
 
 	import { setContext } from 'svelte';
 	import SpaceComponent from '$lib/spaceComponent.svelte';
-	import UserPostsComponent from '$lib/userPostsComponent.svelte';
 
 	export let data: PageData;
 	setContext('user', data.user);
@@ -20,4 +19,4 @@
 	</div>
 	<div class="flex grow" />
 </div>
-<UserPostsComponent posts={data.posts} userId={data.user.user_id} />
+<SpaceComponent posts={data.posts} spaceId={1} />
