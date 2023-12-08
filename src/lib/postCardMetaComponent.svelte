@@ -7,6 +7,8 @@
 	export let spaceId: number | undefined;
 </script>
 
+<svelte:options immutable />
+
 <div class="flex flex-row" >
 	<a href="/users/{post?.poster_id}">
 		<div class="avatar">
