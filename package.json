@@ -45,6 +45,7 @@
 	"type": "module",
 	"dependencies": {
 		"@macfja/svelte-persistent-store": "^2.4.1",
+		"@tanstack/svelte-virtual": "^3.0.1",
 		"@tiptap/core": "^2.1.13",
 		"@tiptap/extension-mention": "^2.1.13",
 		"@tiptap/extension-placeholder": "^2.1.13",

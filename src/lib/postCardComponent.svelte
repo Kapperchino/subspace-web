@@ -8,6 +8,8 @@
 
 	import CommentsIcon from '~icons/mdi/comment-text-multiple-outline';
 	import { createDialog, melt } from '@melt-ui/svelte';
+	import { afterUpdate, onMount } from 'svelte';
+	import hljs from 'highlight.js/lib/common';
 
 	let btn: HTMLButtonElement;
 
@@ -56,7 +58,7 @@
 				href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}"
 				data-sveltekit-noscroll
 			>
-				<h3>
+				<h3 class="truncate">
 					{post?.topic}
 				</h3>
 			</a>
@@ -65,7 +67,7 @@
 			<a
 				href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}"
 				data-sveltekit-noscroll
-				class="prose max-w-[26rem] sm:max-w-none break-words subpixel-antialiased"
+				class="prose max-w-[26rem] sm:max-w-none max-h-96 break-words subpixel-antialiased truncate"
 			>
 				{@html post?.body}
 			</a>
@@ -87,7 +89,7 @@
 			</div>
 		{/if}
 		{#if post?.post_videos != null}
-			<div class="flex">
+			<div class="flex h-72">
 				{#await import('./video/VideoPlayer.svelte') then { default: Player }}
 					<svelte:component
 						this={Player}
