@@ -15,11 +15,11 @@ export const getPost = async (userId: number, postId: number): Promise<Post> => 
 }
 
 export const getPosts = async (fetch: any, userId: number, spaceId: number, days: number, sortType: string, offset: number): Promise<Response> => {
-    const data = await fetch(`${env.BACK_END}/posts/spaces/${spaceId}?sort=${sortType}&days=${days}&userId=${userId}&start=${offset}`, {
+    const data: Response = await fetch(`${env.BACK_END}/posts/spaces/${spaceId}?sort=${sortType}&days=${days}&userId=${userId}&start=${offset}`, {
         headers: {
             'Content-Type': 'application/json; charset=UTF-8',
         }
-    })
+    });
     return data;
 }
 

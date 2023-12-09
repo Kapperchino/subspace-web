@@ -15,7 +15,7 @@
 	import type { Writable } from 'svelte/store';
 
 	export let posts: Writable<Post[]>;
-	export let spaceId: number;
+	export let userId: number;
 	export let offset: Writable<number>;
 	export let loaded: Writable<boolean>;
 	let isLoading = false;
@@ -23,15 +23,9 @@
 
 	let element: HTMLDivElement;
 
-	export const getPostsClient = async (
-		userId: number,
-		spaceId: number,
-		days: number,
-		sortType: string,
-		offset: number
-	): Promise<Post[]> => {
+	export const getPostsClient = async (userId: number, offset: number): Promise<Post[]> => {
 		const data = await axios.get(
-			`${backendUrl}/posts/spaces/${spaceId}?sort=${sortType}&days=${days}&userId=${userId}&start=${offset}`,
+			`${backendUrl}/posts/users/${userId}?sort=latest&days=7&start=${offset}`,
 			{
 				headers: {
 					'Content-Type': 'application/json; charset=UTF-8'
@@ -44,17 +38,8 @@
 	async function loadItems() {
 		if (!$loaded) {
 			$offset += 10;
-			const days = $page.url.searchParams.get('days') ?? '7';
-			const type = $page.url.searchParams.get('type') ?? 'popular';
-			const user: UserMeta | undefined = coockieStore.getValue('cookie');
 			isLoading = true;
-			const newPosts = await getPostsClient(
-				user?.user_id ?? 0,
-				spaceId,
-				Number(days),
-				type,
-				$offset
-			);
+			const newPosts = await getPostsClient(userId, $offset);
 			if (newPosts == null || newPosts == undefined || newPosts?.length == 0) {
 				$loaded = true;
 				isLoading = false;
@@ -107,7 +92,7 @@
 			<div class="flex flex-row pt-2 justify-center">
 				<div class="flex" />
 				<div class="grow max-w-full md:max-w-xl">
-					<PostCardComponent {post} {spaceId} />
+					<PostCardComponent {post} spaceId={1} />
 				</div>
 				<div class="flex" />
 			</div>

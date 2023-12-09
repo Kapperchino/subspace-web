@@ -4,10 +4,24 @@
 	import { onMount, setContext } from 'svelte';
 	import SpaceComponent from '$lib/spaceComponent.svelte';
 	import PostingComponent from '$lib/postingComponent.svelte';
-	import { invalidateAll } from '$app/navigation';
+	import { afterNavigate, invalidateAll } from '$app/navigation';
 	import { coockieStore } from '$lib/store/tokenStore';
 	import SeoComponent from '$lib/seoComponent.svelte';
+	import { persisted } from 'svelte-persisted-store';
 	export let data: PageData;
+
+	$: posts = persisted('home', data.posts);
+	$: offset = persisted('home-offset', 0);
+	$: loaded = persisted('home-loaded', false);
+
+	afterNavigate((nav) => {
+		if (nav.type == 'enter' || nav.type == 'goto') {
+			$posts = data.posts;
+			$offset = 0;
+			$loaded = false;
+		}
+		console.log(nav.type);
+	});
 
 	onMount(() => {
 		coockieStore.setValue('cookie', data.user);
@@ -34,4 +48,4 @@
 	<div class="flex" />
 </div>
 
-<SpaceComponent posts={data.posts} spaceId={1} />
+<SpaceComponent bind:loaded bind:posts bind:offset spaceId={1} />

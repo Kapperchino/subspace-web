@@ -1,11 +1,27 @@
 <script lang="ts">
+	import UserPageComponent from '$lib/userPageComponent.svelte';
+	import type { Writable } from 'svelte/store';
 	import type { PageData } from './$types';
 
 	import { setContext } from 'svelte';
-	import SpaceComponent from '$lib/spaceComponent.svelte';
+	import type { Post } from '../../../../models/post.type';
+	import { persisted } from 'svelte-persisted-store';
+	import { afterNavigate } from '$app/navigation';
 
 	export let data: PageData;
 	setContext('user', data.user);
+
+	$: posts = persisted(`user-${data.user.user_id}`, data.posts);
+	$: offset = persisted(`user-${data.user.user_id}-offset`, 0);
+	$: loaded = persisted(`user-${data.user.user_id}-loaded`, false);
+
+	afterNavigate((nav) => {
+		if (nav.type == 'enter' || nav.type == 'goto') {
+			$posts = data.posts;
+			$offset = 0;
+			$loaded = false;
+		}
+	});
 </script>
 
 <div class="flex flex-row mt-2">
@@ -19,4 +35,4 @@
 	</div>
 	<div class="flex grow" />
 </div>
-<SpaceComponent posts={data.posts} spaceId={1} />
+<UserPageComponent bind:loaded bind:posts bind:offset bind:userId={data.user.user_id} />

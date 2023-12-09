@@ -2,11 +2,23 @@
 	import type { PageData } from './$types';
 
 	import { setContext } from 'svelte';
-	import { page } from '$app/stores';
 	import SpaceComponent from '$lib/spaceComponent.svelte';
-	import type { Post } from '../../../../models/post.type';
 	import SortPostComponent from '$lib/sortPostComponent.svelte';
 	import SeoComponent from '$lib/seoComponent.svelte';
+	import { persisted } from 'svelte-persisted-store';
+	import { afterNavigate } from '$app/navigation';
+
+	$: posts = persisted(`space-${spaceId}`, data.posts);
+	$: offset = persisted(`space-${spaceId}-offset`, 0);
+	$: loaded = persisted(`space-${spaceId}-loaded`, false);
+
+	afterNavigate((nav) => {
+		if (nav.type == 'enter' || nav.type == 'goto') {
+			$posts = data.posts;
+			$offset = 0;
+			$loaded = false;
+		}
+	});
 
 	export let data: PageData;
 	let spaceId: number = data.spaceId;
@@ -55,8 +67,5 @@
 
 	<SortPostComponent />
 </div>
-<!-- <TabGroup justify="justify-center">
-	<TabAnchor href="/s/1/1" selected={$page.url.pathname === '/s/1/1'}>Posts</TabAnchor>
-	<TabAnchor href="/following" selected={$page.url.pathname === '/following'}>About</TabAnchor>
-</TabGroup> -->
-<SpaceComponent posts={data.posts} {spaceId} />
+
+<SpaceComponent bind:loaded bind:posts bind:offset {spaceId} />
