@@ -30,8 +30,8 @@
 
 	$: hasLink = false;
 
-	export let imgHeight: number = 500;
-	export let imgMinHeight: number = 300;
+	export let imgHeight: number = 300;
+	export let imgMinHeight: number = 200;
 
 	let picList: Array<[string, File]> = [];
 	let vidList: Array<[string, File]> = [];
@@ -190,7 +190,7 @@
 </script>
 
 {#if post != undefined}
-	<div class="card card-compact shadow-lg bg-base-100">
+	<div class="card card-compact shadow-lg bg-base-100 max-h-96">
 		<div class="card-body">
 			<div class="flex-row flex">
 				<div><PostCardMetaComponent {post} spaceId={post.space_id} /></div>
