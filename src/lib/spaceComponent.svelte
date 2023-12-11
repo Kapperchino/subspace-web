@@ -83,13 +83,17 @@
 		}
 		const observer = new IntersectionObserver(
 			async (entries) => {
-				if (entries[0].isIntersecting) {
-					await loadItems();
+				if (entries) {
+					if (entries[0]?.isIntersecting) {
+						await loadItems();
+					}
 				}
 			},
 			{ rootMargin: '500px' }
 		);
-		observer?.observe(element);
+		if (element) {
+			observer?.observe(element);
+		}
 	});
 
 	onDestroy(() => {
@@ -101,7 +105,7 @@
 	});
 </script>
 
-{#if posts != null && $posts.length > 0}
+{#if $posts != null && $posts.length > 0}
 	<div>
 		{#each $posts as post, index}
 			<div class="flex flex-row pt-2 justify-center">
