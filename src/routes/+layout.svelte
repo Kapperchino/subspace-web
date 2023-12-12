@@ -9,6 +9,7 @@
 </script>
 
 <slot />
+<div class="h-screen md:h-0"></div>
 <div class="flex grow">
 	<FooterComponent />
 </div>

@@ -12,7 +12,7 @@
 	<input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
 	<div class="drawer-content flex flex-col">
 		<slot />
-		<div class="flex grow h-10"></div>
+		<div class="flex grow"></div>
 	</div>
 	<SideBar />
 </div>

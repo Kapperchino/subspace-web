@@ -10,9 +10,9 @@
 
 <div class="drawer z-50 md:drawer-open">
 	<input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
+	<SideBar />
 	<div class="drawer-content flex flex-col">
 		<slot />
-		<div class="flex grow h-10"></div>
+		<div class="flex grow h-full"></div>
 	</div>
-	<SideBar />
 </div>

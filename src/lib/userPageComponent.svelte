@@ -86,7 +86,7 @@
 	});
 </script>
 
-{#if posts != null && $posts.length > 0}
+{#if $posts != null && $posts.length > 0}
 	<div>
 		{#each $posts as post, index}
 			<div class="flex flex-row pt-2 justify-center">
