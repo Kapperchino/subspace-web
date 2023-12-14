@@ -119,7 +119,7 @@
 					}
 				}
 			},
-			{ rootMargin: '500px' }
+			{ rootMargin: '600px' }
 		);
 		if (element) {
 			observer?.observe(element);

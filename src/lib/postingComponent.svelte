@@ -274,7 +274,7 @@
 	});
 </script>
 
-<div class="card card-compact flex shadow-lg bg-primary-content grow">
+<div class="card card-compact flex shadow-lg bg-base-300 grow">
 	<div class="card-body">
 		<form method="POST" action="?/post">
 			<div class="flex mb-1.5 pl-1">

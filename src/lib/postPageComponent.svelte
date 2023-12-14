@@ -64,7 +64,7 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class="card card-compact shadow-lg bg-base-100">
+<div class="card card-compact card-bordered shadow-lg bg-base-100">
 	<div class="card-body">
 		<div class="flex-row flex">
 			<div><PostCardMetaComponent {post} {spaceId} /></div>
@@ -83,17 +83,16 @@
 			</div>
 		{/if}
 		{#if post?.post_pictures != null}
-			<div class="flex justify-center">
-				<div class="basis-1/4 rounded-md bg-gradient-to-r from-gray-900 to-gray-800" />
+			<div class="flex justify-center bg-gradient-to-b from-gray-900 to-gray-600 rounded-md">
 				<img
-					class="rounded-md"
-					alt="The project logo"
+					loading="eager"
+					class="object-contain h-[36rem] w-fit"
+					alt="Postcard pic"
 					height={getDimention(post?.post_pictures?.at(0)).height}
 					width={getDimention(post?.post_pictures?.at(0)).width}
-					src={'https://subspace.place/cdn-cgi/image/fit=scale-down,width=650,format=auto/' +
+					src={'https://subspace.place/cdn-cgi/image/fit=scale-down,width=550,format=auto/' +
 						post?.post_pictures?.at(0)?.url}
 				/>
-				<div class="basis-1/4 rounded-md bg-gradient-to-l from-gray-900 to-gray-800" />
 			</div>
 		{/if}
 		{#if post?.post_videos != null}

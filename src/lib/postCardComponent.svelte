@@ -55,7 +55,7 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <a
-	class="card card-compact shadow-lg bg-base-100 hover:cursor-pointer"
+	class="card card-compact card-bordered shadow-lg bg-base-100 hover:cursor-pointer"
 	href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}"
 	draggable="false"
 >
@@ -86,7 +86,7 @@
 		{#if post?.post_pictures != null}
 			<div class="flex justify-center bg-gradient-to-b from-gray-900 to-gray-600 rounded-md">
 				<img
-					loading="eager"
+					loading="lazy"
 					class="object-contain h-[28rem] w-fit"
 					alt="Postcard pic"
 					height={picHeight}

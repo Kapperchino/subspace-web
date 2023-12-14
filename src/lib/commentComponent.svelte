@@ -39,7 +39,7 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class="card card-compact shadow-lg bg-base-100 hover:cursor-pointer">
+<div class="card card-compact card-bordered shadow-lg bg-base-100 hover:cursor-pointer">
 	<div class="card-body">
 		<div class="flex-row flex">
 			<div><CommentMetaComponent comment={comment?.comment} /></div>
