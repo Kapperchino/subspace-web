@@ -1,3 +1,5 @@
+<svelte:options immutable />
+
 <script lang="ts">
 	import VoteComponent from '$lib/voteComponent.svelte';
 	import { VoteType, type PictureMeta, type Post, type VideoMeta } from '../models/post.type';
@@ -8,6 +10,7 @@
 
 	import CommentsIcon from '~icons/mdi/comment-text-multiple-outline';
 	import { createDialog, melt } from '@melt-ui/svelte';
+	import { onMount } from 'svelte';
 
 	let btn: HTMLButtonElement;
 
@@ -15,6 +18,9 @@
 	export let spaceId: number | undefined;
 	export let imgHeight: number = 500;
 	export let imgMinHeight: number = 300;
+
+	let picHeight: number | undefined;
+	let picWidth: number | undefined;
 
 	export function getDimention(meta: PictureMeta | undefined) {
 		const ratio = meta!.width / meta!.height;
@@ -31,6 +37,13 @@
 		btn.click();
 	};
 
+	onMount(() => {
+		if (post?.post_pictures) {
+			picHeight = getDimention(post?.post_pictures[0]).height;
+			picWidth = getDimention(post?.post_pictures[0]).width;
+		}
+	});
+
 	const {
 		elements: { trigger, overlay, content, title, description, close, portalled },
 		states: { open }
@@ -38,9 +51,6 @@
 		forceVisible: true
 	});
 </script>
-
-<svelte:options immutable />
-
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -74,19 +84,16 @@
 			</a>
 		{/if}
 		{#if post?.post_pictures != null}
-			<div class="flex justify-center">
-				<div class="basis-1/4 rounded-md bg-gradient-to-r from-gray-900 to-gray-800" />
+			<div class="flex justify-center bg-gradient-to-b from-gray-900 to-gray-600 rounded-md">
 				<img
-					loading="lazy"
-					class="rounded-md"
+					loading="eager"
+					class="object-contain h-[28rem] w-fit"
 					alt="Postcard pic"
-					height={getDimention(post?.post_pictures?.at(0)).height}
-					width={getDimention(post?.post_pictures?.at(0)).width}
+					height={picHeight}
+					width={picWidth}
 					src={'https://subspace.place/cdn-cgi/image/fit=scale-down,width=550,format=auto/' +
 						post?.post_pictures?.at(0)?.url}
 				/>
-
-				<div class="basis-1/4 rounded-md bg-gradient-to-l from-gray-900 to-gray-800" />
 			</div>
 		{/if}
 		{#if post?.post_videos != null}
