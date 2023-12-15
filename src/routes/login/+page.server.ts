@@ -8,7 +8,9 @@ export const actions = {
         const formData = await request.formData();
         const info: LogIn = { email: formData.get('email')!.toString(), password: formData.get('password')!.toString() }
         const meta = await login(info);
-        /* @migration task: add path argument */ /* @migration task: add path argument */ cookies.set("user", JSON.stringify(meta));
+        cookies.set("user", JSON.stringify(meta), {
+            path: '/'
+        });
         redirect(302, '/home');
     }
 } satisfies Actions;

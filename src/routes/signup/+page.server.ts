@@ -9,7 +9,9 @@ export const actions = {
         const formData = Object.fromEntries(await request.formData());
         const req: SignUp = formData as SignUp;
         const meta = await signup(req);
-        /* @migration task: add path argument */ /* @migration task: add path argument */ cookies.set("user", JSON.stringify(meta));
+        cookies.set("user", JSON.stringify(meta), {
+            path: '/'
+        });
         redirect(302, '/home');
     }
 } satisfies Actions;
