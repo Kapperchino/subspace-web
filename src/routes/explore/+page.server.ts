@@ -12,7 +12,7 @@ export const load: PageServerLoad = async ({ params, cookies }) => {
     }
     const tags = await getTags();
     if (tags.status == 401) {
-        throw redirect(302, '/login');
+        redirect(302, '/login');
     }
     return {
         user: user,
@@ -25,6 +25,6 @@ export const actions = {
     search: async ({ request, cookies }) => {
         const formData = await request.formData();
         const term = formData.get('search');
-        throw redirect(302, `/search/posts?term=${term}`);
+        redirect(302, `/search/posts?term=${term}`);
     }
 } satisfies Actions;

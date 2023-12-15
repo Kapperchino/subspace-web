@@ -7,7 +7,7 @@ import { getTags } from '../../service/trendingService';
 
 export const load: PageServerLoad = async ({ params, cookies }) => {
     if (cookies.get("user") == undefined) {
-        throw redirect(302, '/login');
+        redirect(302, '/login');
     }
-    throw redirect(302, '/notifications/all');
+    redirect(302, '/notifications/all');
 };

@@ -4,5 +4,5 @@ import { login } from '../service/loginService';
 import type { PageServerLoad, Actions } from './$types';
 
 export const load: PageServerLoad = async ({ cookies }) => {
-    throw redirect(302, '/home');
+    redirect(302, '/home');
 };

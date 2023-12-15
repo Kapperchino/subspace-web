@@ -8,7 +8,7 @@ import { getSubscription } from '../../../../../service/subscriptionService';
 
 export const load: PageServerLoad = async ({ params, cookies }) => {
     if (cookies.get("user") == undefined) {
-        throw redirect(302, '/login');
+        redirect(302, '/login');
     }
     const user: UserMeta = JSON.parse(cookies.get("user")!);
     const spaceId = Number(params.subSpaceId);
