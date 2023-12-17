@@ -151,7 +151,7 @@
 					>
 						<div class="flex" />
 						<div class="grow max-w-full md:max-w-xl">
-							<PostCardComponent post={$posts[row.index]} {spaceId} />
+							<PostCardComponent post={$posts[row.index]} {spaceId} index={row.index} />
 						</div>
 						<div class="flex" />
 					</div>

@@ -2,7 +2,7 @@
 
 <script lang="ts">
 	import VoteComponent from '$lib/voteComponent.svelte';
-	import { VoteType, type PictureMeta, type Post, type VideoMeta } from '../models/post.type';
+	import { VoteType, type PictureMeta, type Post } from '../models/post.type';
 	import CommentingComponent from './commentingComponent.svelte';
 	import PostCardMetaComponent from './postCardMetaComponent.svelte';
 	import TimeComponent from './timeComponent.svelte';
@@ -18,6 +18,9 @@
 	export let spaceId: number | undefined;
 	export let imgHeight: number = 500;
 	export let imgMinHeight: number = 300;
+	export let index: number;
+
+	const loadType: 'lazy' | 'eager' = index > 10 ? 'lazy' : 'eager';
 
 	let picHeight: number | undefined;
 	let picWidth: number | undefined;
@@ -86,7 +89,7 @@
 		{#if post?.post_pictures != null}
 			<div class="flex justify-center bg-gradient-to-b from-gray-900 to-gray-600 rounded-md">
 				<img
-					loading="lazy"
+					loading={loadType}
 					class="object-contain h-[28rem] w-fit"
 					alt="Postcard pic"
 					height={picHeight}

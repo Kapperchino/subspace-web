@@ -1,9 +1,8 @@
 <script lang="ts">
 	import ShellComponent from '$lib/shellComponent.svelte';
-
-	// Most of your app wide CSS should be put in this file
-	import SideBar from '$lib/sideBar.svelte';
 	import SortPostComponent from '$lib/sortPostComponent.svelte';
+
+	export let data: import('./$types').LayoutData;
 </script>
 
 <ShellComponent>
@@ -26,11 +25,10 @@
 		</div>
 		<div class="flex-1" />
 		<div class="md:flex-1" />
-		<div class="flex bg-base-300/60 ml-3 rounded-lg">
-			<div class="bottom-10 tabs tabs-boxed tabs-md flex">
-				<a class="tab tab-active" href="/home">Home</a>
-				<a class="tab" href="/following">Following</a>
-			</div>
+		<div class="flex backdrop-blur bg-base-300/60 ml-3 rounded-lg">
+			<div class="flex grow" />
+			{data.post?.space_name}
+			<div class="flex grow" />
 		</div>
 		<div class="flex grow" />
 		<SortPostComponent />

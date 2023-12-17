@@ -1,9 +1,9 @@
 import { setContext } from 'svelte';
 import type { PageServerLoad } from './$types';
-import type { UserMeta } from '../../../../models/signup.type';
-import { getPosts } from '../../../../service/postsService';
-import { redirect } from '@sveltejs/kit';
-import { getSpace } from '../../../../service/spaceService';
+import type { UserMeta } from '../../../../../models/signup.type';
+import { getPosts } from '../../../../../service/postsService';
+import { getSpace } from '../../../../../service/spaceService';
+import type { Post } from '../../../../../models/post.type';
 
 export const load: PageServerLoad = async ({ params, cookies, url, fetch }) => {
     let userId = 0;
@@ -18,13 +18,15 @@ export const load: PageServerLoad = async ({ params, cookies, url, fetch }) => {
     const days = url.searchParams.get('days') ?? "7";
     const type = url.searchParams.get('type') ?? "popular";
     const spaceId = Number(params.subSpaceId);
-    const posts = (await getPosts(fetch, userId, spaceId, Number(days), type, 0)).json();
-    const subspace = await getSpace(spaceId);
+    const postsFuture: Promise<Post[]> = getPosts(fetch, userId, spaceId, Number(days), type, 0)
+        .then(res => res.json());
+    const subspaceFuture = getSpace(spaceId);
+    const res = await Promise.all([postsFuture, subspaceFuture]);
     return {
         user: user,
-        posts: posts,
+        posts: res[0],
         spaceId: spaceId,
-        subspace: subspace.data,
+        subspace: res[1].data,
         params: params
     };
 };

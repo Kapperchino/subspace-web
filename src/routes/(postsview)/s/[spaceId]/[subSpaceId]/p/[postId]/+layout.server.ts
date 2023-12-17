@@ -1,10 +1,10 @@
 import { setContext } from 'svelte';
-import type { UserMeta } from '../../../../../../models/signup.type';
-import { getPost } from '../../../../../../service/postsService';
-import type { PageServerLoad } from './$types';
-import { getCommentsForPost } from '../../../../../../service/commentService';
+import type { UserMeta } from '../../../../../../../models/signup.type';
+import { getCommentsForPost } from '../../../../../../../service/commentService';
+import { getPost } from '../../../../../../../service/postsService';
+import type { LayoutServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ params, cookies }) => {
+export const load: LayoutServerLoad = async ({ params, cookies }) => {
     let userId = 0
     const userJson = cookies.get("user");
     let user: UserMeta | undefined;
@@ -15,7 +15,7 @@ export const load: PageServerLoad = async ({ params, cookies }) => {
     if (Number(params.spaceId) !== post.space_parent_id || Number(params.subSpaceId) !== post.space_id) {
         return;
     }
-    const comments = getCommentsForPost(userId, post.id);
+    const comments = await getCommentsForPost(userId, post.id);
     return {
         post: post,
         user: user,

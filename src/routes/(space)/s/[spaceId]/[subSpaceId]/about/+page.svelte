@@ -7,8 +7,8 @@
 	import SpaceAvatarComponent from '$lib/spaceAvatarComponent.svelte';
 
 	import User from '~icons/mdi/account';
-	import { deleteSubscription, subscribe } from '../../../../../service/subscriptionService';
 	import { invalidateAll } from '$app/navigation';
+	import { deleteSubscription, subscribe } from '../../../../../../service/subscriptionService';
 
 	export let data: PageData;
 	let spaceId: number = data.spaceId;

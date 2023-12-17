@@ -2,9 +2,9 @@ import { setContext } from 'svelte';
 import type { PageServerLoad } from './$types';
 
 import { redirect } from '@sveltejs/kit';
-import type { UserMeta } from '../../../../../models/signup.type';
-import { getSpace } from '../../../../../service/spaceService';
-import { getSubscription } from '../../../../../service/subscriptionService';
+import type { UserMeta } from '../../../../../../models/signup.type';
+import { getSpace } from '../../../../../../service/spaceService';
+import { getSubscription } from '../../../../../../service/subscriptionService';
 
 export const load: PageServerLoad = async ({ params, cookies }) => {
     if (cookies.get("user") == undefined) {
