@@ -108,7 +108,7 @@
 		{/if}
 	</ul>
 
-	<ul class="hidden md:menu lg:hidden p-4 w-20 min-h-full bg-base-200">
+	<ul class="hidden sm:menu lg:hidden p-4 w-20 min-h-full bg-base-200">
 		<!-- Sidebar content here -->
 		<a href="/home" data-sveltekit-noscroll>
 			<li>

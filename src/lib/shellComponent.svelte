@@ -1,4 +1,5 @@
 <script>
+	import BottomNavComponent from './bottomNavComponent.svelte';
 	import SideBar from './sideBar.svelte';
 </script>
 
@@ -12,4 +13,5 @@
 		<div><slot name="content">No content was provided</slot></div>
 	</div>
 	<SideBar />
+	<BottomNavComponent />
 </div>

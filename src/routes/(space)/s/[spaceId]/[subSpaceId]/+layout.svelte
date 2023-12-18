@@ -1,7 +1,6 @@
 <script lang="ts">
 	// Most of your app wide CSS should be put in this file
 	import { page } from '$app/stores';
-	import ButtomNavComponent from '$lib/buttomNavComponent.svelte';
 	import FooterComponent from '$lib/footerComponent.svelte';
 	import SideBar from '$lib/sideBar.svelte';
 	import SideDrawer from '$lib/sideDrawer.svelte';
