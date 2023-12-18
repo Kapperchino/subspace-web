@@ -3,12 +3,14 @@
 	import { page } from '$app/stores';
 	import FooterComponent from '$lib/footerComponent.svelte';
 	import SideBar from '$lib/sideBar.svelte';
+	import Toaster from '$lib/toaster.svelte';
 	import '../app.css';
 	import 'highlight.js/styles/atom-one-dark.css';
 </script>
 
+<Toaster />
 <slot />
-<div class="h-screen md:h-0"></div>
+<div class="h-screen md:h-0" />
 <div class="flex grow">
 	<FooterComponent />
 </div>

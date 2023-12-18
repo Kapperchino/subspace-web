@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lang="ts" >
 	import ImageAddFilled from '~icons/bxs/image-add';
 	import VideoAdd from '~icons/bxs/video-plus';
 	import LinkIcon from '~icons/bx/link';
@@ -33,6 +33,9 @@
 	import { prefixSearchTags, prefixSearchUsers } from '../service/searchService';
 	import { PluginKey } from '@tiptap/pm/state';
 	import { hashTagsRenderer } from './hashtags/hashTagRenderer';
+	import { addToast } from './toaster.svelte';
+	import Toast from './toaster.svelte';
+
 
 	$: hasTitle = false;
 	$: hasLink = false;
@@ -121,11 +124,12 @@
 			postReq.content_type = ContentType.Picture;
 		}
 		if (postReq.link == '' && vidList.length == 0 && picList.length == 0 && editor?.isEmpty) {
-			toast.error('Empty post is not allowed!', {
-				icon: '❌',
-				position: 'bottom-center',
-				style: 'border-radius: 300px; background: oklch(var(--b3)); color: oklch(var(--er));'
-			});
+			create();
+			// toast.error('Empty post is not allowed!', {
+			// 	icon: '❌',
+			// 	position: 'bottom-center',
+			// 	style: 'border-radius: 300px; background: oklch(var(--b3)); color: oklch(var(--er));'
+			// });
 			return;
 		}
 		const user: UserMeta = coockieStore.getValue('cookie');
@@ -169,7 +173,7 @@
 		//at this point everything should be uploaded
 		postReq.file_ids = fileIds;
 		if (spacePrefixState == SpacePrefixState.Selected) {
-			postReq.space_id = selectedSpace.id;
+			postReq.space_id = selectedSpace!.id;
 		}
 		try {
 			const res = await createPostClient(postReq);
@@ -182,11 +186,7 @@
 			}
 		}
 		resetPost();
-		toast.success('Post Successful!', {
-			icon: '🎉',
-			position: 'bottom-center',
-			style: 'border-radius: 200px; background: oklch(var(--b3)); color: oklch(var(--su));'
-		});
+		create();
 		onSuccess();
 	}
 
@@ -216,6 +216,16 @@
 
 	let editor: Editor | undefined;
 	let editorDiv: HTMLElement;
+
+	function create() {
+		addToast({
+			data: {
+				title: 'Success',
+				description: 'The resource was created!',
+				color: 'green'
+			}
+		});
+	}
 
 	onMount(() => {
 		const hashtagPlugin = Mention.extend({
