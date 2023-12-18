@@ -3,7 +3,6 @@
 	import { page } from '$app/stores';
 	import FooterComponent from '$lib/footerComponent.svelte';
 	import SideBar from '$lib/sideBar.svelte';
-	import SideDrawer from '$lib/sideDrawer.svelte';
 	import '../app.css';
 	import 'highlight.js/styles/atom-one-dark.css';
 </script>

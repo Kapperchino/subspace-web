@@ -6,7 +6,6 @@
 	import FooterComponent from '$lib/footerComponent.svelte';
 	import ShellComponent from '$lib/shellComponent.svelte';
 	import SideBar from '$lib/sideBar.svelte';
-	import SideDrawer from '$lib/sideDrawer.svelte';
 	import { blur } from 'svelte/transition';
 
 	let term: string;

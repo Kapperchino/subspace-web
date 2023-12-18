@@ -1,7 +1,6 @@
 <script lang="ts">
 	// Most of your app wide CSS should be put in this file
 	import SideBar from '$lib/sideBar.svelte';
-	import SideDrawer from '$lib/sideDrawer.svelte';
 	import { blur } from 'svelte/transition';
 </script>
 

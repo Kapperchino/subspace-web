@@ -53,7 +53,7 @@
 	};
 
 	let spacePrefixState: SpacePrefixState;
-	let selectedSpace: SpacePrefixRes;
+	let selectedSpace: SpacePrefixRes | undefined;
 	let clickOutside: () => void;
 
 	export let onSuccess = () => {}; // no-operation function;

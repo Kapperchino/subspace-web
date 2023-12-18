@@ -20,7 +20,6 @@
 			$offset = 0;
 			$loaded = false;
 		}
-		console.log(nav.type);
 	});
 
 	onMount(() => {

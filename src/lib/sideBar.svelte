@@ -12,6 +12,7 @@
 	import AvatarComponent from './avatarComponent.svelte';
 	import { createDialog, melt } from '@melt-ui/svelte';
 	import X from '~icons/bx/x';
+	import { page } from '$app/stores';
 	let modal: HTMLDialogElement | undefined;
 
 	var onSuccess = async () => {
@@ -30,6 +31,8 @@
 	} = createDialog({
 		forceVisible: true
 	});
+
+	$: path = $page.route.id;
 </script>
 
 <div class="drawer-side z-50">
@@ -37,48 +40,92 @@
 	<ul class="hidden lg:menu p-4 w-60 min-h-full bg-base-200">
 		<!-- Sidebar content here -->
 		<a href="/home" data-sveltekit-noscroll>
-			<li>
-				<div class=" join">
-					<div class="text-lg">
-						<Home />
+			{#if path?.startsWith('/home')}
+				<li class="bg-primary rounded-lg">
+					<div class=" join">
+						<div class="text-lg text-primary-content">
+							<Home />
+						</div>
+						<div class="flex text-lg text-primary-content">Home</div>
 					</div>
-					<div class="flex text-lg">Home</div>
-				</div>
-			</li></a
-		>
+				</li>
+			{:else}
+				<li class="rounded-lg">
+					<div class=" join">
+						<div class="text-lg">
+							<Home />
+						</div>
+						<div class="flex text-lg">Home</div>
+					</div>
+				</li>
+			{/if}
+		</a>
 
 		<a href="/explore" data-sveltekit-noscroll>
-			<li>
-				<div class=" join">
-					<div class="text-lg">
-						<Search />
+			{#if path?.startsWith('/explore')}
+				<li class="bg-primary rounded-lg">
+					<div class=" join">
+						<div class="text-lg text-primary-content">
+							<Search />
+						</div>
+						<div class="flex text-lg text-primary-content">Explore</div>
 					</div>
-					<div class="flex text-lg">Explore</div>
-				</div>
-			</li></a
-		>
+				</li>
+			{:else}
+				<li class="rounded-lg">
+					<div class=" join">
+						<div class="text-lg">
+							<Search />
+						</div>
+						<div class="flex text-lg">Explore</div>
+					</div>
+				</li>
+			{/if}
+		</a>
 
 		<a href="/spaces" data-sveltekit-noscroll>
-			<li>
-				<div class=" join">
-					<div class="text-lg">
-						<Satellite />
+			{#if path?.startsWith('/space')}
+				<li class="bg-primary rounded-lg">
+					<div class=" join">
+						<div class="text-lg text-primary-content">
+							<Satellite />
+						</div>
+						<div class="flex text-lg text-primary-content">Space</div>
 					</div>
-					<div class="flex text-lg">Space</div>
-				</div>
-			</li></a
-		>
+				</li>
+			{:else}
+				<li class="rounded-lg">
+					<div class=" join">
+						<div class="text-lg">
+							<Satellite />
+						</div>
+						<div class="flex text-lg">Space</div>
+					</div>
+				</li>
+			{/if}
+		</a>
 
 		<a href="/notifications" data-sveltekit-noscroll>
-			<li>
-				<div class="join">
-					<div class="text-lg">
-						<Bell />
+			{#if path?.startsWith('/notifications')}
+				<li class="bg-primary rounded-lg">
+					<div class=" join">
+						<div class="text-lg text-primary-content">
+							<Bell />
+						</div>
+						<div class="flex text-lg text-primary-content">Notifications</div>
 					</div>
-					<div class="flex text-lg">Notifications</div>
-				</div>
-			</li></a
-		>
+				</li>
+			{:else}
+				<li class="rounded-lg">
+					<div class=" join">
+						<div class="text-lg">
+							<Bell />
+						</div>
+						<div class="flex text-lg">Notifications</div>
+					</div>
+				</li>
+			{/if}
+		</a>
 		<button type="button" class="btn btn-primary btn-sm h-12 mt-3" use:melt={$trigger}>
 			<div class="text-lg flex flex-row">Post</div>
 		</button>
@@ -111,35 +158,67 @@
 	<ul class="hidden sm:menu lg:hidden p-4 w-20 min-h-full bg-base-200">
 		<!-- Sidebar content here -->
 		<a href="/home" data-sveltekit-noscroll>
-			<li>
-				<div class="text-lg">
-					<Home />
-				</div>
-			</li>
+			{#if path?.startsWith('/home')}
+				<li class="bg-primary rounded-lg">
+					<div class="text-lg text-primary-content">
+						<Home />
+					</div>
+				</li>
+			{:else}
+				<li class="rounded-lg">
+					<div class="text-lg">
+						<Home />
+					</div>
+				</li>
+			{/if}
 		</a>
 
 		<a href="/explore" data-sveltekit-noscroll>
-			<li>
-				<div class="text-lg">
-					<Search />
-				</div>
-			</li>
+			{#if path?.startsWith('/explore')}
+				<li class="bg-primary rounded-lg">
+					<div class="text-lg text-primary-content">
+						<Search />
+					</div>
+				</li>
+			{:else}
+				<li class="rounded-lg">
+					<div class="text-lg">
+						<Search />
+					</div>
+				</li>
+			{/if}
 		</a>
 
 		<a href="/spaces" data-sveltekit-noscroll>
-			<li>
-				<div class="text-lg">
-					<Satellite />
-				</div>
-			</li>
+			{#if path?.startsWith('/spaces')}
+				<li class="bg-primary rounded-lg">
+					<div class="text-lg text-primary-content">
+						<Satellite />
+					</div>
+				</li>
+			{:else}
+				<li class="rounded-lg">
+					<div class="text-lg">
+						<Satellite />
+					</div>
+				</li>
+			{/if}
 		</a>
 
 		<a href="/notifications" data-sveltekit-noscroll>
-			<li>
-				<div class="text-lg">
-					<Bell />
-				</div>
-			</li>
+			{#if path?.startsWith('/notifications')}
+				<li class="bg-primary rounded-lg">
+					<div class="text-lg text-primary-content">
+						<Bell />
+					</div>
+				</li>
+			{:else}
+				<li class="rounded-lg">
+					<div class="text-lg">
+						<Bell />
+					</div>
+				</li>
+			{/if}
 		</a>
 		<button type="button" class="flex btn btn-primary btn-sm w-14 h-12 mt-3" use:melt={$trigger}>
 			<div class="text-lg flex flex-row"><Send /></div>

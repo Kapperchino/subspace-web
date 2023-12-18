@@ -5,12 +5,11 @@
 	import SpaceAvatarComponent from './spaceAvatarComponent.svelte';
 	import User from '~icons/mdi/account';
 	import { createCombobox, melt } from '@melt-ui/svelte';
-	import type { ListboxOption } from '@melt-ui/svelte/dist/builders/listbox/types';
 
 	let list: SpacePrefixRes[] = [];
 
 	export let state: SpacePrefixState = SpacePrefixState.Init;
-	export let selectedSpace: SpacePrefixRes;
+	export let selectedSpace: SpacePrefixRes | undefined;
 
 	export function clickOutside() {
 		if ($inputValue.length == 0) {
@@ -29,10 +28,9 @@
 		forceVisible: true
 	});
 
-	selected.subscribe((val: ListboxOption<unknown> | undefined) => {
-		const valRes = val as ListboxOption<SpacePrefixRes>;
-		if (valRes != undefined) {
-			selectedSpace = valRes?.value;
+	selected.subscribe((val: any | undefined) => {
+		if (val != undefined) {
+			selectedSpace = val.value;
 			state = SpacePrefixState.Selected;
 			$inputValue = '';
 		}
@@ -69,7 +67,7 @@
 		/>
 	</div>
 	{#if $open}
-		<ul class="z-10 flex max-h-[300px] flex-col overflow-hidden rounded-lg w-60" use:melt={$menu}>
+		<ul class="flex max-h-[300px] flex-col overflow-hidden rounded-lg w-60 z-50" use:melt={$menu}>
 			<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 			<div
 				class="flex max-h-full flex-col gap-0 overflow-y-auto bg-base-100 px-2 py-2"
@@ -127,10 +125,10 @@
 			<div class="pr-0.5 flex text-base">@</div>
 			<div class="flex avatar p-0">
 				<div class="w-5 rounded-full">
-					<SpaceAvatarComponent url={selectedSpace.small_picture?.url} />
+					<SpaceAvatarComponent url={selectedSpace?.small_picture?.url} />
 				</div>
 			</div>
-			<div class="pl-1 flex text-base">{selectedSpace.name}</div>
+			<div class="pl-1 flex text-base">{selectedSpace?.name}</div>
 		</div>
 	</button>
 {/if}

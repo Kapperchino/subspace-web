@@ -13,6 +13,7 @@
 	import { getUserByAddress } from '../service/userServiceClient';
 	import hljs from 'highlight.js/lib/common';
 	import type { Writable } from 'svelte/store';
+	import { createVirtualizer } from '@tanstack/svelte-virtual';
 
 	export let posts: Writable<Post[]>;
 	export let userId: number;
@@ -22,6 +23,35 @@
 	let observer: IntersectionObserver;
 
 	let element: HTMLDivElement;
+
+	let virtualListEl: HTMLDivElement;
+	let virtualItemEls: HTMLDivElement[] = [];
+
+	$: count = $posts?.length ?? 0;
+
+	$: virtualizer = createVirtualizer<HTMLDivElement, HTMLDivElement>({
+		getScrollElement: () => virtualListEl,
+		count,
+		scrollMargin: virtualListEl?.offsetTop ?? 0,
+		estimateSize: () => 400,
+		initialRect: { width: 400, height: 1000 },
+		overscan: 20
+	});
+
+	$: items = $virtualizer.getVirtualItems();
+
+	$: {
+		if (virtualItemEls.length)
+			virtualItemEls.forEach((el) => {
+				$virtualizer.measureElement(el);
+			});
+	}
+
+	$: {
+		$virtualizer.setOptions({
+			count: !loaded ? count + 1 : count
+		});
+	}
 
 	export const getPostsClient = async (userId: number, offset: number): Promise<Post[]> => {
 		const data = await axios.get(
@@ -87,16 +117,28 @@
 </script>
 
 {#if $posts != null && $posts.length > 0}
-	<div>
-		{#each $posts as post, index}
-			<div class="flex flex-row pt-2 justify-center">
-				<div class="flex" />
-				<div class="grow max-w-full md:max-w-xl">
-					<PostCardComponent {post} spaceId={1} />
-				</div>
-				<div class="flex" />
+	<div bind:this={virtualListEl}>
+		<div style="position: relative; height: {$virtualizer.getTotalSize()}px; width: 100%;">
+			<div
+				style="position: absolute; top: 0; width: 100%; transform: translateY({items[0]
+					? items[0].start - $virtualizer.options.scrollMargin
+					: 0}px);"
+			>
+				{#each items as row, idx (row.index)}
+					<div
+						bind:this={virtualItemEls[idx]}
+						data-index={row.index}
+						class="flex flex-row pt-2 justify-center"
+					>
+						<div class="flex" />
+						<div class="grow max-w-full md:max-w-xl">
+							<PostCardComponent post={$posts[row.index]} spaceId={1} index={row.index} />
+						</div>
+						<div class="flex" />
+					</div>
+				{/each}
 			</div>
-		{/each}
+		</div>
 		<div bind:this={element} class="h-40" />
 	</div>
 {:else}

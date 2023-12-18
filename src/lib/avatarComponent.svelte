@@ -6,6 +6,9 @@
 	export let url: string | undefined;
 
 	function getAlt(): string {
+		if (userId == undefined) {
+			return 'https://subspaceimg.com/default_profile_' + 1 + '.png';
+		}
 		const num = userId! % 6;
 		return 'https://subspaceimg.com/default_profile_' + num + '.png';
 	}
