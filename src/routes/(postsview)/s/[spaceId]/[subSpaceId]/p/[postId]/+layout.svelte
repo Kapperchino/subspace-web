@@ -2,16 +2,23 @@
 	import AvatarComponent from '$lib/avatarComponent.svelte';
 	import ShellComponent from '$lib/shellComponent.svelte';
 	import SortPostComponent from '$lib/sortPostComponent.svelte';
+	import { coockieStore } from '$lib/store/tokenStore';
+	import { onMount } from 'svelte';
+	import type { UserMeta } from '../../../../../../../models/signup.type';
 
 	export let data: import('./$types').LayoutData;
+	let user: UserMeta;
+	onMount(() => {
+		user = coockieStore.getValue('cookie');
+	});
 </script>
 
 <ShellComponent>
 	<svelte:fragment slot="navbar">
-		<a class="flex flex-col mt-auto hover:cursor-pointer" href="/users/{data.user?.user_id}">
+		<a class="flex sm:hidden" href="/users/{user?.user_id}">
 			<div class="avatar">
 				<div class="w-10 rounded-full">
-					<AvatarComponent url={data.user?.picture_meta?.url} userId={data.user?.user_id} />
+					<AvatarComponent url={user?.picture_meta?.url} userId={user?.user_id} />
 				</div>
 			</div>
 		</a>
