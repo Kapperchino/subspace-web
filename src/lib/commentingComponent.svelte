@@ -226,7 +226,7 @@
 				<div class="flex justify-center bg-gradient-to-b from-gray-900 to-gray-600 rounded-md">
 					<img
 						loading="eager"
-						class="object-contain h-[28rem] w-fit"
+						class="object-contain h-72 w-fit"
 						alt="Postcard pic"
 						height={getDimention(post.post_pictures[0]).height}
 						width={imgWidth}

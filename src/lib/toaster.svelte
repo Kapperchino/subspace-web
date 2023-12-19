@@ -20,7 +20,7 @@
 </script>
 
 <div use:portal>
-	<div class="toast toast-center z-50" use:portal>
+	<div class="toast toast-end z-50" use:portal>
 		{#each $toasts as { id, data } (id)}
 			<div use:melt={$content(id)}>
 				{#if data.type == 'error'}
