@@ -23,17 +23,42 @@
 	<div class="toast toast-center z-50" use:portal>
 		{#each $toasts as { id, data } (id)}
 			<div use:melt={$content(id)}>
-				<div class="relative alert alert-{data.type}">
-					<div>
-						<!-- <h3 use:melt={$title(id)} class="flex items-center gap-2 font-semibold">
-							{data.title}
-							<span class="rounded-full square-1.5 {data.color}" />
-						</h3> -->
-						<div use:melt={$description(id)}>
-							{data.description}
+				{#if data.type == 'error'}
+					<div class="relative alert alert-error">
+						<div>
+							<div use:melt={$description(id)}>
+								{data.description}
+							</div>
 						</div>
 					</div>
-				</div>
+				{/if}
+				{#if data.type == 'warning'}
+					<div class="relative alert alert-warning">
+						<div>
+							<div use:melt={$description(id)}>
+								{data.description}
+							</div>
+						</div>
+					</div>
+				{/if}
+				{#if data.type == 'info'}
+					<div class="relative alert alert-info">
+						<div>
+							<div use:melt={$description(id)}>
+								{data.description}
+							</div>
+						</div>
+					</div>
+				{/if}
+				{#if data.type == 'success'}
+					<div class="relative alert alert-success">
+						<div>
+							<div use:melt={$description(id)}>
+								{data.description}
+							</div>
+						</div>
+					</div>
+				{/if}
 			</div>
 		{/each}
 	</div>
