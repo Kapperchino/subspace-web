@@ -22,11 +22,11 @@
 		uploadMedia
 	} from '../service/postingService';
 
-	import toast, { Toaster } from 'svelte-french-toast';
 	import PostCardMetaComponent from './postCardMetaComponent.svelte';
 	import CommentMetaComponent from './commentMetaComponent.svelte';
 	import type { Comment, CommentRequest } from '../models/comment.type';
 	import { createCommentClient } from '../service/commentingService';
+	import { addToast } from './toaster.svelte';
 
 	$: hasLink = false;
 
@@ -108,11 +108,7 @@
 
 	async function createComment(e: Event) {
 		if (commentReq.body == '') {
-			toast.error('Empty comment is not allowed!', {
-				icon: '❌',
-				position: 'bottom-center',
-				style: 'border-radius: 300px; background: oklch(var(--b3)); color: oklch(var(--er));'
-			});
+			createEmptyPost();
 			return;
 		}
 		const user: UserMeta = coockieStore.getValue('cookie');
@@ -160,12 +156,8 @@
 		// commentReq.file_ids = fileIds;
 		await createCommentClient(commentReq);
 		resetPost();
-		toast.success('Comment Successful!', {
-			icon: '🎉',
-			position: 'bottom-center',
-			style: 'border-radius: 200px; background: oklch(var(--b3)); color: oklch(var(--su));'
-		});
 		onSuccess();
+		createSuccess();
 	}
 
 	function toggleLink() {
@@ -186,6 +178,26 @@
 			vidList = vidList;
 			videoInput.value = '';
 		}
+	}
+
+	function createSuccess() {
+		addToast({
+			data: {
+				title: 'Success',
+				description: '🎉 Comment successful!',
+				type: 'success'
+			}
+		});
+	}
+
+	function createEmptyPost() {
+		addToast({
+			data: {
+				title: 'Warning',
+				description: '❌ Empty comment not allowed!',
+				type: 'error'
+			}
+		});
 	}
 </script>
 

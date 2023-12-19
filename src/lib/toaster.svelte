@@ -2,7 +2,7 @@
 	export type ToastData = {
 		title: string;
 		description: string;
-		color: string;
+		type: 'success' | 'info' | 'warning' | 'error';
 	};
 
 	const {
@@ -12,7 +12,7 @@
 		actions: { portal }
 	} = createToaster<ToastData>();
 
-	export const addToast = helpers.addToast;
+	export let addToast = helpers.addToast;
 </script>
 
 <script lang="ts">
@@ -20,20 +20,21 @@
 </script>
 
 <div use:portal>
-	{#each $toasts as { id, data } (id)}
-		<div use:melt={$content(id)}>
-			<div>
-				<div>
-					<h3 use:melt={$title(id)}>
-						{data.title}
-						<span style:color={data.color} />
-					</h3>
-					<div use:melt={$description(id)}>
-						{data.description}
+	<div class="toast toast-center z-50" use:portal>
+		{#each $toasts as { id, data } (id)}
+			<div use:melt={$content(id)}>
+				<div class="relative alert alert-{data.type}">
+					<div>
+						<!-- <h3 use:melt={$title(id)} class="flex items-center gap-2 font-semibold">
+							{data.title}
+							<span class="rounded-full square-1.5 {data.color}" />
+						</h3> -->
+						<div use:melt={$description(id)}>
+							{data.description}
+						</div>
 					</div>
 				</div>
-				<button use:melt={$close(id)} aria-label="close notification"> X </button>
 			</div>
-		</div>
-	{/each}
+		{/each}
+	</div>
 </div>

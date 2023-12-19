@@ -19,7 +19,6 @@
 		uploadMedia
 	} from '../service/postingService';
 
-	import toast, { Toaster } from 'svelte-french-toast';
 	import { onDestroy, onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import axios from 'axios';
@@ -34,7 +33,6 @@
 	import { PluginKey } from '@tiptap/pm/state';
 	import { hashTagsRenderer } from './hashtags/hashTagRenderer';
 	import { addToast } from './toaster.svelte';
-	import Toast from './toaster.svelte';
 
 
 	$: hasTitle = false;
@@ -124,12 +122,7 @@
 			postReq.content_type = ContentType.Picture;
 		}
 		if (postReq.link == '' && vidList.length == 0 && picList.length == 0 && editor?.isEmpty) {
-			create();
-			// toast.error('Empty post is not allowed!', {
-			// 	icon: '❌',
-			// 	position: 'bottom-center',
-			// 	style: 'border-radius: 300px; background: oklch(var(--b3)); color: oklch(var(--er));'
-			// });
+			createEmptyPost();
 			return;
 		}
 		const user: UserMeta = coockieStore.getValue('cookie');
@@ -186,7 +179,7 @@
 			}
 		}
 		resetPost();
-		create();
+		createSuccess();
 		onSuccess();
 	}
 
@@ -217,12 +210,22 @@
 	let editor: Editor | undefined;
 	let editorDiv: HTMLElement;
 
-	function create() {
+	function createSuccess() {
 		addToast({
 			data: {
 				title: 'Success',
-				description: 'The resource was created!',
-				color: 'green'
+				description: '🎉 Post successful!',
+				type: 'success'
+			}
+		});
+	}
+
+	function createEmptyPost() {
+		addToast({
+			data: {
+				title: 'Warning',
+				description: '❌ Empty post not allowed!',
+				type: 'error'
 			}
 		});
 	}
@@ -430,5 +433,3 @@
 		</form>
 	</div>
 </div>
-
-<Toaster />
