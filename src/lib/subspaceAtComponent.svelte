@@ -81,7 +81,7 @@
 							disabled: item.name == 'SubSpace'
 						})}
 						class="relative cursor-pointer scroll-my-2 rounded-md py-2 pl-2 pr-2
-        data-[highlighted]:bg-secondary data-[highlighted]:text-magnum-900
+        data-[highlighted]:bg-secondary data-[highlighted]:text-primary-content
           data-[disabled]:opacity-50"
 					>
 						<div class="flex flex-row">

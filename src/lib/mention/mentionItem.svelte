@@ -11,7 +11,8 @@
 	export let onClick = () => {};
 	let element: HTMLElement;
 
-	$: bg = active ? 'bg-secondary' : 'bg-base-200';
+	$: bg = active ? 'bg-primary' : 'bg-base-200';
+	$: text = active ? 'text-primary-content' : '';
 	$: {
 		if (active) {
 			// wait for next tick make sure layout is ready
@@ -29,6 +30,6 @@
 		</div>
 	</div>
 	<div class="flex pl-3">
-		<span class="text-lg">{user.display_name}</span>
+		<span class="text-lg {text}">{user.display_name}</span>
 	</div>
 </button>

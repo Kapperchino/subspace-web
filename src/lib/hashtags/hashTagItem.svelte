@@ -12,7 +12,8 @@
 	export let onClick = () => {};
 	let element: HTMLElement;
 
-	$: bg = active ? 'bg-secondary' : 'bg-base-200';
+	$: bg = active ? 'bg-primary' : 'bg-base-200';
+	$: text = active ? 'text-primary-content' : '';
 	$: {
 		if (active) {
 			// wait for next tick make sure layout is ready
@@ -25,6 +26,6 @@
 
 <button on:click={onClick} bind:this={element} class="flex grow flex-row {bg} py-2 px-2 rounded-lg">
 	<div class="flex pl-3">
-		<span class="text-lg">#{tag.name}</span>
+		<span class="text-lg {text}">#{tag.name}</span>
 	</div>
 </button>
