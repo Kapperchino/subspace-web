@@ -32,6 +32,7 @@
 
 	export let imgHeight: number = 300;
 	export let imgMinHeight: number = 200;
+	export let imgWidth: number = 550;
 
 	let picList: Array<[string, File]> = [];
 	let vidList: Array<[string, File]> = [];
@@ -97,11 +98,9 @@
 
 	export function getDimention(meta: PictureMeta | undefined) {
 		const ratio = meta!.width / meta!.height;
-		var height = Math.min(imgHeight, meta!.height);
-		height = Math.max(imgMinHeight, height);
-		const width = height * ratio;
+		var height = imgWidth / ratio;
 		return {
-			width: width,
+			width: imgWidth,
 			height: height
 		};
 	}
@@ -224,19 +223,16 @@
 				</div>
 			{/if}
 			{#if post?.post_pictures != null}
-				<div class="flex justify-center">
-					<div class="basis-1/4 rounded-md bg-gradient-to-r from-gray-900 to-gray-800" />
+				<div class="flex justify-center bg-gradient-to-b from-gray-900 to-gray-600 rounded-md">
 					<img
-						loading="lazy"
-						class="rounded-md"
-						alt="The project logo"
-						height={getDimention(post?.post_pictures?.at(0)).height}
-						width={getDimention(post?.post_pictures?.at(0)).width}
+						loading="eager"
+						class="object-contain h-[28rem] w-fit"
+						alt="Postcard pic"
+						height={getDimention(post.post_pictures[0]).height}
+						width={imgWidth}
 						src={'https://subspace.place/cdn-cgi/image/fit=scale-down,width=550,format=auto/' +
 							post?.post_pictures?.at(0)?.url}
 					/>
-
-					<div class="basis-1/4 rounded-md bg-gradient-to-l from-gray-900 to-gray-800" />
 				</div>
 			{/if}
 			{#if post?.post_videos != null}

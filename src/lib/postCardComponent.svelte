@@ -18,20 +18,16 @@
 	export let spaceId: number | undefined;
 	export let imgHeight: number = 500;
 	export let imgMinHeight: number = 300;
+	export let imgWidth: number = 550;
 	export let index: number;
 
 	const loadType: 'lazy' | 'eager' = index > 10 ? 'lazy' : 'eager';
 
-	let picHeight: number | undefined;
-	let picWidth: number | undefined;
-
 	export function getDimention(meta: PictureMeta | undefined) {
 		const ratio = meta!.width / meta!.height;
-		var height = Math.min(imgHeight, meta!.height);
-		height = Math.max(imgMinHeight, height);
-		const width = height * ratio;
+		var height = imgWidth / ratio;
 		return {
-			width: width,
+			width: imgWidth,
 			height: height
 		};
 	}
@@ -39,13 +35,6 @@
 	var onSuccess = async () => {
 		btn.click();
 	};
-
-	onMount(() => {
-		if (post?.post_pictures) {
-			picHeight = getDimention(post?.post_pictures[0]).height;
-			picWidth = getDimention(post?.post_pictures[0]).width;
-		}
-	});
 
 	const {
 		elements: { trigger, overlay, content, title, description, close, portalled },
@@ -92,8 +81,8 @@
 					loading={loadType}
 					class="object-contain h-[28rem] w-fit"
 					alt="Postcard pic"
-					height={picHeight}
-					width={picWidth}
+					height={getDimention(post.post_pictures[0]).height}
+					width={imgWidth}
 					src={'https://subspace.place/cdn-cgi/image/fit=scale-down,width=550,format=auto/' +
 						post?.post_pictures?.at(0)?.url}
 				/>
