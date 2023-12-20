@@ -258,13 +258,18 @@
 				{/if}
 			</a>
 		{/if}
-		<li class="rounded-lg">
-			<div class="join">
-				<div class="text-lg">
-					<Settings />
-				</div>
-			</div>
-		</li>
+
+		<SettingsComponent {user}>
+			<svelte:fragment slot="button">
+				<li class="rounded-lg">
+					<div class="join">
+						<div class="text-lg">
+							<Settings />
+						</div>
+					</div>
+				</li>
+			</svelte:fragment>
+		</SettingsComponent>
 
 		<button type="button" class="flex btn btn-primary btn-sm w-14 h-12 mt-3" use:melt={$trigger}>
 			<div class="text-lg flex flex-row"><Send /></div>
