@@ -15,6 +15,7 @@
 	import Account from '~icons/material-symbols/account-circle';
 	import { page } from '$app/stores';
 	import SideBarProfileComponent from './sideBarProfileComponent.svelte';
+	import SettingsComponent from './settingsComponent.svelte';
 	let modal: HTMLDialogElement | undefined;
 
 	var onSuccess = async () => {
@@ -154,14 +155,18 @@
 			</a>
 		{/if}
 
-		<li class="rounded-lg">
-			<div class="join">
-				<div class="text-lg">
-					<Settings />
-				</div>
-				<div class="flex text-lg">Settings</div>
-			</div>
-		</li>
+		<SettingsComponent {user}>
+			<svelte:fragment slot="button">
+				<li class="rounded-lg">
+					<div class="join">
+						<div class="text-lg">
+							<Settings />
+						</div>
+						<div class="flex text-lg">Settings</div>
+					</div>
+				</li>
+			</svelte:fragment>
+		</SettingsComponent>
 
 		<button type="button" class="btn btn-primary btn-sm h-12 mt-3" use:melt={$trigger}>
 			<div class="text-lg flex flex-row">Post</div>
@@ -268,9 +273,9 @@
 	</ul>
 </div>
 
-<div use:melt={$portalled}>
-	{#if $open}
-		<div use:melt={$overlay} class="fixed inset-0 z-50 bg-black/50" />
+{#if $open}
+	<div use:melt={$portalled}>
+		<div use:melt={$overlay} class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm" />
 		<div
 			class="fixed left-[50%] top-[50%] z-50 max-h-[85vh] w-[90vw]
 			  max-w-xl translate-x-[-50%] translate-y-[-50%] rounded-xl bg-base-300
@@ -284,5 +289,5 @@
 			</div>
 			<PostingComponent {onSuccess} />
 		</div>
-	{/if}
-</div>
+	</div>
+{/if}

@@ -4,6 +4,14 @@
 	import Toaster from '$lib/toaster.svelte';
 	import '../app.css';
 	import 'highlight.js/styles/atom-one-dark.css';
+	import { themeStore } from '$lib/store/themeStore';
+	import { browser } from '$app/environment';
+
+	if (browser) {
+		themeStore.subscribe((val) => {
+			document.documentElement.setAttribute('data-theme', val);
+		});
+	}
 </script>
 
 <Toaster />
