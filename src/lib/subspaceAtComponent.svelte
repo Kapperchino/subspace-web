@@ -3,7 +3,6 @@
 	import { SpacePrefixState, type SpacePrefixRes } from '../models/space.type';
 	import { prefixSearchSpaces } from '../service/searchService';
 	import SpaceAvatarComponent from './spaceAvatarComponent.svelte';
-	import User from '~icons/mdi/account';
 	import { createCombobox, melt } from '@melt-ui/svelte';
 
 	let list: SpacePrefixRes[] = [];

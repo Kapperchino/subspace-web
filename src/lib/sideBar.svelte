@@ -9,10 +9,12 @@
 	import { coockieStore } from './store/tokenStore';
 	import { onMount } from 'svelte';
 	import type { UserMeta } from '../models/signup.type';
-	import AvatarComponent from './avatarComponent.svelte';
 	import { createDialog, melt } from '@melt-ui/svelte';
 	import X from '~icons/bx/x';
+	import Settings from '~icons/material-symbols/settings-outline-rounded'
+	import Account from '~icons/material-symbols/account-circle';
 	import { page } from '$app/stores';
+	import SideBarProfileComponent from './sideBarProfileComponent.svelte';
 	let modal: HTMLDialogElement | undefined;
 
 	var onSuccess = async () => {
@@ -20,7 +22,7 @@
 		modal?.close();
 	};
 
-	let user: UserMeta;
+	let user: UserMeta | undefined;
 	onMount(() => {
 		user = coockieStore.getValue('cookie');
 	});
@@ -33,9 +35,10 @@
 	});
 
 	$: path = $page.route.id;
+	$: url = $page.url.pathname;
 </script>
 
-<div class="drawer-side z-50">
+<div class="drawer-side z-40">
 	<label for="my-drawer-3" aria-label="close sidebar" class="drawer-overlay lg:hidden" />
 	<ul class="hidden lg:menu p-4 w-60 min-h-full bg-base-200">
 		<!-- Sidebar content here -->
@@ -126,33 +129,45 @@
 				</li>
 			{/if}
 		</a>
+
+		{#if user}
+			<a href="/users/{user?.user_id}" data-sveltekit-noscroll>
+				{#if url.toString().startsWith(`/users/${user.user_id}`)}
+					<li class="bg-primary rounded-lg">
+						<div class=" join">
+							<div class="text-lg text-primary-content">
+								<Account />
+							</div>
+							<div class="flex text-lg text-primary-content">Account</div>
+						</div>
+					</li>
+				{:else}
+					<li class="rounded-lg">
+						<div class="join">
+							<div class="text-lg">
+								<Account />
+							</div>
+							<div class="flex text-lg">Account</div>
+						</div>
+					</li>
+				{/if}
+			</a>
+		{/if}
+
+		<li class="rounded-lg">
+			<div class="join">
+				<div class="text-lg">
+					<Settings />
+				</div>
+				<div class="flex text-lg">Settings</div>
+			</div>
+		</li>
+
 		<button type="button" class="btn btn-primary btn-sm h-12 mt-3" use:melt={$trigger}>
 			<div class="text-lg flex flex-row">Post</div>
 		</button>
 
-		{#if user == undefined}
-			<a class="flex flex-col mt-auto" href="/login">
-				<div class="btn btn-info shadow-md shadow-info">Log in here!</div>
-			</a>{:else}
-			<a class="flex flex-col mt-auto hover:cursor-pointer" href="/users/{user.user_id}">
-				<div class="grow" />
-				<div class="card card-compact bg-base-300">
-					<div class="card-body">
-						<div class="flex-row flex">
-							<div class="avatar">
-								<div class="w-10 rounded-full">
-									<AvatarComponent url={user?.picture_meta?.url} userId={user?.user_id} />
-								</div>
-							</div>
-							<div class="pl-2">
-								<div class="pl-1 font-semibold">{user?.display_name}</div>
-								<div class="pl-0.5 text-primary">@{user?.user_address}</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</a>
-		{/if}
+		<SideBarProfileComponent {user} />
 	</ul>
 
 	<ul class="hidden sm:menu lg:hidden p-4 w-20 min-h-full bg-base-200">
@@ -220,34 +235,28 @@
 				</li>
 			{/if}
 		</a>
+
+		{#if user}
+			<a href="/users/{user?.user_id}" data-sveltekit-noscroll>
+				{#if url.toString().startsWith(`/users/${user.user_id}`)}
+					<li class="bg-primary rounded-lg">
+						<div class="text-lg text-primary-content">
+							<Account />
+						</div>
+					</li>
+				{:else}
+					<li class="rounded-lg">
+						<div class="text-lg">
+							<Account />
+						</div>
+					</li>
+				{/if}
+			</a>
+		{/if}
 		<button type="button" class="flex btn btn-primary btn-sm w-14 h-12 mt-3" use:melt={$trigger}>
 			<div class="text-lg flex flex-row"><Send /></div>
 		</button>
-
-		{#if user == undefined}
-			<a class="flex flex-col mt-auto" href="/login">
-				<div class="btn btn-info shadow-md shadow-info">Log in here!</div>
-			</a>
-		{:else}
-			<a class="flex flex-col mt-auto hover:cursor-pointer" href="/users/{user.user_id}">
-				<div class="grow" />
-				<div class="card card-compact bg-base-300">
-					<div class="card-body">
-						<div class="flex-row flex">
-							<div class="avatar">
-								<div class="w-10 rounded-full">
-									<AvatarComponent url={user?.picture_meta?.url} userId={user?.user_id} />
-								</div>
-							</div>
-							<div class="hidden lg:block pl-2">
-								<div class="pl-1 font-semibold">{user?.display_name}</div>
-								<div class="pl-0.5 text-primary">@{user?.user_address}</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</a>
-		{/if}
+		<SideBarProfileComponent {user} />
 	</ul>
 </div>
 
