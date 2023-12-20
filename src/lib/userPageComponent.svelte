@@ -1,5 +1,5 @@
 <script lang="ts">
-	import PostCardComponent from './postCardComponent.svelte';
+	import PostCardComponent from './posts/postCardComponent.svelte';
 	import type { Post } from '../models/post.type';
 	import NotFoundComponent from './notFoundComponent.svelte';
 	import { infiniteScrollAction } from 'svelte-legos';

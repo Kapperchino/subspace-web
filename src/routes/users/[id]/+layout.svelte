@@ -1,6 +1,6 @@
 <script lang="ts">
 	// Most of your app wide CSS should be put in this file
-	import SideBar from '$lib/sideBar.svelte';
+	import SideBar from '$lib/sidebar/sideBar.svelte';
 	import type { LayoutData } from './$types';
 	import AvatarComponent from '$lib/avatarComponent.svelte';
 	import { onMount } from 'svelte';

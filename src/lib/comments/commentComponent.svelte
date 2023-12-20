@@ -2,11 +2,11 @@
 	import { goto, invalidateAll } from '$app/navigation';
 
 	import VoteComponent from '$lib/voteComponent.svelte';
-	import type { CommentData } from '../models/comment.type';
-	import { VoteType, type PictureMeta, type Post, type VideoMeta } from '../models/post.type';
+	import type { CommentData } from '../../models/comment.type';
+	import { VoteType, type PictureMeta, type Post, type VideoMeta } from '../../models/post.type';
 	import CommentMetaComponent from './commentMetaComponent.svelte';
 	import CommentingComponent from './commentingComponent.svelte';
-	import TimeComponent from './timeComponent.svelte';
+	import TimeComponent from '../timeComponent.svelte';
 	import ReplyIcon from '~icons/gridicons/reply';
 	import { createDialog, melt } from '@melt-ui/svelte';
 	import X from '~icons/bx/x';

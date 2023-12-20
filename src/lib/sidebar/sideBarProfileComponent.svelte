@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { createPopover, melt } from '@melt-ui/svelte';
-	import type { UserMeta } from '../models/signup.type';
-	import AvatarComponent from './avatarComponent.svelte';
+	import type { UserMeta } from '../../models/signup.type';
+	import AvatarComponent from '../avatarComponent.svelte';
 
 	import Dots from '~icons/mdi/dots-vertical';
 	import X from '~icons/bx/x';
 	import Logout from '~icons/material-symbols/logout-rounded';
-	import { coockieStore } from './store/tokenStore';
+	import { coockieStore } from '../store/tokenStore';
 	import { goto } from '$app/navigation';
 
 	export let user: UserMeta | undefined;

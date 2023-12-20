@@ -9,30 +9,30 @@
 		type FileUploadRequest,
 		type PictureRequestMeta,
 		type PostCreation
-	} from '../models/post.type';
-	import { coockieStore } from './store/tokenStore';
-	import type { UserMeta } from '../models/signup.type';
+	} from '../../models/post.type';
+	import { coockieStore } from '../store/tokenStore';
+	import type { UserMeta } from '../../models/signup.type';
 	import {
 		createPostClient,
 		processVideo,
 		uploadFile,
 		uploadMedia
-	} from '../service/postingService';
+	} from '../../service/postingService';
 
 	import { onDestroy, onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import axios from 'axios';
-	import SubspaceAtComponent from './subspaceAtComponent.svelte';
-	import { SpacePrefixState, type SpacePrefixRes } from '../models/space.type';
+	import SubspaceAtComponent from '../subspaceAtComponent.svelte';
+	import { SpacePrefixState, type SpacePrefixRes } from '../../models/space.type';
 	import { Editor } from '@tiptap/core';
 	import StarterKit from '@tiptap/starter-kit';
 	import Placeholder from '@tiptap/extension-placeholder';
 	import Mention from '@tiptap/extension-mention';
-	import { mentionRenderer } from './mention/mentionRenderer';
-	import { prefixSearchTags, prefixSearchUsers } from '../service/searchService';
+	import { mentionRenderer } from '../mention/mentionRenderer';
+	import { prefixSearchTags, prefixSearchUsers } from '../../service/searchService';
 	import { PluginKey } from '@tiptap/pm/state';
-	import { hashTagsRenderer } from './hashtags/hashTagRenderer';
-	import { addToast } from './toaster.svelte';
+	import { hashTagsRenderer } from '../hashtags/hashTagRenderer';
+	import { addToast } from '../toaster.svelte';
 
 
 	$: hasTitle = false;

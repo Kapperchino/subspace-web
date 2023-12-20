@@ -4,14 +4,14 @@
 	import Satellite from '~icons/material-symbols/satellite-alt-outline-sharp';
 	import Bell from '~icons/ic/round-notifications-none';
 	import Send from '~icons/ic/baseline-send';
-	import PostingComponent from './postingComponent.svelte';
+	import PostingComponent from '../posts/postingComponent.svelte';
 	import { goto, invalidateAll } from '$app/navigation';
-	import { coockieStore } from './store/tokenStore';
+	import { coockieStore } from '../store/tokenStore';
 	import { onMount } from 'svelte';
-	import type { UserMeta } from '../models/signup.type';
+	import type { UserMeta } from '../../models/signup.type';
 	import { createDialog, melt } from '@melt-ui/svelte';
 	import X from '~icons/bx/x';
-	import Settings from '~icons/material-symbols/settings-outline-rounded'
+	import Settings from '~icons/material-symbols/settings-outline-rounded';
 	import Account from '~icons/material-symbols/account-circle';
 	import { page } from '$app/stores';
 	import SideBarProfileComponent from './sideBarProfileComponent.svelte';
@@ -253,6 +253,14 @@
 				{/if}
 			</a>
 		{/if}
+		<li class="rounded-lg">
+			<div class="join">
+				<div class="text-lg">
+					<Settings />
+				</div>
+			</div>
+		</li>
+
 		<button type="button" class="flex btn btn-primary btn-sm w-14 h-12 mt-3" use:melt={$trigger}>
 			<div class="text-lg flex flex-row"><Send /></div>
 		</button>

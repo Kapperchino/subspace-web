@@ -3,7 +3,7 @@
 
 	import { onMount, setContext } from 'svelte';
 	import SpaceComponent from '$lib/spaceComponent.svelte';
-	import PostingComponent from '$lib/postingComponent.svelte';
+	import PostingComponent from '$lib/posts/postingComponent.svelte';
 	import { afterNavigate, invalidateAll } from '$app/navigation';
 	import { coockieStore } from '$lib/store/tokenStore';
 	import SeoComponent from '$lib/seoComponent.svelte';

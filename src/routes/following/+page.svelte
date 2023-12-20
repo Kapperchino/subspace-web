@@ -4,7 +4,7 @@
 	import VoteComponent from '$lib/voteComponent.svelte';
 	import { setContext } from 'svelte';
 	import { page } from '$app/stores';
-	import PostCardComponent from '$lib/postCardComponent.svelte';
+	import PostCardComponent from '$lib/posts/postCardComponent.svelte';
 	import NotFoundComponent from '$lib/notFoundComponent.svelte';
 	import type { PictureMeta } from '../../models/signup.type';
 

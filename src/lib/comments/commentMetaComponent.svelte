@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { Comment } from '../models/comment.type';
-	import type { PictureMeta, Post, VideoMeta } from '../models/post.type';
-	import AvatarComponent from './avatarComponent.svelte';
-	import SpaceAvatarComponent from './spaceAvatarComponent.svelte';
+	import type { Comment } from '../../models/comment.type';
+	import type { PictureMeta, Post, VideoMeta } from '../../models/post.type';
+	import AvatarComponent from '../avatarComponent.svelte';
+	import SpaceAvatarComponent from '../spaceAvatarComponent.svelte';
 
 	export let comment: Comment | undefined;
 </script>

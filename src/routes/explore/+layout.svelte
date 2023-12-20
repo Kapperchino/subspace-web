@@ -5,7 +5,7 @@
 	import { page } from '$app/stores';
 	import FooterComponent from '$lib/footerComponent.svelte';
 	import ShellComponent from '$lib/shellComponent.svelte';
-	import SideBar from '$lib/sideBar.svelte';
+	import SideBar from '$lib/sidebar/sideBar.svelte';
 	import { blur } from 'svelte/transition';
 
 	let term: string;

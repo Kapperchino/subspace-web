@@ -4,9 +4,9 @@
 	import VoteComponent from '$lib/voteComponent.svelte';
 	import { setContext } from 'svelte';
 	import AvatarComponent from '$lib/avatarComponent.svelte';
-	import PostCardComponent from '$lib/postCardComponent.svelte';
-	import PostPageComponent from '$lib/postPageComponent.svelte';
-	import CommentComponent from '$lib/commentComponent.svelte';
+	import PostCardComponent from '$lib/posts/postCardComponent.svelte';
+	import PostPageComponent from '$lib/posts/postPageComponent.svelte';
+	import CommentComponent from '$lib/comments/commentComponent.svelte';
 	import SeoComponent from '$lib/seoComponent.svelte';
 	import type { PageData } from './$types';
 

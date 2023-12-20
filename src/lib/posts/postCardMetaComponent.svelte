@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { PictureMeta, Post, VideoMeta } from '../models/post.type';
-	import AvatarComponent from './avatarComponent.svelte';
-	import SpaceAvatarComponent from './spaceAvatarComponent.svelte';
+	import type { PictureMeta, Post, VideoMeta } from '../../models/post.type';
+	import AvatarComponent from '../avatarComponent.svelte';
+	import SpaceAvatarComponent from '../spaceAvatarComponent.svelte';
 
 	export let post: Post | undefined;
 	export let spaceId: number | undefined;

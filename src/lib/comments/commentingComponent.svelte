@@ -12,21 +12,21 @@
 		type Post,
 		type PostCreation,
 		type VideoMeta
-	} from '../models/post.type';
-	import { coockieStore } from './store/tokenStore';
-	import type { UserMeta } from '../models/signup.type';
+	} from '../../models/post.type';
+	import { coockieStore } from '../store/tokenStore';
+	import type { UserMeta } from '../../models/signup.type';
 	import {
 		createPostClient,
 		processVideo,
 		uploadFile,
 		uploadMedia
-	} from '../service/postingService';
+	} from '../../service/postingService';
 
-	import PostCardMetaComponent from './postCardMetaComponent.svelte';
+	import PostCardMetaComponent from '../posts/postCardMetaComponent.svelte';
 	import CommentMetaComponent from './commentMetaComponent.svelte';
-	import type { Comment, CommentRequest } from '../models/comment.type';
-	import { createCommentClient } from '../service/commentingService';
-	import { addToast } from './toaster.svelte';
+	import type { Comment, CommentRequest } from '../../models/comment.type';
+	import { createCommentClient } from '../../service/commentingService';
+	import { addToast } from '../toaster.svelte';
 
 	$: hasLink = false;
 
@@ -236,7 +236,7 @@
 				</div>
 			{/if}
 			{#if post?.post_videos != null}
-				{#await import('./video/VideoPlayer.svelte') then { default: Player }}
+				{#await import('../video/VideoPlayer.svelte') then { default: Player }}
 					<svelte:component
 						this={Player}
 						src={post.post_videos[0].url}

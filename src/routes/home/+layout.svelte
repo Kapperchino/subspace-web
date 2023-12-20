@@ -3,7 +3,7 @@
 	import ShellComponent from '$lib/shellComponent.svelte';
 
 	// Most of your app wide CSS should be put in this file
-	import SideBar from '$lib/sideBar.svelte';
+	import SideBar from '$lib/sidebar/sideBar.svelte';
 	import SortPostComponent from '$lib/sortPostComponent.svelte';
 	import { coockieStore } from '$lib/store/tokenStore';
 	import { onMount } from 'svelte';

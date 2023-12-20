@@ -1,6 +1,6 @@
 <script>
 	import BottomNavComponent from './bottomNavComponent.svelte';
-	import SideBar from './sideBar.svelte';
+	import SideBar from './sidebar/sideBar.svelte';
 </script>
 
 <div class="drawer md:drawer-open">

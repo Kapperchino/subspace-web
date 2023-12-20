@@ -4,7 +4,7 @@
 	import Satellite from '~icons/material-symbols/satellite-alt-outline-sharp';
 	import Bell from '~icons/ic/round-notifications-none';
 	import Send from '~icons/ic/baseline-send';
-	import PostingComponent from './postingComponent.svelte';
+	import PostingComponent from './posts/postingComponent.svelte';
 	import { goto, invalidateAll } from '$app/navigation';
 	import { coockieStore } from './store/tokenStore';
 	import { onMount } from 'svelte';
