@@ -126,8 +126,8 @@
 	</div>
 </div>
 
-{#if $open}
-	<div use:melt={$portalled}>
+<div use:melt={$portalled}>
+	{#if $open}
 		<div use:melt={$overlay} class="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm" />
 		<div
 			class="fixed left-[50%] top-[50%] z-40 max-h-[85vh] w-full sm:w-[90vw]
@@ -144,5 +144,5 @@
 			</div>
 			<CommentingComponent {post} comment={undefined} {onSuccess} />
 		</div>
-	</div>
-{/if}
+	{/if}
+</div>

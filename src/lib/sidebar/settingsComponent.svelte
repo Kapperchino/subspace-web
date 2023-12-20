@@ -25,8 +25,8 @@
 	<slot name="button" />
 </button>
 
-{#if $open}
-	<div use:melt={$portalled}>
+<div use:melt={$portalled}>
+	{#if $open}
 		<div use:melt={$overlay} class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm" />
 		<div
 			class="fixed left-[50%] top-[50%] z-50 max-h-[85vh] w-full sm:w-[90vw]
@@ -85,5 +85,5 @@
 				</label>
 			</div>
 		</div>
-	</div>
-{/if}
+	{/if}
+</div>
