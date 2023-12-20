@@ -17,7 +17,7 @@
 
 <svelte:head>
 	<SeoComponent
-		title={data.post?.topic ?? 'Subspace Post'}
+		title="{data.post?.poster_name} posted in {data.post?.space_name}: {data.post?.topic ?? ''}"
 		description={data.post?.body ?? ''}
 		img={data.post?.post_pictures?.at(0)?.url}
 	/>

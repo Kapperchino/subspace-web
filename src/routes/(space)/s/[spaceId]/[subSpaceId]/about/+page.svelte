@@ -9,6 +9,7 @@
 	import User from '~icons/mdi/account';
 	import { invalidateAll } from '$app/navigation';
 	import { deleteSubscription, subscribe } from '../../../../../../service/subscriptionService';
+	import SeoComponent from '$lib/seoComponent.svelte';
 
 	export let data: PageData;
 	let spaceId: number = data.spaceId;
@@ -52,6 +53,15 @@
 		}
 	};
 </script>
+
+<svelte:head>
+	<SeoComponent
+		title="Subspace {data.subspace.name} about"
+		description={data.subspace.description ??
+			"Subspace is a social network for people to hang out with thier communities, there's a subspace for anything that you're intrested in, and if not, go create it!"}
+		img={data.subspace.small_picture?.url ?? undefined}
+	/>
+</svelte:head>
 
 <div class="w-full navbar bg-base-300">
 	<div class="flex-none md:hidden">

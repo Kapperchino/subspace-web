@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import SeoComponent from '$lib/seoComponent.svelte';
 	import SignInComponent from '$lib/signInComponent.svelte';
 	import { createLabel, melt } from '@melt-ui/svelte';
 	import { onMount } from 'svelte';
@@ -19,6 +20,14 @@
 		elements: { root }
 	} = createLabel();
 </script>
+
+<svelte:head>
+	<SeoComponent
+		title="Subspace Sign up"
+		description="Subspace is a social network for people to hang out with thier communities, there's a subspace for anything that you're intrested in, and if not, go create it!"
+		img={undefined}
+	/>
+</svelte:head>
 
 <dialog id="my_modal_2" class="modal" bind:this={modal}>
 	<div class="modal-box" use:clickOutsideAction on:clickoutside={handleClickOutside}>

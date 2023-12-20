@@ -5,10 +5,20 @@
 	import { page } from '$app/stores';
 	import SpaceComponent from '$lib/spaceComponent.svelte';
 	import SortPostComponent from '$lib/sortPostComponent.svelte';
+	import SeoComponent from '$lib/seoComponent.svelte';
+
 
 	export let data: PageData;
 	setContext('user', data.user);
 </script>
+
+<svelte:head>
+	<SeoComponent
+		title="Subspace Search"
+		description="Subspace is a social network for people to hang out with thier communities, there's a subspace for anything that you're intrested in, and if not, go create it!"
+		img={undefined}
+	/>
+</svelte:head>
 
 <div class="w-full navbar bg-base-300">
 	<div class="flex-none md:hidden">

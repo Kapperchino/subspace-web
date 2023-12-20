@@ -28,9 +28,10 @@
 
 <svelte:head>
 	<SeoComponent
-		title={data.subspace.name}
-		description={data.subspace.description}
-		img={data.subspace.small_picture?.url}
+		title="Subspace {data.subspace.name}"
+		description={data.subspace.description ??
+			"Subspace is a social network for people to hang out with thier communities, there's a subspace for anything that you're intrested in, and if not, go create it!"}
+		img={data.subspace.small_picture?.url ?? undefined}
 	/>
 </svelte:head>
 

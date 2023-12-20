@@ -7,6 +7,7 @@
 	import type { Post } from '../../../../models/post.type';
 	import { persisted } from 'svelte-persisted-store';
 	import { afterNavigate } from '$app/navigation';
+	import SeoComponent from '$lib/seoComponent.svelte';
 
 	export let data: PageData;
 	setContext('user', data.user);
@@ -23,6 +24,13 @@
 		}
 	});
 </script>
+
+<SeoComponent
+	title="Subspace User: {data.user.display_name}"
+	description={data.user.bio ??
+		"Subspace is a social network for people to hang out with thier communities, there's a subspace for anything that you're intrested in, and if not, go create it!"}
+	img={data.user.picture_meta?.url ?? undefined}
+/>
 
 <div class="flex flex-row mt-2">
 	<div class="flex grow" />
