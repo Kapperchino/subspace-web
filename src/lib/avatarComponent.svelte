@@ -16,7 +16,6 @@
 
 {#if url == '' || url == null}
 	<img
-		loading="lazy"
 		src="https://subspace.place/cdn-cgi/image/fit=scale-down,width=150,format=auto/{getAlt()}"
 		alt="avatar"
 		width="150"
@@ -24,7 +23,6 @@
 	/>
 {:else}
 	<img
-		loading="lazy"
 		src={'https://subspace.place/cdn-cgi/image/fit=scale-down,width=150,format=auto/' + url}
 		alt="avatar"
 		width="150"

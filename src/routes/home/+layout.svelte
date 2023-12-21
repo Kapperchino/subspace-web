@@ -8,6 +8,7 @@
 	import { coockieStore } from '$lib/store/tokenStore';
 	import { onMount } from 'svelte';
 	import type { UserMeta } from '../../models/signup.type';
+	import PhoneSideBarButton from '$lib/sidebar/phoneSideBarButton.svelte';
 
 	let user: UserMeta;
 	onMount(() => {
@@ -17,13 +18,7 @@
 
 <ShellComponent>
 	<svelte:fragment slot="navbar">
-		<a class="flex sm:hidden" href="/users/{user?.user_id}">
-			<div class="avatar">
-				<div class="w-10 rounded-full">
-					<AvatarComponent url={user?.picture_meta?.url} userId={user?.user_id} />
-				</div>
-			</div>
-		</a>
+		<PhoneSideBarButton />
 		<div class="flex-1" />
 		<div class="md:flex-1" />
 		<div class="flex bg-base-300/60 ml-3 rounded-lg">
