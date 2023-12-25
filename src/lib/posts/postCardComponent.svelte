@@ -18,6 +18,8 @@
 	export let imgWidth: number = 550;
 	export let index: number;
 
+	const loadType: 'lazy' | 'eager' = index > 10 ? 'lazy' : 'eager';
+
 	export function getDimention(meta: PictureMeta | undefined) {
 		const ratio = meta!.width / meta!.height;
 		var height = imgWidth / ratio;
@@ -28,7 +30,7 @@
 	}
 
 	var onSuccess = async () => {
-		$open = true;
+		$open = false;
 	};
 
 	const {
@@ -73,7 +75,8 @@
 		{#if post?.post_pictures != null}
 			<div class="flex justify-center bg-gradient-to-b from-gray-900 to-gray-600 rounded-md">
 				<img
-					loading="lazy"
+					loading={loadType}
+					decoding="async"
 					class="object-contain h-[28rem] w-fit"
 					alt="Postcard pic"
 					height={getDimention(post.post_pictures[0]).height}
