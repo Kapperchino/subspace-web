@@ -10,9 +10,6 @@
 
 	import CommentsIcon from '~icons/mdi/comment-text-multiple-outline';
 	import { createDialog, melt } from '@melt-ui/svelte';
-	import { onMount } from 'svelte';
-
-	let btn: HTMLButtonElement;
 
 	export let post: Post | undefined;
 	export let spaceId: number | undefined;
@@ -20,8 +17,6 @@
 	export let imgMinHeight: number = 300;
 	export let imgWidth: number = 550;
 	export let index: number;
-
-	const loadType: 'lazy' | 'eager' = index > 10 ? 'lazy' : 'eager';
 
 	export function getDimention(meta: PictureMeta | undefined) {
 		const ratio = meta!.width / meta!.height;
@@ -33,7 +28,7 @@
 	}
 
 	var onSuccess = async () => {
-		btn.click();
+		$open = true;
 	};
 
 	const {
@@ -78,7 +73,7 @@
 		{#if post?.post_pictures != null}
 			<div class="flex justify-center bg-gradient-to-b from-gray-900 to-gray-600 rounded-md">
 				<img
-					loading={loadType}
+					loading="lazy"
 					class="object-contain h-[28rem] w-fit"
 					alt="Postcard pic"
 					height={getDimention(post.post_pictures[0]).height}
@@ -134,9 +129,7 @@
 			<div class="flex flex-row">
 				<h2 use:melt={$title} class="flex pb-2 text-lg font-semibold">Comment</h2>
 				<div class="grow" />
-				<button type="button" bind:this={btn} class="btn btn-sm btn-circle" use:melt={$close}
-					><X /></button
-				>
+				<button type="button" class="btn btn-sm btn-circle" use:melt={$close}><X /></button>
 			</div>
 			<CommentingComponent {post} comment={undefined} {onSuccess} />
 		</div>
