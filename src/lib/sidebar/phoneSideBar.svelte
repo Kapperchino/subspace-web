@@ -1,9 +1,4 @@
 <script lang="ts">
-	import Home from '~icons/bx/home';
-	import Search from '~icons/bx/search';
-	import Satellite from '~icons/material-symbols/satellite-alt-outline-sharp';
-	import Bell from '~icons/ic/round-notifications-none';
-	import Send from '~icons/ic/baseline-send';
 	import PostingComponent from '../posts/postingComponent.svelte';
 	import { invalidateAll } from '$app/navigation';
 	import { coockieStore } from '../store/tokenStore';
@@ -14,7 +9,6 @@
 	import Settings from '~icons/material-symbols/settings-outline-rounded';
 	import Account from '~icons/material-symbols/account-circle';
 	import { page } from '$app/stores';
-	import SideBarProfileComponent from './sideBarProfileComponent.svelte';
 	import SettingsComponent from './settingsComponent.svelte';
 	import SideBarProfilePhone from './sideBarProfilePhone.svelte';
 	let modal: HTMLDialogElement | undefined;

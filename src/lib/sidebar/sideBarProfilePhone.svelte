@@ -4,7 +4,6 @@
 	import AvatarComponent from '../avatarComponent.svelte';
 
 	import Dots from '~icons/mdi/dots-vertical';
-	import X from '~icons/bx/x';
 	import Logout from '~icons/material-symbols/logout-rounded';
 	import { coockieStore } from '../store/tokenStore';
 	import { goto } from '$app/navigation';
@@ -24,10 +23,10 @@
 
 {#if user == undefined}
 	<a class="flex flex-col mt-auto" href="/login">
-		<div class="flex btn btn-info shadow-md shadow-info">Log in here!</div>
+		<div class="flex btn btn-info shadow-md shadow-info mb-20">Log in here!</div>
 	</a>
 {:else}
-	<button type="button" class="mt-auto" use:melt={$trigger}>
+	<button type="button" class="mt-auto mb-20" use:melt={$trigger}>
 		<div class="flex flex-col">
 			<div class="grow" />
 			<div class="card card-compact bg-base-300">
