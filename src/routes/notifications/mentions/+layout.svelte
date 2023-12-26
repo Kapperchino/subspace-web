@@ -9,8 +9,8 @@
 		<div class="flex grow" />
 		<div class="backdrop-blur bg-base-300">
 			<div class=" bottom-10 tabs tabs-boxed tabs-md flex">
-				<a class="tab tab-active" href="/spaces/popular">Popular</a>
-				<a class="tab" href="/spaces/new">New</a>
+				<a class="tab" href="/notifications/all">All</a>
+				<a class="tab tab-active" href="/notifications/mentions">Mentions</a>
 			</div>
 		</div>
 		<div class="flex grow" />

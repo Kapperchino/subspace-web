@@ -1,5 +1,4 @@
 <script lang="ts">
-
 	import VoteComponent from '$lib/voteComponent.svelte';
 	import ImageAddFilled from '~icons/bxs/image-add';
 	import VideoAdd from '~icons/bxs/video-plus';
@@ -9,9 +8,11 @@
 	import type { Space } from '../models/space.type';
 	import SpaceCardComponent from './spaceCardComponent.svelte';
 
-	export let spaces: Space[];
+	export let spaces: Space[] | undefined;
 </script>
 
-{#each spaces as space, index}
-	<SpaceCardComponent {space} />
-{/each}
+{#if spaces}
+	{#each spaces as space, index}
+		<SpaceCardComponent {space} />
+	{/each}
+{/if}

@@ -59,7 +59,6 @@
 						type="checkbox"
 						value={$theme}
 						on:change={(e) => {
-							console.log('joe');
 							if ($theme == 'dark') {
 								$theme = 'light';
 							} else {

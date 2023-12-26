@@ -5,8 +5,15 @@
 	import { createLabel, melt } from '@melt-ui/svelte';
 	import { onMount } from 'svelte';
 	import { clickOutsideAction } from 'svelte-legos';
+	import { superValidate } from 'sveltekit-superforms/server';
+	import { superForm } from 'sveltekit-superforms/client';
+	import type { PageData } from './$types';
 
 	let modal: HTMLDialogElement | undefined;
+
+	export let data: PageData;
+
+	const { form, errors, constraints } = superForm(data.form);
 
 	onMount(() => {
 		modal?.showModal();
@@ -42,9 +49,15 @@
 						type="text"
 						id="display_name"
 						placeholder="display name"
-						class="input input-bordered"
+						class="input {$errors.display_name ? 'input-error' : 'input-bordered'}"
 						required
+						minlength="3"
+						maxlength="100"
+						aria-invalid={$errors.display_name ? 'true' : undefined}
+						bind:value={$form.display_name}
+						{...$constraints.display_name}
 					/>
+					{#if $errors.display_name}<span class="text-error">{$errors.display_name}</span>{/if}
 
 					<label class="label" for="user_address">
 						<span class="label-text">User Address</span>
@@ -54,9 +67,14 @@
 						id="user_address"
 						type="text"
 						placeholder="@user"
-						class="input input-bordered"
+						class="input {$errors.user_address ? 'input-error' : 'input-bordered'}"
 						required
+						minlength="3"
+						aria-invalid={$errors.user_address ? 'true' : undefined}
+						bind:value={$form.user_address}
+						{...$constraints.user_address}
 					/>
+					{#if $errors.user_address}<span class="text-error">{$errors.user_address}</span>{/if}
 
 					<label class="label" for="email">
 						<span class="label-text">Email</span>
@@ -66,9 +84,13 @@
 						type="email"
 						id="email"
 						placeholder="email"
-						class="input input-bordered"
+						class="input {$errors.email ? 'input-error' : 'input-bordered'}"
 						required
+						aria-invalid={$errors.email ? 'true' : undefined}
+						bind:value={$form.email}
+						{...$constraints.email}
 					/>
+					{#if $errors.email}<span class="text-error">{$errors.email}</span>{/if}
 
 					<label class="label" for="password">
 						<span class="label-text">Password</span>
@@ -78,9 +100,14 @@
 						type="password"
 						id="password"
 						placeholder="password"
-						class="input input-bordered"
+						class="input {$errors.password ? 'input-error' : 'input-bordered'}"
 						required
+						aria-invalid={$errors.password ? 'true' : undefined}
+						bind:value={$form.password}
+						{...$constraints.password}
 					/>
+					{#if $errors.password}<span class="text-error">{$errors.password}</span>{/if}
+
 					<div class="mt-6">
 						<button class="btn btn-info" type="submit">Sign up</button>
 					</div>

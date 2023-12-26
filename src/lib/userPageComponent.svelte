@@ -104,7 +104,9 @@
 			},
 			{ rootMargin: '500px' }
 		);
-		observer?.observe(element);
+		if (element) {
+			observer?.observe(element);
+		}
 	});
 
 	onDestroy(() => {
