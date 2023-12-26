@@ -13,7 +13,6 @@
 
 	export let comment: CommentData | undefined;
 	export let imgHeight: number = 500;
-	export let spaceId: number | undefined;
 	export let imgMinHeight: number = 300;
 	export let imgWidth: number = 550;
 

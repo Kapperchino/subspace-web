@@ -15,7 +15,6 @@
 	import { onDestroy, onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import axios from 'axios';
-	import { SpacePrefixState, type SpacePrefixRes } from '../../models/space.type';
 	import { Editor } from '@tiptap/core';
 	import StarterKit from '@tiptap/starter-kit';
 	import Placeholder from '@tiptap/extension-placeholder';
@@ -45,10 +44,20 @@
 		return 1;
 	};
 
+	let postId = () => {
+		if(post){
+			return post.id;
+		}
+		if(comment){
+			return comment.post_id;
+		}
+		return -1;
+	}
+
 	let commentReq: CommentRequest = {
 		parent_id: parentId(),
 		poster_id: 0,
-		post_id: post?.id!,
+		post_id: postId(),
 		body: '',
 		content_type: ContentType.Text,
 		file_ids: []
@@ -60,7 +69,7 @@
 		commentReq = {
 			parent_id: parentId(),
 			poster_id: 0,
-			post_id: post?.id!,
+			post_id: postId(),
 			body: '',
 			content_type: ContentType.Text,
 			file_ids: []
