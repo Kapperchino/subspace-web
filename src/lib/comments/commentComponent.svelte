@@ -13,7 +13,9 @@
 
 	export let comment: CommentData | undefined;
 	export let imgHeight: number = 500;
-	let btn: HTMLButtonElement;
+	export let spaceId: number | undefined;
+	export let imgMinHeight: number = 300;
+	export let imgWidth: number = 550;
 
 	export function getDimention(meta: PictureMeta | undefined) {
 		const ratio = meta!.width / meta!.height;
@@ -46,9 +48,36 @@
 		</div>
 
 		{#if comment?.comment.body != ''}
-			<section class="p-2 break-words subpixel-antialiased">
-				{comment?.comment.body}
+			<section class="prose max-w-[26rem] sm:max-w-none break-words subpixel-antialiased">
+				{@html comment?.comment.body}
 			</section>
+		{/if}
+
+		{#if comment?.comment.comment_pictures != null}
+			<div class="flex justify-center bg-gradient-to-b from-gray-900 to-gray-600 rounded-md">
+				<img
+					loading="lazy"
+					decoding="async"
+					class="object-contain h-[28rem] w-fit"
+					alt="Postcard pic"
+					height={getDimention(comment?.comment.comment_pictures[0]).height}
+					width={imgWidth}
+					src={'https://subspace.place/cdn-cgi/image/fit=scale-down,width=550,format=auto/' +
+						comment?.comment.comment_pictures?.at(0)?.url}
+				/>
+			</div>
+		{/if}
+		{#if comment?.comment.comment_videos != null}
+			<div class="flex">
+				{#await import('../video/VideoPlayer.svelte') then { default: Player }}
+					<svelte:component
+						this={Player}
+						src={comment?.comment.comment_videos[0].url}
+						thumbnail={comment?.comment.comment_videos[0].thumbnail}
+						title={'video'}
+					/>
+				{/await}
+			</div>
 		{/if}
 
 		<div class="card-actions">
@@ -95,9 +124,7 @@
 			<div class="flex flex-row">
 				<h2 use:melt={$title} class="flex pb-2 text-lg font-semibold">Comment</h2>
 				<div class="grow" />
-				<button type="button" bind:this={btn} class="btn btn-sm btn-circle" use:melt={$close}
-					><X /></button
-				>
+				<button type="button" class="btn btn-sm btn-circle" use:melt={$close}><X /></button>
 			</div>
 			<CommentingComponent post={undefined} comment={comment?.comment} {onSuccess} />
 		</div>

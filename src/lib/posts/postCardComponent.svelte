@@ -56,7 +56,6 @@
 			<a
 				class="card-title"
 				href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}"
-				data-sveltekit-noscroll
 			>
 				<h3>
 					{post?.topic}
@@ -66,7 +65,6 @@
 		{#if post?.body != ''}
 			<a
 				href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}"
-				data-sveltekit-noscroll
 				class="prose max-w-[26rem] sm:max-w-none break-words subpixel-antialiased"
 			>
 				{@html post?.body}

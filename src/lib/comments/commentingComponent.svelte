@@ -1,38 +1,32 @@
 <script lang="ts">
 	import ImageAddFilled from '~icons/bxs/image-add';
 	import VideoAdd from '~icons/bxs/video-plus';
-	import LinkIcon from '~icons/bx/link';
 	import XIcon from '~icons/bx/x';
-	import { lazyLoadImageAction, textareaAutosizeAction } from 'svelte-legos';
 	import {
 		ContentType,
 		type FileUploadRequest,
-		type PictureMeta,
 		type PictureRequestMeta,
-		type Post,
-		type PostCreation,
-		type VideoMeta
+		type Post
 	} from '../../models/post.type';
 	import { coockieStore } from '../store/tokenStore';
 	import type { UserMeta } from '../../models/signup.type';
-	import {
-		createPostClient,
-		processVideo,
-		uploadFile,
-		uploadMedia
-	} from '../../service/postingService';
+	import { processVideo, uploadFile, uploadMedia } from '../../service/postingService';
 
-	import PostCardMetaComponent from '../posts/postCardMetaComponent.svelte';
-	import CommentMetaComponent from './commentMetaComponent.svelte';
+	import { onDestroy, onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+	import axios from 'axios';
+	import { SpacePrefixState, type SpacePrefixRes } from '../../models/space.type';
+	import { Editor } from '@tiptap/core';
+	import StarterKit from '@tiptap/starter-kit';
+	import Placeholder from '@tiptap/extension-placeholder';
+	import Mention from '@tiptap/extension-mention';
+	import { mentionRenderer } from '../mention/mentionRenderer';
+	import { prefixSearchTags, prefixSearchUsers } from '../../service/searchService';
+	import { PluginKey } from '@tiptap/pm/state';
+	import { hashTagsRenderer } from '../hashtags/hashTagRenderer';
+	import { addToast } from '../toaster.svelte';
 	import type { Comment, CommentRequest } from '../../models/comment.type';
 	import { createCommentClient } from '../../service/commentingService';
-	import { addToast } from '../toaster.svelte';
-
-	$: hasLink = false;
-
-	export let imgHeight: number = 300;
-	export let imgMinHeight: number = 200;
-	export let imgWidth: number = 550;
 
 	let picList: Array<[string, File]> = [];
 	let vidList: Array<[string, File]> = [];
@@ -40,32 +34,48 @@
 	let vidFiles: FileList | undefined;
 	let picInput: HTMLInputElement;
 	let videoInput: HTMLInputElement;
-	let commentReq: CommentRequest = {
-		poster_id: 0,
-		post_id: 0,
-		body: '',
-		content: '',
-		parent_id: 0,
-		content_type: ContentType.Text
-	};
-
-	export let onSuccess = () => {}; // no-operation function;
 
 	export let post: Post | undefined;
 	export let comment: Comment | undefined;
 
-	function resetPost() {
+	let parentId = () => {
+		if (comment) {
+			return comment.id;
+		}
+		return 1;
+	};
+
+	let commentReq: CommentRequest = {
+		parent_id: parentId(),
+		poster_id: 0,
+		post_id: post?.id!,
+		body: '',
+		content_type: ContentType.Text,
+		file_ids: []
+	};
+
+	export let onSuccess = () => {}; // no-operation function;
+
+	function resetComment() {
 		commentReq = {
+			parent_id: parentId(),
 			poster_id: 0,
-			post_id: 0,
+			post_id: post?.id!,
 			body: '',
-			content: '',
-			parent_id: 0,
-			content_type: ContentType.Text
+			content_type: ContentType.Text,
+			file_ids: []
 		};
-		hasLink = false;
+		editor?.commands.clearContent(true);
 		closeImage();
 		closeVideo();
+	}
+
+	async function checkAuth() {
+		const user: UserMeta = coockieStore.getValue('cookie');
+		if (user == undefined) {
+			await goto('/login');
+			return;
+		}
 	}
 
 	async function onPicChange(e: Event) {
@@ -96,22 +106,24 @@
 		}
 	}
 
-	export function getDimention(meta: PictureMeta | undefined) {
-		const ratio = meta!.width / meta!.height;
-		var height = imgWidth / ratio;
-		return {
-			width: imgWidth,
-			height: height
-		};
-	}
-
 	async function createComment(e: Event) {
-		if (commentReq.body == '') {
+		if (vidList != null && vidList.length > 0) {
+			commentReq.content_type = ContentType.Video;
+		} else if (picList != null && picList.length > 0) {
+			commentReq.content_type = ContentType.Picture;
+		}
+		if (vidList.length == 0 && picList.length == 0 && editor?.isEmpty) {
 			createEmptyPost();
 			return;
 		}
 		const user: UserMeta = coockieStore.getValue('cookie');
-		commentReq.poster_id = user.user_id;
+		if (user == undefined) {
+			await goto('/login');
+			return;
+		}
+		commentReq.poster_id = user?.user_id;
+		commentReq.body = editor?.getHTML() ?? '';
+
 		const fileIds: number[] = [];
 		if (commentReq.content_type === ContentType.Picture) {
 			const memoryImg = document.createElement('img');
@@ -142,25 +154,22 @@
 			var videoProcess = await processVideo(videoRes.data.id);
 			fileIds.push(videoRes.data.id);
 		}
-
-		if (comment != undefined) {
-			commentReq.parent_id = comment.id;
-			commentReq.post_id = comment.post_id;
-		}
-		if (post != undefined) {
-			commentReq.parent_id = 1;
-			commentReq.post_id = post.id;
-		}
 		//at this point everything should be uploaded
-		// commentReq.file_ids = fileIds;
-		await createCommentClient(commentReq);
-		resetPost();
-		onSuccess();
+		commentReq.file_ids = fileIds;
+		try {
+			const res = await createCommentClient(commentReq);
+		} catch (error) {
+			console.log(error);
+			if (axios.isAxiosError(error)) {
+				if (error.response?.status == 401) {
+					await goto('/login');
+					return;
+				}
+			}
+		}
+		resetComment();
 		createSuccess();
-	}
-
-	function toggleLink() {
-		hasLink = !hasLink;
+		onSuccess();
 	}
 
 	function closeImage() {
@@ -179,11 +188,14 @@
 		}
 	}
 
+	let editor: Editor | undefined;
+	let editorDiv: HTMLElement;
+
 	function createSuccess() {
 		addToast({
 			data: {
 				title: 'Success',
-				description: '🎉 Comment successful!',
+				description: '🎉 Post successful!',
 				type: 'success'
 			}
 		});
@@ -193,109 +205,86 @@
 		addToast({
 			data: {
 				title: 'Warning',
-				description: '❌ Empty comment not allowed!',
+				description: '❌ Empty post not allowed!',
 				type: 'error'
 			}
 		});
 	}
+
+	onMount(() => {
+		const hashtagPlugin = Mention.extend({
+			name: 'hashtagPlugin'
+		}).configure({
+			suggestion: {
+				char: '#',
+				pluginKey: new PluginKey('suggestionOne'),
+				items: async (e) => {
+					if (e.query == '') {
+						return [];
+					}
+					return (await prefixSearchTags(e.query)).data;
+				},
+				render: hashTagsRenderer
+			},
+			HTMLAttributes: {
+				class: 'text-primary font-semi-bold hashtags'
+			}
+		});
+		editor = new Editor({
+			element: editorDiv,
+			extensions: [
+				StarterKit,
+				Placeholder.configure({
+					placeholder: 'Comment here! (Markdown supported)',
+					emptyEditorClass:
+						'cursor-text text-xl before:content-[attr(data-placeholder)] before:absolute  before:opacity-70 before-pointer-events-none'
+				}),
+				Mention.configure({
+					suggestion: {
+						items: async (e) => {
+							if (e.query == '') {
+								return [];
+							}
+							return (await prefixSearchUsers(e.query)).data;
+						},
+						render: mentionRenderer
+					},
+					HTMLAttributes: {
+						class: 'text-primary font-semi-bold mentions'
+					}
+				}),
+				hashtagPlugin
+			],
+			editorProps: {
+				attributes: {
+					class: 'prose dark:prose-invert prose-base focus:outline-none'
+				}
+			}
+		});
+	});
+
+	onDestroy(() => {
+		editor?.destroy();
+	});
 </script>
 
-{#if post != undefined}
-	<div class="card card-compact shadow-lg bg-base-100 max-h-96">
-		<div class="card-body">
-			<div class="flex-row flex">
-				<div><PostCardMetaComponent {post} spaceId={post.space_id} /></div>
-			</div>
-			{#if post?.topic != ''}
-				<a
-					class="card-title"
-					href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}"
-					data-sveltekit-noscroll
-				>
-					<h3>
-						{post?.topic}
-					</h3>
-				</a>
-			{/if}
-			{#if post?.body != ''}
-				<div class="prose max-w-xl break-words">
-					{@html post?.body}
-				</div>
-			{/if}
-			{#if post?.post_pictures != null}
-				<div class="flex justify-center bg-gradient-to-b from-gray-900 to-gray-600 rounded-md">
-					<img
-						loading="eager"
-						class="object-contain h-72 w-fit"
-						alt="Postcard pic"
-						height={getDimention(post.post_pictures[0]).height}
-						width={imgWidth}
-						src={'https://subspace.place/cdn-cgi/image/fit=scale-down,width=550,format=auto/' +
-							post?.post_pictures?.at(0)?.url}
-					/>
-				</div>
-			{/if}
-			{#if post?.post_videos != null}
-				{#await import('../video/VideoPlayer.svelte') then { default: Player }}
-					<svelte:component
-						this={Player}
-						src={post.post_videos[0].url}
-						thumbnail={post?.post_videos[0].thumbnail}
-						title={post.topic ?? 'video'}
-					/>
-				{/await}
-			{/if}
-		</div>
-	</div>
-{/if}
-
-{#if comment != undefined}
-	<div class="card card-compact shadow-lg bg-base-100 hover:cursor-pointer">
-		<div class="card-body">
-			<div class="flex-row flex">
-				<div><CommentMetaComponent {comment} /></div>
-			</div>
-
-			{#if comment?.body != ''}
-				<section class="p-2 break-words subpixel-antialiased">
-					{comment?.body}
-				</section>
-			{/if}
-		</div>
-	</div>
-{/if}
-
-<div class="card card-compact flex shadow-lg bg-base-200 grow max-w-xl mt-2">
+<div class="card card-compact flex shadow-lg bg-base-300 grow">
 	<div class="card-body">
 		<form method="POST" action="?/post">
-			{#if hasLink}
-				<label class="label">
-					<textarea
-						class="textarea textarea-md textarea-accent textarea-bordered w-full grid-cols-[auto_1fr_auto]"
-						name="Link"
-						placeholder="Link(Optional)"
-						rows="1"
-					/>
-				</label>
-			{/if}
 			<label class="label">
-				<textarea
-					use:textareaAutosizeAction
-					class="textarea textarea-md text-lg textarea-primary textarea-bordered w-full"
-					name="Comment"
-					placeholder="Comment here!"
-					bind:value={commentReq.body}
-					autofocus
+				<div
+					bind:this={editorDiv}
+					class="tiptap textarea textarea-md textarea-bordered textarea-primary w-full cursor-text"
+					on:click={() => {
+						editor?.chain().focus().run();
+					}}
 				/>
 			</label>
+
 			{#if picList != null && picList.length > 0 && vidList.length == 0}
 				<div class="flex-row flex pb-1 pt-3">
 					<div class="relative bg-gradient-to-r from-gray-900 to-gray-800 rounded-md">
-						<img
-							class="object-scale-down h-24 w-24 p-1"
-							data-src={picList.at(0)?.[0]}
-							alt="image thumbnail"
-						/>
+						<img loading="lazy" class="object-scale-down h-24 w-24 p-1" src={picList.at(0)?.[0]} />
 						<div class="pl-1" />
 						<button
 							type="button"
@@ -310,7 +299,6 @@
 			{#if vidList != null && vidList.length > 0 && picList.length == 0}
 				<div class="flex-row flex pb-1 pt-3">
 					<div class="relative bg-gradient-to-r from-gray-900 to-gray-800 rounded-md">
-						<!-- svelte-ignore a11y-media-has-caption -->
 						<video
 							class="object-scale-down clip-thumbnail h-24 w-24 p-1"
 							src={vidList.at(0)?.[0]}
@@ -374,18 +362,11 @@
 					</label>{/if}
 
 				<div class="pl-1" />
-				<button
-					type="button"
-					on:click={toggleLink}
-					class="btn btn-square btn-neutral btn-outline btn-xs variant-filled-surface h-8 w-8"
-				>
-					<LinkIcon />
-				</button>
 				<div class="grow" />
 				<button
 					type="button"
 					on:click={createComment}
-					class="btn btn-secondary btn-sm justify-self-end h-10 w-20"
+					class="btn btn-primary btn-sm justify-self-end h-10 w-20"
 					>Comment
 				</button>
 			</div>

@@ -1,4 +1,4 @@
-import type { ContentType, PictureMeta, Vote } from "./post.type";
+import type { ContentType, PictureMeta, VideoMeta, Vote } from "./post.type";
 
 export type Comment = {
     id: number;
@@ -14,6 +14,8 @@ export type Comment = {
     created: string;
     content_type: ContentType;
     vote: Vote;
+    comment_pictures: PictureMeta[];
+    comment_videos: VideoMeta[];
 }
 
 export type CommentData = {
@@ -25,7 +27,7 @@ export type CommentRequest = {
     poster_id: number;
     post_id: number;
     body: string;
-    content: string;
     parent_id: number;
     content_type: ContentType;
+    file_ids: number[];
 }

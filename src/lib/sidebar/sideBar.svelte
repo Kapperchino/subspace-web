@@ -16,11 +16,10 @@
 	import { page } from '$app/stores';
 	import SideBarProfileComponent from './sideBarProfileComponent.svelte';
 	import SettingsComponent from './settingsComponent.svelte';
-	let modal: HTMLDialogElement | undefined;
 
 	var onSuccess = async () => {
 		await invalidateAll();
-		modal?.close();
+		$open = false;
 	};
 
 	let user: UserMeta | undefined;
@@ -288,7 +287,7 @@
 			use:melt={$content}
 		>
 			<div class="flex flex-row">
-				<h2 use:melt={$title} class="flex pb-2 text-lg font-semibold">Comment</h2>
+				<h2 use:melt={$title} class="flex pb-2 text-lg font-semibold">Post</h2>
 				<div class="grow" />
 				<button type="button" class="btn btn-sm btn-circle" use:melt={$close}><X /></button>
 			</div>
