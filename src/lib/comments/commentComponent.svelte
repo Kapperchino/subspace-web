@@ -12,6 +12,7 @@
 	import X from '~icons/bx/x';
 
 	export let comment: CommentData | undefined;
+	export let post: Post;
 	export let imgHeight: number = 500;
 	export let imgMinHeight: number = 300;
 	export let imgWidth: number = 550;
@@ -40,7 +41,10 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class="card card-compact card-bordered shadow-lg bg-base-100 hover:cursor-pointer">
+<a
+	class="card card-compact card-bordered shadow-lg bg-base-100"
+	href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}/c/{comment?.comment.id}"
+>
 	<div class="card-body">
 		<div class="flex-row flex">
 			<div><CommentMetaComponent comment={comment?.comment} /></div>
@@ -96,16 +100,19 @@
 			</div>
 		</div>
 	</div>
-</div>
+</a>
 
 {#if comment?.children != null && comment?.children.length > 0}
 	{#each comment?.children as child, index}
 		<div class="flex flex-row pt-2 justify-center">
 			<div class="flex" />
 			<div class="divider divider-neutral divider-horizontal" />
-			<div class="grow flex-row max-w-md md:max-w-xl">
-				<svelte:self comment={child} />
-			</div>
+			<a
+				class="grow flex-row max-w-md md:max-w-xl"
+				href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}/c/{child?.comment.id}"
+			>
+				<svelte:self comment={child} {post} />
+			</a>
 			<div class="flex" />
 		</div>
 	{/each}

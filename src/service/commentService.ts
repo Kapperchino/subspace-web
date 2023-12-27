@@ -35,3 +35,44 @@ export const getCommentsForPost = async (userId: number, postId: number): Promis
     });
     return resList;
 }
+
+export const getComment = async (commentId: number): Promise<Comment> => {
+    const data: AxiosResponse<Comment> = await axios.get(`${env.BACK_END}/comments/${commentId}`,
+        {
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+            }
+        });
+    return data.data;
+}
+
+export const getCommentsForComments = async (userId: number, commentId: number): Promise<Array<CommentData>> => {
+    const data: AxiosResponse<Array<Comment>> = await axios.get(`${env.BACK_END}/comments?commentId=${commentId}&userId=${userId}&sort=popular&days=365`,
+        {
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+            }
+        });
+    const comments = data.data;
+    if (comments == null) {
+        return [];
+    }
+    const commentsData: CommentData[] = comments.map((e) => <CommentData>{ comment: e, children: [] });
+    const map: Map<number, CommentData> = new Map<number, CommentData>();
+    const resList: CommentData[] = [];
+    commentsData.forEach((val) => {
+        map.set(val.comment.id, val);
+    });
+    map.forEach((value, key) => {
+        if (!map.has(value.comment.parent_id)) {
+        } else {
+            map.get(value.comment.parent_id)!.children.push(value);
+        }
+    });
+    commentsData.forEach((val) => {
+        if (!map.has(val.comment.parent_id)) {
+            resList.push(val);
+        }
+    });
+    return resList;
+}

@@ -17,9 +17,10 @@
 
 <svelte:head>
 	<SeoComponent
-		title="{data.post?.poster_name} posted in {data.post?.space_name}: {data.post?.topic ?? ''}"
-		description={data.post?.body ?? ''}
-		img={data.post?.post_pictures?.at(0)?.url}
+		title="{data.post?.poster_name} commented in {data.post?.space_name}: {data.rootComment?.body ??
+			''}"
+		description={data.rootComment?.body ?? ''}
+		img={data.rootComment?.comment_pictures?.at(0)?.url}
 	/>
 </svelte:head>
 
