@@ -86,7 +86,7 @@
 		<div class="card-actions">
 			<div class="pt-2"><TimeComponent time={comment?.comment.created} /></div>
 			<div class="grow" />
-			<div class="btn btn-sm btn-secondary h-8" use:melt={$trigger}>
+			<div class="btn btn-sm btn-secondary h-8" on:click|preventDefault use:melt={$trigger}>
 				<div class="text-md font-bold subpixel-antialiased"><ReplyIcon /></div>
 			</div>
 			<div class="z-10">
