@@ -45,7 +45,7 @@
 	$: {
 		if ($touchedInput) {
 			debounce(async () => {
-				list = (await prefixSearchSpaces($inputValue)).data;
+				list = await prefixSearchSpaces($inputValue);
 			});
 		} else {
 			list = [];
