@@ -1,8 +1,9 @@
 import { preprocessMeltUI } from '@melt-ui/pp';
 import sequence from 'svelte-sequential-preprocessor';
-import adapter from '@sveltejs/adapter-node';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import preprocess from 'svelte-preprocess';
+import adapter from '@sveltejs/adapter-cloudflare';
+
 /** @type {import('@sveltejs/kit').Config}*/
 const config = {
 	// Consult https://kit.svelte.dev/docs/integrations#preprocessors
@@ -12,7 +13,13 @@ const config = {
 	})]),
 
 	kit: {
-		adapter: adapter()
+		adapter: adapter({
+			// See below for an explanation of these options
+			routes: {
+				include: ['/*'],
+				exclude: ['<all>']
+			}
+		})
 	}
 };
 export default config;
