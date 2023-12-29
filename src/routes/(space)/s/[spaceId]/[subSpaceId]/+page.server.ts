@@ -26,7 +26,7 @@ export const load: PageServerLoad = async ({ params, cookies, url, fetch }) => {
         user: user,
         posts: res[0],
         spaceId: spaceId,
-        subspace: res[1].data,
+        subspace: res[1],
         params: params
     };
 };

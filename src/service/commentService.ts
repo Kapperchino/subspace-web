@@ -1,18 +1,16 @@
-import type { AxiosResponse } from "axios";
 import type { UserMeta } from "../models/signup.type";
 import type { Comment, CommentData } from "../models/comment.type";
-import axios from "axios";
 import { env } from "$env/dynamic/private";
 
 
 export const getCommentsForPost = async (userId: number, postId: number): Promise<Array<CommentData>> => {
-    const data: AxiosResponse<Array<Comment>> = await axios.get(`${env.BACK_END}/comments?postId=${postId}&userId=${userId}&sort=popular&days=365`,
+    const data: Response = await fetch(`${env.BACK_END}/comments?postId=${postId}&userId=${userId}&sort=popular&days=365`,
         {
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
             }
         });
-    const comments = data.data;
+    const comments = (await data.json()) as Array<Comment>;
     if (comments == null) {
         return [];
     }
@@ -37,23 +35,23 @@ export const getCommentsForPost = async (userId: number, postId: number): Promis
 }
 
 export const getComment = async (commentId: number): Promise<Comment> => {
-    const data: AxiosResponse<Comment> = await axios.get(`${env.BACK_END}/comments/${commentId}`,
+    const data: Response = await fetch(`${env.BACK_END}/comments/${commentId}`,
         {
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
             }
         });
-    return data.data;
+    return data.json();
 }
 
 export const getCommentsForComments = async (userId: number, commentId: number): Promise<Array<CommentData>> => {
-    const data: AxiosResponse<Array<Comment>> = await axios.get(`${env.BACK_END}/comments?commentId=${commentId}&userId=${userId}&sort=popular&days=365`,
+    const data: Response = await fetch(`${env.BACK_END}/comments?commentId=${commentId}&userId=${userId}&sort=popular&days=365`,
         {
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
             }
         });
-    const comments = data.data;
+    const comments : Comment[] = await data.json();
     if (comments == null) {
         return [];
     }

@@ -20,7 +20,7 @@
 			<div class="flex grow card card-compact max-w-md md:max-w-xl bg-base-300">
 				<div class="avatar pt-2 pl-2">
 					<div class="w-24 rounded-full">
-						<AvatarComponent url={data.user.picture_meta?.url} userId={data.user.user_id} />
+						<AvatarComponent url={data.user.picture_meta?.url} userId={data.user?.user_id} />
 					</div>
 				</div>
 				<div class="card-title pl-2 pt-2">

@@ -2,12 +2,7 @@
 	import PostCardComponent from './posts/postCardComponent.svelte';
 	import type { Post } from '../models/post.type';
 	import NotFoundComponent from './notFoundComponent.svelte';
-	import { infiniteScrollAction } from 'svelte-legos';
-	import { page } from '$app/stores';
 	import { backendUrl } from './store/clientBackendUrl';
-	import { coockieStore } from './store/tokenStore';
-	import type { UserMeta } from '../models/signup.type';
-	import axios from 'axios';
 	import { afterUpdate, onDestroy, onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { getUserByAddress } from '../service/userServiceClient';
@@ -54,7 +49,7 @@
 	}
 
 	export const getPostsClient = async (userId: number, offset: number): Promise<Post[]> => {
-		const data = await axios.get(
+		const data = await fetch(
 			`${backendUrl}/posts/users/${userId}?sort=latest&days=7&start=${offset}`,
 			{
 				headers: {
@@ -62,7 +57,7 @@
 				}
 			}
 		);
-		return data.data;
+		return await data.json();
 	};
 
 	async function loadItems() {
@@ -93,7 +88,7 @@
 			element?.addEventListener('click', async (e) => {
 				e.preventDefault();
 				const user = await getUserByAddress(name!);
-				await goto(`/users/${user.data.user_id}`);
+				await goto(`/users/${user.user_id}`);
 			});
 		}
 		const observer = new IntersectionObserver(

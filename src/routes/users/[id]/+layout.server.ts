@@ -14,7 +14,7 @@ export const load: LayoutServerLoad = async ({ params, cookies }) => {
     const user = await getUser(userId);
     return {
         curUser: curUser,
-        user: user.data,
+        user: user,
         params: params
     };
 };

@@ -15,7 +15,7 @@ export const load: PageServerLoad = async ({ params, cookies }) => {
     const spaces = await getSpaces('popular');
     return {
         user: user,
-        spaces: spaces.data,
+        spaces: spaces,
         params: params
     };
 };

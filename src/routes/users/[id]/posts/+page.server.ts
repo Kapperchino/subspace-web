@@ -15,8 +15,8 @@ export const load: PageServerLoad = async ({ params, cookies }) => {
     const posts = await getUserPosts(userId);
     return {
         curUser: curUser,
-        user: user.data,
-        posts: posts.data,
+        user: user,
+        posts: posts,
         params: params
     };
 };

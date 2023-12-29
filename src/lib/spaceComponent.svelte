@@ -7,7 +7,6 @@
 	import { backendUrl } from './store/clientBackendUrl';
 	import { coockieStore } from './store/tokenStore';
 	import type { UserMeta } from '../models/signup.type';
-	import axios from 'axios';
 	import { afterUpdate, onDestroy, onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { getUserByAddress } from '../service/userServiceClient';
@@ -60,7 +59,7 @@
 		sortType: string,
 		offset: number
 	): Promise<Post[]> => {
-		const data = await axios.get(
+		const data = await fetch(
 			`${backendUrl}/posts/spaces/${spaceId}?sort=${sortType}&days=${days}&userId=${userId}&start=${offset}`,
 			{
 				headers: {
@@ -68,7 +67,7 @@
 				}
 			}
 		);
-		return data.data;
+		return await data.json();
 	};
 
 	async function loadItems() {
@@ -108,7 +107,7 @@
 			element?.addEventListener('click', async (e) => {
 				e.preventDefault();
 				const user = await getUserByAddress(name!);
-				await goto(`/users/${user.data.user_id}`);
+				await goto(`/users/${user.user_id}`);
 			});
 		}
 		const observer = new IntersectionObserver(

@@ -1,4 +1,4 @@
-<script lang="ts" >
+<script lang="ts">
 	import ImageAddFilled from '~icons/bxs/image-add';
 	import VideoAdd from '~icons/bxs/video-plus';
 	import LinkIcon from '~icons/bx/link';
@@ -21,7 +21,6 @@
 
 	import { onDestroy, onMount } from 'svelte';
 	import { goto } from '$app/navigation';
-	import axios from 'axios';
 	import SubspaceAtComponent from '../subspaceAtComponent.svelte';
 	import { SpacePrefixState, type SpacePrefixRes } from '../../models/space.type';
 	import { Editor } from '@tiptap/core';
@@ -33,7 +32,6 @@
 	import { PluginKey } from '@tiptap/pm/state';
 	import { hashTagsRenderer } from '../hashtags/hashTagRenderer';
 	import { addToast } from '../toaster.svelte';
-
 
 	$: hasTitle = false;
 	$: hasLink = false;
@@ -150,8 +148,8 @@
 				is_link: undefined
 			};
 			var picRes = await uploadMedia(fileUploadReq);
-			var uploadRes = await uploadFile(picList[0][1], picRes.data.presigned, picList[0][1].type);
-			fileIds.push(picRes.data.id);
+			var uploadRes = await uploadFile(picList[0][1], picRes.presigned, picList[0][1].type);
+			fileIds.push(picRes.id);
 		} else if (postReq.content_type === ContentType.Video) {
 			const fileUploadReq: FileUploadRequest = {
 				picture_meta: undefined,
@@ -159,9 +157,9 @@
 				is_link: undefined
 			};
 			var videoRes = await uploadMedia(fileUploadReq);
-			var uploadRes = await uploadFile(vidList[0][1], videoRes.data.presigned, vidList[0][1].type);
-			var videoProcess = await processVideo(videoRes.data.id);
-			fileIds.push(videoRes.data.id);
+			var uploadRes = await uploadFile(vidList[0][1], videoRes.presigned, vidList[0][1].type);
+			var videoProcess = await processVideo(videoRes.id);
+			fileIds.push(videoRes.id);
 		}
 		//at this point everything should be uploaded
 		postReq.file_ids = fileIds;
@@ -170,14 +168,11 @@
 		}
 		try {
 			const res = await createPostClient(postReq);
-		} catch (error) {
-			if (axios.isAxiosError(error)) {
-				if (error.response?.status == 401) {
-					await goto('/login');
-					return;
-				}
+			if (res.status == 401) {
+				await goto('/login');
+				return;
 			}
-		}
+		} catch (error) {}
 		resetPost();
 		createSuccess();
 		onSuccess();
@@ -241,7 +236,7 @@
 					if (e.query == '') {
 						return [];
 					}
-					return (await prefixSearchTags(e.query)).data;
+					return await prefixSearchTags(e.query);
 				},
 				render: hashTagsRenderer
 			},
@@ -264,7 +259,7 @@
 							if (e.query == '') {
 								return [];
 							}
-							return (await prefixSearchUsers(e.query)).data;
+							return await prefixSearchUsers(e.query);
 						},
 						render: mentionRenderer
 					},

@@ -11,12 +11,9 @@ export const load: PageServerLoad = async ({ params, cookies }) => {
         user = JSON.parse(userJson);
     }
     const tags = await getTags();
-    if (tags.status == 401) {
-        redirect(302, '/login');
-    }
     return {
         user: user,
-        tags: tags.data,
+        tags: tags,
         params: params
     };
 };
