@@ -11,12 +11,13 @@ export const load: PageServerLoad = async ({ cookies, url }) => {
     const user: UserMeta = JSON.parse(cookies.get("user")!);
     const days = url.searchParams.get('days') ?? "7";
     const type = url.searchParams.get('type') ?? "popular";
-    const posts = await getSubscriptions(user, Number(days), type);
-    if (posts.status == 401) {
+    const res = await getSubscriptions(user, Number(days), type);
+    if (res.status == 401) {
         redirect(302, '/login');
     }
+    const posts = await res.json();
     return {
         user: user,
-        posts: posts.data
+        posts: posts
     };
 };

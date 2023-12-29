@@ -32,7 +32,7 @@ export const getSearchPosts = async (user: UserMeta, term: string, isTag: boolea
     return await data.json();
 }
 
-export const getSubscriptions = async (user: UserMeta, days: number, sortType: string): Promise<Array<Post>> => {
+export const getSubscriptions = async (user: UserMeta, days: number, sortType: string): Promise<Response> => {
     const data: Response = await fetch(`${env.BACK_END}/posts/users/${user!.user_id}/subscriptions?sort=${sortType}&days=${days}`,
         {
             headers: {
@@ -40,5 +40,5 @@ export const getSubscriptions = async (user: UserMeta, days: number, sortType: s
                 'Authorization': `Bearer ${user.token}`,
             }
         });
-    return await data.json();
+    return data;
 }

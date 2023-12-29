@@ -19,7 +19,7 @@ export const load: PageServerLoad = async ({ params, cookies }) => {
         user: user,
         spaceId: spaceId,
         isSubbed: isSubbed,
-        subspace: subspace.data,
+        subspace: subspace,
         params: params
     };
 };
