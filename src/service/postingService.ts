@@ -35,7 +35,7 @@ export const uploadFile = async (file: File, url: string, mime: string): Promise
     const data: Response = await fetch(`${url}`,
         {
             method: 'PUT',
-            body: JSON.stringify(file),
+            body: file,
             headers: {
                 'Content-Type': mime,
             }

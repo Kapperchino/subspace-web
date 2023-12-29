@@ -8,6 +8,7 @@ export const actions = {
         const formData = await request.formData();
         const info: LogIn = { email: formData.get('email')!.toString(), password: formData.get('password')!.toString() }
         const meta = await login(info);
+        console.log(meta)
         cookies.set("user", JSON.stringify(meta), {
             path: '/'
         });
