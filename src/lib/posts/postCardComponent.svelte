@@ -43,76 +43,74 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<a
-	class="card card-compact card-bordered shadow-lg bg-base-100 hover:cursor-pointer"
-	href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}"
-	draggable="false"
->
-	<div class="card-body">
-		<div class="flex-row flex">
-			<div><PostCardMetaComponent {post} {spaceId} /></div>
-		</div>
-		{#if post?.topic != ''}
-			<a
-				class="card-title"
-				href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}"
-			>
-				<h3>
-					{post?.topic}
-				</h3>
-			</a>
-		{/if}
-		{#if post?.body != ''}
-			<a
-				href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}"
-				class="prose max-w-[26rem] sm:max-w-none break-words subpixel-antialiased"
-			>
-				{@html post?.body}
-			</a>
-		{/if}
-		{#if post?.post_pictures != null}
-			<div class="flex justify-center bg-gradient-to-b from-gray-900 to-gray-600 rounded-md">
-				<img
-					loading={loadType}
-					decoding="async"
-					class="object-contain h-[28rem] w-fit"
-					alt="Postcard pic"
-					height={getDimention(post.post_pictures[0]).height}
-					width={imgWidth}
-					src={'https://subspace.place/cdn-cgi/image/fit=scale-down,width=550,format=auto/' +
-						post?.post_pictures?.at(0)?.url}
-				/>
+<a href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}">
+	<div
+		class="card card-compact card-bordered shadow-lg bg-base-100 hover:cursor-pointer"
+		draggable="false"
+	>
+		<div class="card-body">
+			<div class="flex-row flex">
+				<div><PostCardMetaComponent {post} {spaceId} /></div>
 			</div>
-		{/if}
-		{#if post?.post_videos != null}
-			<div class="flex">
-				{#await import('../video/VideoPlayer.svelte') then { default: Player }}
-					<svelte:component
-						this={Player}
-						src={post.post_videos[0].url}
-						thumbnail={post?.post_videos[0].thumbnail}
-						title={post.topic ?? 'video'}
+			{#if post?.topic != ''}
+				<a class="card-title" href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}">
+					<h3>
+						{post?.topic}
+					</h3>
+				</a>
+			{/if}
+			{#if post?.body != ''}
+				<a
+					href="/s/{post?.space_parent_id}/{post?.space_id}/p/{post?.id}"
+					class="prose max-w-[26rem] sm:max-w-none break-words subpixel-antialiased"
+				>
+					{@html post?.body}
+				</a>
+			{/if}
+			{#if post?.post_pictures != null}
+				<div class="flex justify-center bg-gradient-to-b from-gray-900 to-gray-600 rounded-md">
+					<img
+						loading={loadType}
+						decoding="async"
+						class="object-contain h-[28rem] w-fit"
+						alt="Postcard pic"
+						height={getDimention(post.post_pictures[0]).height}
+						width={imgWidth}
+						src={'https://subspace.place/cdn-cgi/image/fit=scale-down,width=550,format=auto/' +
+							post?.post_pictures?.at(0)?.url}
 					/>
-				{/await}
-			</div>
-		{/if}
-		<div class="card-actions">
-			<div class="pt-2"><TimeComponent time={post?.created} /></div>
-			<div class="grow" />
-			<div class="btn btn-sm h-8" on:click|preventDefault use:melt={$trigger}>
-				<div class="join join-horizontal">
-					<div class="text-primary"><CommentsIcon /></div>
-					<p class="pl-2 font-semibold">{post?.comments_count}</p>
 				</div>
-			</div>
-			<div class="z-10">
-				<VoteComponent
-					upVotes={post?.up_votes}
-					downVotes={post?.down_votes}
-					voteData={post?.vote}
-					id={post?.id}
-					voteType={VoteType.Post}
-				/>
+			{/if}
+			{#if post?.post_videos != null}
+				<div class="flex">
+					{#await import('../video/VideoPlayer.svelte') then { default: Player }}
+						<svelte:component
+							this={Player}
+							src={post.post_videos[0].url}
+							thumbnail={post?.post_videos[0].thumbnail}
+							title={post.topic ?? 'video'}
+						/>
+					{/await}
+				</div>
+			{/if}
+			<div class="card-actions">
+				<div class="pt-2"><TimeComponent time={post?.created} /></div>
+				<div class="grow" />
+				<div class="btn btn-sm h-8" on:click|preventDefault use:melt={$trigger}>
+					<div class="join join-horizontal">
+						<div class="text-primary"><CommentsIcon /></div>
+						<p class="pl-2 font-semibold">{post?.comments_count}</p>
+					</div>
+				</div>
+				<div class="z-10">
+					<VoteComponent
+						upVotes={post?.up_votes}
+						downVotes={post?.down_votes}
+						voteData={post?.vote}
+						id={post?.id}
+						voteType={VoteType.Post}
+					/>
+				</div>
 			</div>
 		</div>
 	</div>
