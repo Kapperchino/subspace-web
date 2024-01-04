@@ -1,11 +1,9 @@
-import { setContext } from 'svelte';
 import type { PageServerLoad } from './$types';
 import type { UserMeta } from '../../../../../models/signup.type';
 import { getPosts } from '../../../../../service/postsService';
-import { getSpace } from '../../../../../service/spaceService';
 import type { Post } from '../../../../../models/post.type';
 
-export const load: PageServerLoad = async ({ params, cookies, url, fetch }) => {
+export const load: PageServerLoad = async ({ parent, params, cookies, url, fetch }) => {
     let userId = 0;
     const userJson = cookies.get("user");
     let user: UserMeta | undefined;
@@ -20,13 +18,13 @@ export const load: PageServerLoad = async ({ params, cookies, url, fetch }) => {
     const spaceId = Number(params.subSpaceId);
     const postsFuture: Promise<Post[]> = getPosts(fetch, userId, spaceId, Number(days), type, 0)
         .then(res => res.json());
-    const subspaceFuture = getSpace(spaceId);
-    const res = await Promise.all([postsFuture, subspaceFuture]);
+    const posts = await postsFuture;
+    var subspace = await parent();
     return {
         user: user,
-        posts: res[0],
+        posts: posts,
         spaceId: spaceId,
-        subspace: res[1],
+        subspace: subspace.subspace,
         params: params
     };
 };
