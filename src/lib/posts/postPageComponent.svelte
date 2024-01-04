@@ -53,7 +53,7 @@
 			element?.addEventListener('click', async (e) => {
 				e.preventDefault();
 				const user = await getUserByAddress(name!);
-				await goto(`/users/${user.data.user_id}`);
+				await goto(`/users/${user.user_id}`);
 			});
 		}
 	});

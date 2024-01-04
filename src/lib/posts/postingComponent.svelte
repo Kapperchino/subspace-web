@@ -249,7 +249,7 @@
 			extensions: [
 				StarterKit,
 				Placeholder.configure({
-					placeholder: 'Post here! (Markdown supported)',
+					placeholder: 'Post here!',
 					emptyEditorClass:
 						'cursor-text text-xl before:content-[attr(data-placeholder)] before:absolute  before:opacity-70 before-pointer-events-none'
 				}),

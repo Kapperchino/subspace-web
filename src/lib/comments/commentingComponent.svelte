@@ -241,7 +241,7 @@
 			extensions: [
 				StarterKit,
 				Placeholder.configure({
-					placeholder: 'Comment here! (Markdown supported)',
+					placeholder: 'Comment here!',
 					emptyEditorClass:
 						'cursor-text text-xl before:content-[attr(data-placeholder)] before:absolute  before:opacity-70 before-pointer-events-none'
 				}),
