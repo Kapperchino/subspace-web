@@ -72,7 +72,7 @@
 					<img
 						loading={loadType}
 						decoding="async"
-						class="object-contain h-[28rem] w-fit"
+						class="object-contain h-[26rem] w-fit"
 						alt="Postcard pic"
 						height={getDimention(post.post_pictures[0]).height}
 						width={imgWidth}

@@ -11,12 +11,9 @@ export const load: PageServerLoad = async ({ params, cookies, url }) => {
     const user: UserMeta = JSON.parse(cookies.get("user")!);
     const term = url.searchParams.get('term') ?? "";
     const posts = await getSearchPosts(user, term, false);
-    if (posts.status == 401) {
-        redirect(302, '/login');
-    }
     return {
         user: user,
-        posts: posts.data,
+        posts: posts,
         params: params
     };
 };

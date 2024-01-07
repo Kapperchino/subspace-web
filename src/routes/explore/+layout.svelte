@@ -15,22 +15,22 @@
 <ShellComponent>
 	<svelte:fragment slot="navbar">
 		<PhoneSideBarButton />
-		<div class="flex flex-row justify-start pt-3">
-			<div class="pl-3 flex">
+		<div class="flex flex-row grow pt-3">
+			<div class="pl-3 flex grow">
 				<form method="POST" action="?/search">
-					<div class="form-control">
+					<div class="form-control flex shrink">
 						<input
 							name="search"
 							type="text"
 							bind:value={term}
 							placeholder="Search"
-							class="input input-bordered"
+							class="input w-40 sm:w-auto input-bordered flex"
 						/>
 					</div>
 				</form>
 			</div>
-			<div class="flex grow"/>
-			<div class="pt-1 pl-10 flex">
+			<div class="flex grow" />
+			<div class="pt-1 pl-3 flex">
 				<div class="flex tabs tabs-boxed tabs-md">
 					<a class="tab tab-active" href="/home">Trending</a>
 					<a class="tab" href="/news">News</a>

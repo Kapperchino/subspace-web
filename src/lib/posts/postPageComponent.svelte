@@ -16,7 +16,7 @@
 
 	export let post: Post | undefined;
 	export let spaceId: number | undefined;
-	export let imgHeight: number = 500;
+	export let imgHeight: number = 400;
 	export let imgMinHeight: number = 300;
 
 	let btn: HTMLButtonElement;
@@ -86,7 +86,7 @@
 			<div class="flex justify-center bg-gradient-to-b from-gray-900 to-gray-600 rounded-md">
 				<img
 					loading="eager"
-					class="object-contain h-[36rem] w-fit"
+					class="object-contain h-[30rem] w-fit"
 					alt="Postcard pic"
 					height={getDimention(post?.post_pictures?.at(0)).height}
 					width={getDimention(post?.post_pictures?.at(0)).width}

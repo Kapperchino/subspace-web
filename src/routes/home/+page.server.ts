@@ -3,9 +3,16 @@ import type { Actions, PageServerLoad } from './$types';
 import type { UserMeta } from '../../models/signup.type';
 import { getPosts } from '../../service/postsService';
 import type { Post } from '../../models/post.type';
+import { env } from '$env/dynamic/private';
 
-async function fetchFunction(fetch: any, userId: number, days: string, type: string, offset: number): Promise<Post[]> {
-    return (await getPosts(fetch, userId, 1, Number(days), type, offset)).json();
+
+async function fetchFunction(fetch: (input: URL | RequestInfo, init?: RequestInit | undefined) => Promise<Response>, userId: number, days: string, type: string, offset: number): Promise<Post[]> {
+    const data: Response = await fetch(`${env.BACK_END}/posts/spaces/1?sort=${type}&days=${days}&userId=${userId}&start=${offset}`, {
+        headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+        }
+    });
+    return data.json();
 }
 
 export const load: PageServerLoad = async ({ params, cookies, url, fetch }) => {

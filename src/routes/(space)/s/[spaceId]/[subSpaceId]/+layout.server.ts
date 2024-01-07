@@ -1,8 +1,10 @@
 import type { UserMeta } from "../../../../../models/signup.type";
-import { getSpace } from "../../../../../service/spaceService";
+import type { Space } from "../../../../../models/space.type";
 import type { LayoutServerLoad } from "./$types";
+import { env } from "$env/dynamic/private";
 
-export const load: LayoutServerLoad = async ({ params, cookies, url }) => {
+
+export const load: LayoutServerLoad = async ({ params, cookies, fetch }) => {
     let userId = 0;
     const userJson = cookies.get("user");
     let user: UserMeta | undefined;
@@ -13,10 +15,20 @@ export const load: LayoutServerLoad = async ({ params, cookies, url }) => {
         }
     }
     const spaceId = Number(params.subSpaceId);
-    const subspace = await getSpace(spaceId);
+    const subspace = await getSpace(spaceId, fetch);
     return {
         spaceId: spaceId,
         subspace: subspace,
         params: params
     };
 };
+
+const getSpace = async (spaceId: number, fetch: (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>): Promise<Space> => {
+    const data: Response = await fetch(`${env.BACK_END}/spaces/${spaceId}`,
+        {
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+            }
+        });
+    return await data.json();
+}

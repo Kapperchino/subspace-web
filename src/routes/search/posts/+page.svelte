@@ -2,9 +2,6 @@
 	import type { PageData } from './$types';
 
 	import { setContext } from 'svelte';
-	import { page } from '$app/stores';
-	import SpaceComponent from '$lib/spaceComponent.svelte';
-	import SortPostComponent from '$lib/sortPostComponent.svelte';
 	import SeoComponent from '$lib/seoComponent.svelte';
 
 
@@ -56,8 +53,3 @@
 	<div class="flex grow" />
 	<div class="flex grow" />
 </div>
-<!-- <TabGroup justify="justify-center">
-	<TabAnchor href="/s/1/1" selected={$page.url.pathname === '/s/1/1'}>Posts</TabAnchor>
-	<TabAnchor href="/following" selected={$page.url.pathname === '/following'}>About</TabAnchor>
-</TabGroup> -->
-<SpaceComponent posts={data.posts} spaceId={1} />
