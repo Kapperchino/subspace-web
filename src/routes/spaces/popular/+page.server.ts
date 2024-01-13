@@ -6,13 +6,13 @@ import { getTags } from '../../../service/trendingService';
 import { getSpaces } from '../../../service/spaceService';
 
 
-export const load: PageServerLoad = async ({ params, cookies }) => {
+export const load: PageServerLoad = async ({ params, cookies, fetch }) => {
     const userJson = cookies.get("user");
     let user: UserMeta | undefined;
     if (userJson != undefined) {
         user = JSON.parse(userJson);
     }
-    const spaces = await getSpaces('popular');
+    const spaces = await getSpaces('popular', fetch);
     return {
         user: user,
         spaces: spaces,

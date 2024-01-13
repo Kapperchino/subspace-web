@@ -9,6 +9,8 @@
 	import { coockieStore } from '../store/tokenStore';
 	import { goto } from '$app/navigation';
 	import { themeStore } from '$lib/store/themeStore';
+	import { flyAndScale } from '$lib/utils';
+	import { fade } from 'svelte/transition';
 
 	export let user: UserMeta | undefined;
 	$: theme = themeStore;
@@ -27,12 +29,21 @@
 
 <div use:melt={$portalled}>
 	{#if $open}
-		<div use:melt={$overlay} class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm" />
+		<div
+			use:melt={$overlay}
+			transition:fade={{ duration: 150 }}
+			class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
+		/>
 		<div
 			class="fixed left-[50%] top-[50%] z-50 max-h-[85vh] w-full sm:w-[90vw]
 			max-w-xl translate-x-[-50%] translate-y-[-50%] rounded-xl bg-base-200
 			p-3 shadow-lg"
 			use:melt={$content}
+			transition:flyAndScale={{
+				duration: 150,
+				y: 100,
+				start: 0.96
+			}}
 		>
 			<div class="flex flex-row">
 				<h2 use:melt={$title} class="flex pb-2 text-lg font-semibold">Settings</h2>

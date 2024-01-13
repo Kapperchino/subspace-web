@@ -23,3 +23,11 @@ export enum SpacePrefixState {
     Selecting,
     Selected
 }
+
+export type SpaceCreationReq = {
+    name: string;
+    description: string;
+    parent: number | undefined;
+	small_picture_id: number | undefined;
+	background_picture_id: number | undefined;
+}

@@ -1,7 +1,9 @@
 import type { Space } from "../models/space.type";
 import { env } from "$env/dynamic/private";
+import type { SvelteFetch } from "../models/common.type";
 
-export const getSpaces = async (sort: string): Promise<Array<Space>> => {
+
+export const getSpaces = async (sort: string, fetch: SvelteFetch): Promise<Array<Space>> => {
     const data: Response = await fetch(`${env.BACK_END}/spaces/sort?sortBy=${sort}`,
         {
             headers: {
@@ -11,7 +13,7 @@ export const getSpaces = async (sort: string): Promise<Array<Space>> => {
     return await data.json()
 }
 
-export const getSpace = async (spaceId: number): Promise<Space> => {
+export const getSpace = async (spaceId: number, fetch: SvelteFetch): Promise<Space> => {
     const data: Response = await fetch(`${env.BACK_END}/spaces/${spaceId}`,
         {
             headers: {

@@ -4,13 +4,13 @@ import { redirect, type Actions } from '@sveltejs/kit';
 import type { UserMeta } from '../../models/signup.type';
 import { getTags } from '../../service/trendingService';
 
-export const load: PageServerLoad = async ({ params, cookies }) => {
+export const load: PageServerLoad = async ({ params, cookies, fetch }) => {
     const userJson = cookies.get("user");
     let user: UserMeta | undefined;
     if (userJson != undefined) {
         user = JSON.parse(userJson);
     }
-    const tags = await getTags();
+    const tags = await getTags(fetch);
     return {
         user: user,
         tags: tags,
