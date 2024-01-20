@@ -7,7 +7,7 @@ import { getUser } from '../../../service/userService';
 export const load: LayoutServerLoad = async ({ params, cookies, fetch }) => {
     const userJson = cookies.get("user");
     let curUser: UserMeta | undefined;
-    if (userJson != undefined) {
+    if (userJson != undefined && userJson != 'undefined') {
         curUser = JSON.parse(userJson);
     }
     const userId = Number(params.id);

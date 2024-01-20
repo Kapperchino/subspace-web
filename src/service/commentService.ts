@@ -1,9 +1,10 @@
 import type { UserMeta } from "../models/signup.type";
 import type { Comment, CommentData } from "../models/comment.type";
 import { env } from "$env/dynamic/private";
+import type { SvelteFetch } from "../models/common.type";
 
 
-export const getCommentsForPost = async (userId: number, postId: number): Promise<Array<CommentData>> => {
+export const getCommentsForPost = async (userId: number, postId: number, fetch: SvelteFetch): Promise<Array<CommentData>> => {
     const data: Response = await fetch(`${env.BACK_END}/comments?postId=${postId}&userId=${userId}&sort=popular&days=365`,
         {
             headers: {
@@ -34,7 +35,7 @@ export const getCommentsForPost = async (userId: number, postId: number): Promis
     return resList;
 }
 
-export const getComment = async (commentId: number): Promise<Comment> => {
+export const getComment = async (commentId: number, fetch: SvelteFetch): Promise<Comment> => {
     const data: Response = await fetch(`${env.BACK_END}/comments/${commentId}`,
         {
             headers: {
@@ -44,14 +45,14 @@ export const getComment = async (commentId: number): Promise<Comment> => {
     return data.json();
 }
 
-export const getCommentsForComments = async (userId: number, commentId: number): Promise<Array<CommentData>> => {
+export const getCommentsForComments = async (userId: number, commentId: number, fetch: SvelteFetch): Promise<Array<CommentData>> => {
     const data: Response = await fetch(`${env.BACK_END}/comments?commentId=${commentId}&userId=${userId}&sort=popular&days=365`,
         {
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
             }
         });
-    const comments : Comment[] = await data.json();
+    const comments: Comment[] = await data.json();
     if (comments == null) {
         return [];
     }

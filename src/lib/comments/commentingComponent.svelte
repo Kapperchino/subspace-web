@@ -296,8 +296,9 @@
 							type="button"
 							on:click={closeImage}
 							class="absolute btn btn-xs btn-circle btn-error h-6 w-6 bottom-20 left-20"
-							><XIcon /></button
 						>
+							<XIcon />
+						</button>
 					</div>
 				</div>
 			{/if}

@@ -7,7 +7,7 @@ export const load: PageServerLoad = async ({ parent, params, cookies, url, fetch
     let userId = 0;
     const userJson = cookies.get("user");
     let user: UserMeta | undefined;
-    if (userJson != undefined) {
+    if (userJson != undefined && userJson != 'undefined') {
         user = JSON.parse(userJson);
         if (user != null) {
             userId = user.user_id;

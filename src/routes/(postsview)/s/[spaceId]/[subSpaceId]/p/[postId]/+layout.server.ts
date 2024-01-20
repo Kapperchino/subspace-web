@@ -9,7 +9,7 @@ export const load: LayoutServerLoad = async ({ params, cookies, fetch }) => {
     let userId = 0
     const userJson = cookies.get("user");
     let user: UserMeta | undefined;
-    if (userJson != undefined) {
+    if (userJson != undefined && userJson != 'undefined') {
         user = JSON.parse(userJson);
     }
     const post = await getPost(userId, Number(params.postId), fetch);

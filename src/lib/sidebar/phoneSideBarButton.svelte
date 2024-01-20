@@ -18,6 +18,7 @@
 	import SettingsComponent from './settingsComponent.svelte';
 	import AvatarComponent from '$lib/avatarComponent.svelte';
 	import PhoneSideBar from './phoneSideBar.svelte';
+	import { fade, fly } from 'svelte/transition';
 	let modal: HTMLDialogElement | undefined;
 
 	var onSuccess = async () => {
@@ -56,19 +57,5 @@
 		<div use:melt={$content}>
 			<PhoneSideBar />
 		</div>
-
-		<!-- <div
-			class="fixed left-[50%] top-[50%] z-50 max-h-[85vh] w-[90vw]
-			  max-w-xl translate-x-[-50%] translate-y-[-50%] rounded-xl bg-base-300
-			  p-3 shadow-lg"
-			use:melt={$content}
-		>
-			<div class="flex flex-row">
-				<h2 use:melt={$title} class="flex pb-2 text-lg font-semibold">Comment</h2>
-				<div class="grow" />
-				<button type="button" class="btn btn-sm btn-circle" use:melt={$close}><X /></button>
-			</div>
-			<PostingComponent {onSuccess} />
-		</div> -->
 	{/if}
 </div>

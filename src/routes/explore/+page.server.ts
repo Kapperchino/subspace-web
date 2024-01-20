@@ -7,7 +7,7 @@ import { getTags } from '../../service/trendingService';
 export const load: PageServerLoad = async ({ params, cookies, fetch }) => {
     const userJson = cookies.get("user");
     let user: UserMeta | undefined;
-    if (userJson != undefined) {
+    if (userJson != undefined && userJson != 'undefined') {
         user = JSON.parse(userJson);
     }
     const tags = await getTags(fetch);

@@ -6,13 +6,13 @@ import type { UserMeta } from '../../../../../../models/signup.type';
 import { getSpace } from '../../../../../../service/spaceService';
 import { getSubscription } from '../../../../../../service/subscriptionService';
 
-export const load: PageServerLoad = async ({ params, cookies }) => {
+export const load: PageServerLoad = async ({ params, cookies, fetch }) => {
     if (cookies.get("user") == undefined) {
         redirect(302, '/login');
     }
     const user: UserMeta = JSON.parse(cookies.get("user")!);
     const spaceId = Number(params.subSpaceId);
-    const subspace = await getSpace(spaceId);
+    const subspace = await getSpace(spaceId, fetch);
     const subRes = await getSubscription(spaceId, user);
     const isSubbed = subRes.status == 200;
     return {
