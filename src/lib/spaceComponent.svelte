@@ -2,7 +2,6 @@
 	import PostCardComponent from './posts/postCardComponent.svelte';
 	import type { Post } from '../models/post.type';
 	import NotFoundComponent from './notFoundComponent.svelte';
-	import { infiniteScrollAction } from 'svelte-legos';
 	import { page } from '$app/stores';
 	import { backendUrl } from './store/clientBackendUrl';
 	import { coockieStore } from './store/tokenStore';
@@ -12,7 +11,7 @@
 	import { getUserByAddress } from '../service/userServiceClient';
 	import hljs from 'highlight.js/lib/common';
 	import type { Writable } from 'svelte/store';
-	import { createVirtualizer, createWindowVirtualizer } from '@tanstack/svelte-virtual';
+	import { createVirtualizer } from '@tanstack/svelte-virtual';
 
 	export let posts: Writable<Post[]>;
 	export let spaceId: number;

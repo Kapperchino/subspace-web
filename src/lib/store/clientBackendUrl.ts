@@ -1,1 +1,1 @@
-export const backendUrl = 'http://affd9410af649471f913ff8a76ea254a-1959163819.us-east-1.elb.amazonaws.com';
+export const backendUrl = 'https://api.subspace.place';
