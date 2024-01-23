@@ -11,6 +11,7 @@
 	import { page } from '$app/stores';
 	import SettingsComponent from './settingsComponent.svelte';
 	import SideBarProfilePhone from './sideBarProfilePhone.svelte';
+	import { fly } from 'svelte/transition';
 	let modal: HTMLDialogElement | undefined;
 
 	var onSuccess = async () => {
@@ -37,6 +38,11 @@
 <div
 	class="z-50 fixed left-0 top-0 h-screen w-20
 shadow-lg focus:outline-none"
+	transition:fly={{
+		x: -350,
+		duration: 300,
+		opacity: 1
+	}}
 >
 	<ul class="menu p-4 w-60 min-h-full bg-base-200">
 		{#if user}

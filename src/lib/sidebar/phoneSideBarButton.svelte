@@ -52,9 +52,15 @@
 
 <div use:melt={$portalled}>
 	{#if $open}
-		<div use:melt={$overlay} class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm" />
+		<div
+			use:melt={$overlay}
+			class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
+			transition:fade={{ duration: 150 }}
+		/>
 
-		<div use:melt={$content}>
+		<div
+			use:melt={$content}
+		>
 			<PhoneSideBar />
 		</div>
 	{/if}
