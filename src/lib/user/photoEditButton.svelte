@@ -7,7 +7,7 @@
 	import X from '~icons/bx/x';
 	import Logout from '~icons/material-symbols/logout-rounded';
 	import { coockieStore } from '../store/tokenStore';
-	import { goto } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 	import { themeStore } from '$lib/store/themeStore';
 	import { flyAndScale } from '$lib/utils';
 	import { fade } from 'svelte/transition';
@@ -19,6 +19,11 @@
 	} = createDialog({
 		forceVisible: true
 	});
+
+	var onSuccess = async () => {
+		await invalidateAll();
+		$open = false;
+	};
 </script>
 
 <button type="button" use:melt={$trigger}>
@@ -48,7 +53,7 @@
 				<div class="grow" />
 				<button type="button" class="btn btn-sm btn-circle" use:melt={$close}><X /></button>
 			</div>
-			<PhotoEditComponent />
+			<PhotoEditComponent {onSuccess} />
 		</div>
 	{/if}
 </div>

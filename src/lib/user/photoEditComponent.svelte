@@ -1,6 +1,17 @@
 <script lang="ts">
 	import PhotoIcon from '~icons/material-symbols/add-photo-alternate';
 	import XIcon from '~icons/bx/x';
+	import type { FileUploadRequest, PictureRequestMeta } from '../../models/post.type';
+	import { uploadFile, uploadMedia } from '../../service/postingService';
+	import { backendUrl } from '$lib/store/clientBackendUrl';
+	import { number } from 'zod';
+	import { addToast } from '$lib/toaster.svelte';
+	import type { UserMeta } from '../../models/signup.type';
+	import { coockieStore } from '$lib/store/tokenStore';
+	import { goto } from '$app/navigation';
+
+	export let onSuccess = () => {}; // no-operation function;
+
 
 	let picList: Array<[string, File]> = [];
 	let picFiles: FileList | undefined;
@@ -24,15 +35,73 @@
 		if (picList.length > 0) {
 			picList.pop();
 			picList = picList;
-			picInput.value = '';
 		}
+	}
+
+	async function upload() {
+		const user: UserMeta = coockieStore.getValue('cookie');
+		if (user == undefined) {
+			await goto('/login');
+			return;
+		}
+		const memoryImg = document.createElement('img');
+		memoryImg.src = picList[0][0];
+		const width = memoryImg.width;
+		const height = memoryImg.height;
+		const picUploadReq: PictureRequestMeta = {
+			height: height,
+			url: '',
+			width: width
+		};
+		const fileUploadReq: FileUploadRequest = {
+			picture_meta: picUploadReq,
+			file_type: 'picture',
+			is_link: undefined
+		};
+		var picRes = await uploadMedia(fileUploadReq);
+		var uploadRes = await uploadFile(picList[0][1], picRes.presigned, picList[0][1].type);
+		var res = await updateUserPic(picRes.id);
+		uploadSuccess();
+		reset();
+		onSuccess();
+	}
+
+	async function updateUserPic(pictureId: number) {
+		const user: UserMeta = coockieStore.getValue('cookie');
+		const data: Response = await fetch(`${backendUrl}/users/${user.user_id}/picture`, {
+			method: 'PUT',
+			body: JSON.stringify({ picture_id: pictureId }),
+			headers: {
+				'Content-Type': 'application/json; charset=UTF-8',
+				Authorization: `Bearer ${user?.token}`
+			}
+		});
+		return await data;
+	}
+
+	function uploadSuccess() {
+		addToast({
+			data: {
+				title: 'Success',
+				description: '🎉 Profile update Success!',
+				type: 'success'
+			}
+		});
+	}
+
+	function reset() {
+		closeImage();
 	}
 </script>
 
 {#if picList != null && picList.length > 0}
 	<div class="flex-row flex pb-1 pt-3 justify-center">
 		<div class="relative rounded-full">
-			<img loading="lazy" class="object-scale-down rounded-full h-36 w-36 p-1" src={picList.at(0)?.[0]} />
+			<img
+				loading="lazy"
+				class="object-scale-down rounded-full h-36 w-36 p-1"
+				src={picList.at(0)?.[0]}
+			/>
 			<div class="pl-1" />
 			<button
 				type="button"
@@ -42,7 +111,7 @@
 		</div>
 	</div>
 	<div class="flex flex-row justify-center pt-3">
-		<button type="button" class="btn btn-info btn-sm">Upload</button>
+		<button type="button" class="btn btn-info btn-sm" on:click={upload}>Upload</button>
 	</div>
 {:else}
 	<div class="flex flex-row justify-center">
