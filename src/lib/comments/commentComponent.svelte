@@ -65,7 +65,7 @@
 		{/if}
 
 		{#if comment?.comment.comment_pictures != null}
-			<div class="flex justify-center bg-gradient-to-b from-gray-900 to-gray-600 rounded-md">
+			<div class="flex justify-center bg-gradient-to-b from-gray-900 to-gray-600 rounded-md overflow-hidden">
 				<div>
 					<Image
 						src="https://subspace.place/cdn-cgi/image/format=auto/{comment?.comment.comment_pictures[0]?.url}"
@@ -73,6 +73,8 @@
 						aspectRatio={getRatio(comment?.comment.comment_pictures[0])}
 						height="500"
 						alt="image"
+						priority="true"
+						background="auto"
 					/>
 				</div>
 			</div>

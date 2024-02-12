@@ -78,16 +78,15 @@
 				<div
 					class="flex justify-center bg-gradient-to-b from-gray-900 to-gray-600 rounded-lg overflow-hidden"
 				>
-					<div>
-						<Image
-							src="https://subspace.place/cdn-cgi/image/format=auto/{post?.post_pictures?.at(0)
-								?.url}"
-							layout="constrained"
-							aspectRatio={getRatio(post?.post_pictures?.at(0))}
-							height="500"
-							alt="image"
-						/>
-					</div>
+					<Image
+						src="https://subspace.place/cdn-cgi/image/format=auto/{post?.post_pictures?.at(0)?.url}"
+						layout="constrained"
+						aspectRatio={getRatio(post?.post_pictures?.at(0))}
+						height="500"
+						alt="image"
+						priority="true"
+						background="auto"
+					/>
 				</div>
 			{/if}
 			{#if post?.post_videos != null}
