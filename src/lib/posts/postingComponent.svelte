@@ -333,7 +333,7 @@
 			{#if picList != null && picList.length > 0 && vidList.length == 0}
 				<div class="flex-row flex pb-1 pt-3">
 					<div class="relative bg-gradient-to-r from-gray-900 to-gray-800 rounded-md">
-						<img loading="lazy" class="object-scale-down h-24 w-24 p-1" src={picList.at(0)?.[0]} />
+						<img class="object-scale-down h-24 w-24 p-1" src={picList.at(0)?.[0]} />
 						<div class="pl-1" />
 						<button
 							type="button"

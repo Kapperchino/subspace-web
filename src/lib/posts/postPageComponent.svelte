@@ -15,6 +15,7 @@
 	import hljs from 'highlight.js/lib/common';
 	import { flyAndScale } from '$lib/utils';
 	import { fade } from 'svelte/transition';
+	import { Image } from '@unpic/svelte';
 
 	export let post: Post | undefined;
 	export let spaceId: number | undefined;
@@ -60,6 +61,11 @@
 		}
 	});
 
+	export function getRatio(meta: PictureMeta | undefined) {
+		const ratio = meta!.width / meta!.height;
+		return ratio;
+	}
+
 	afterUpdate(() => {
 		hljs.highlightAll();
 	});
@@ -85,16 +91,18 @@
 			</div>
 		{/if}
 		{#if post?.post_pictures != null}
-			<div class="flex justify-center bg-gradient-to-b from-gray-900 to-gray-600 rounded-md">
-				<img
-					loading="eager"
-					class="object-contain h-[30rem] w-fit"
-					alt="Postcard pic"
-					height={getDimention(post?.post_pictures?.at(0)).height}
-					width={getDimention(post?.post_pictures?.at(0)).width}
-					src={'https://subspace.place/cdn-cgi/image/fit=scale-down,width=550,format=auto/' +
-						post?.post_pictures?.at(0)?.url}
-				/>
+			<div
+				class="flex justify-center bg-gradient-to-b from-gray-900 to-gray-600 rounded-lg overflow-hidden"
+			>
+				<div>
+					<Image
+						src="https://subspace.place/cdn-cgi/image/format=auto/{post?.post_pictures?.at(0)?.url}"
+						layout="constrained"
+						aspectRatio={getRatio(post?.post_pictures?.at(0))}
+						height="600"
+						alt="image"
+					/>
+				</div>
 			</div>
 		{/if}
 		{#if post?.post_videos != null}

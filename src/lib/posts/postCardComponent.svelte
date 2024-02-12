@@ -12,23 +12,28 @@
 	import { createDialog, melt } from '@melt-ui/svelte';
 	import { flyAndScale } from '$lib/utils';
 	import { fade } from 'svelte/transition';
+	import { Image } from '@unpic/svelte';
 
 	export let post: Post | undefined;
 	export let spaceId: number | undefined;
-	export let imgHeight: number = 500;
-	export let imgMinHeight: number = 300;
-	export let imgWidth: number = 550;
 	export let index: number;
-
-	const loadType: 'lazy' | 'eager' = index > 10 ? 'lazy' : 'eager';
+	const imgMaxHeight: number = 500;
+	const imgMaxWidth: number = 550;
+	let divElement: HTMLDivElement | undefined;
+	$: imgDivWidth = divElement ? divElement?.offsetWidth : imgMaxWidth;
 
 	export function getDimention(meta: PictureMeta | undefined) {
 		const ratio = meta!.width / meta!.height;
-		var height = imgWidth / ratio;
+		let height = imgDivWidth / ratio;
 		return {
-			width: imgWidth,
-			height: height
+			width: imgDivWidth,
+			height: Math.min(height, imgMaxHeight)
 		};
+	}
+
+	export function getRatio(meta: PictureMeta | undefined) {
+		const ratio = meta!.width / meta!.height;
+		return ratio;
 	}
 
 	var onSuccess = async () => {
@@ -70,17 +75,19 @@
 				</a>
 			{/if}
 			{#if post?.post_pictures != null}
-				<div class="flex justify-center bg-gradient-to-b from-gray-900 to-gray-600 rounded-md">
-					<img
-						loading={loadType}
-						decoding="async"
-						class="object-contain h-[26rem] w-fit"
-						alt="Postcard pic"
-						height={getDimention(post.post_pictures[0]).height}
-						width={imgWidth}
-						src={'https://subspace.place/cdn-cgi/image/fit=scale-down,width=550,format=auto/' +
-							post?.post_pictures?.at(0)?.url}
-					/>
+				<div
+					class="flex justify-center bg-gradient-to-b from-gray-900 to-gray-600 rounded-lg overflow-hidden"
+				>
+					<div>
+						<Image
+							src="https://subspace.place/cdn-cgi/image/format=auto/{post?.post_pictures?.at(0)
+								?.url}"
+							layout="constrained"
+							aspectRatio={getRatio(post?.post_pictures?.at(0))}
+							height="500"
+							alt="image"
+						/>
+					</div>
 				</div>
 			{/if}
 			{#if post?.post_videos != null}

@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { lazyLoadImageAction } from 'svelte-legos';
-	import { get } from 'svelte/store';
 
 	export let userId: number | undefined;
 	export let url: string | undefined;

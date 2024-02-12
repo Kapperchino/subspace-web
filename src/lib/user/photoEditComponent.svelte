@@ -98,7 +98,6 @@
 	<div class="flex-row flex pb-1 pt-3 justify-center">
 		<div class="relative rounded-full">
 			<img
-				loading="lazy"
 				class="object-scale-down rounded-full h-36 w-36 p-1"
 				src={picList.at(0)?.[0]}
 			/>

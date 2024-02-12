@@ -8,19 +8,18 @@
 	import { persisted } from 'svelte-persisted-store';
 	import { afterNavigate } from '$app/navigation';
 	import SeoComponent from '$lib/seoComponent.svelte';
+	import UserCommentComponent from '$lib/user/userCommentComponent.svelte';
 
 	export let data: PageData;
 	setContext('user', data.user);
 
-	$: posts = persisted(`user-${data.user.user_id}`, data.posts);
-	$: offset = persisted(`user-${data.user.user_id}-offset`, 0);
-	$: loaded = persisted(`user-${data.user.user_id}-loaded`, false);
-	$: days = data.sortDay;
-	$: type = data.sortType;
+	$: comments = persisted(`user-${data.user.user_id}-comments`, data.comments);
+	$: offset = persisted(`user-${data.user.user_id}-comments-offset`, 0);
+	$: loaded = persisted(`user-${data.user.user_id}-comments-loaded`, false);
 
 	afterNavigate((nav) => {
 		if (nav.type == 'enter' || nav.type == 'goto') {
-			$posts = data.posts;
+			$comments = data.comments;
 			$offset = 0;
 			$loaded = false;
 		}
@@ -39,17 +38,10 @@
 	<div class="flex grow" />
 	<div class="flex grow max-w-md md:max-w-xl">
 		<div class="tabs tabs-boxed tabs-md justify-center">
-			<a class="tab tab-active" href="/users/{data.user.user_id}/posts">Posts</a>
-			<a class="tab" href="/users/{data.user.user_id}/comments">Comments</a>
+			<a class="tab" href="/users/{data.user.user_id}/posts">Posts</a>
+			<a class="tab tab-active" href="/users/{data.user.user_id}/comments">Comments</a>
 		</div>
 	</div>
 	<div class="flex grow" />
 </div>
-<UserPageComponent
-	bind:loaded
-	bind:posts
-	bind:offset
-	bind:userId={data.user.user_id}
-	bind:sortDays={days}
-	bind:sortType={type}
-/>
+<UserCommentComponent bind:loaded bind:comments bind:offset bind:posterId={data.user.user_id}   />

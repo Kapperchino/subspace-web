@@ -1,7 +1,7 @@
 import { setContext } from 'svelte';
 import { redirect } from '@sveltejs/kit';
 import type { UserMeta } from '../../../../models/signup.type';
-import { getUser, getUserPosts } from '../../../../service/userService';
+import { getUser, getUserComments, getUserPosts } from '../../../../service/userService';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params, cookies, fetch, url }) => {
@@ -14,13 +14,11 @@ export const load: PageServerLoad = async ({ params, cookies, fetch, url }) => {
     const user = await getUser(userId, fetch);
     const days = url.searchParams.get('days') ?? "7";
     const type = url.searchParams.get('type') ?? "popular";
-    const posts = await getUserPosts(userId, fetch, type, Number(days));
+    const comments = await getUserComments(userId, curUser?.user_id ?? -1, fetch, type, Number(days));
     return {
         curUser: curUser,
         user: user,
-        posts: posts,
-        params: params,
-        sortDay: Number(days),
-        sortType: type
+        comments: comments,
+        params: params
     };
 };

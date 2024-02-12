@@ -1,28 +1,32 @@
 <script lang="ts">
-	import PostCardComponent from './posts/postCardComponent.svelte';
-	import type { Post } from '../models/post.type';
-	import NotFoundComponent from './notFoundComponent.svelte';
-	import { backendUrl } from './store/clientBackendUrl';
+	import PostCardComponent from '../posts/postCardComponent.svelte';
+	import type { Post } from '../../models/post.type';
+	import NotFoundComponent from '../notFoundComponent.svelte';
+	import { backendUrl } from '../store/clientBackendUrl';
 	import { afterUpdate, onDestroy, onMount } from 'svelte';
 	import { goto } from '$app/navigation';
-	import { getUserByAddress } from '../service/userServiceClient';
+	import { getUserByAddress } from '../../service/userServiceClient';
 	import hljs from 'highlight.js/lib/common';
 	import type { Writable } from 'svelte/store';
 	import { createVirtualizer } from '@tanstack/svelte-virtual';
+	import CommentComponent from '$lib/comments/commentComponent.svelte';
+	import type { UserMeta } from '../../models/signup.type';
+	import { coockieStore } from '$lib/store/tokenStore';
 
-	export let posts: Writable<Post[]>;
-	export let userId: number;
+	export let comments: Writable<Comment[]>;
 	export let offset: Writable<number>;
 	export let loaded: Writable<boolean>;
+	export let posterId: number;
 	let isLoading = false;
 	let observer: IntersectionObserver;
+	let user: UserMeta;
 
 	let element: HTMLDivElement;
 
 	let virtualListEl: HTMLDivElement;
 	let virtualItemEls: HTMLDivElement[] = [];
 
-	$: count = $posts?.length ?? 0;
+	$: count = $comments.length ?? 0;
 
 	$: virtualizer = createVirtualizer<HTMLDivElement, HTMLDivElement>({
 		getScrollElement: () => virtualListEl,
@@ -48,9 +52,9 @@
 		});
 	}
 
-	export const getPostsClient = async (userId: number, offset: number): Promise<Post[]> => {
+	export const getCommentsClient = async (posterId: number, offset: number): Promise<Comment[]> => {
 		const data = await fetch(
-			`${backendUrl}/posts/users/${userId}?sort=latest&days=7&start=${offset}`,
+			`${backendUrl}/comments/users/${posterId}?sort=latest&days=7&start=${offset}&userId=${user.user_id}`,
 			{
 				headers: {
 					'Content-Type': 'application/json; charset=UTF-8'
@@ -64,15 +68,15 @@
 		if (!$loaded) {
 			$offset += 10;
 			isLoading = true;
-			const newPosts = await getPostsClient(userId, $offset);
-			if (newPosts == null || newPosts == undefined || newPosts?.length == 0) {
+			const netComments = await getCommentsClient(posterId, $offset);
+			if (netComments == null || netComments == undefined || netComments?.length == 0) {
 				$loaded = true;
 				isLoading = false;
 				return;
 			}
-			$posts = $posts.concat(newPosts);
+			$comments = $comments.concat(netComments);
 			isLoading = false;
-			if (newPosts?.length != 10) {
+			if (netComments?.length != 10) {
 				$loaded = true;
 				isLoading = false;
 				return;
@@ -102,6 +106,7 @@
 		if (element) {
 			observer?.observe(element);
 		}
+		user = coockieStore.getValue('cookie');
 	});
 
 	onDestroy(() => {
@@ -113,7 +118,7 @@
 	});
 </script>
 
-{#if $posts != null && $posts.length > 0}
+{#if $comments != null && $comments.length > 0}
 	<div bind:this={virtualListEl}>
 		<div style="position: relative; height: {$virtualizer.getTotalSize()}px; width: 100%;">
 			<div
@@ -129,7 +134,9 @@
 					>
 						<div class="flex" />
 						<div class="grow max-w-full md:max-w-xl">
-							<PostCardComponent post={$posts[row.index]} spaceId={1} index={row.index} />
+							<CommentComponent
+								comment={{comment:$comments[row.index],children: []}}
+							/>
 						</div>
 						<div class="flex" />
 					</div>

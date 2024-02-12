@@ -12,6 +12,7 @@
 	import X from '~icons/bx/x';
 	import { flyAndScale } from '$lib/utils';
 	import { fade } from 'svelte/transition';
+	import { Image } from '@unpic/svelte';
 
 	export let comment: CommentData | undefined;
 	export let post: Post;
@@ -33,6 +34,11 @@
 		await invalidateAll();
 		$open = false;
 	};
+
+	export function getRatio(meta: PictureMeta | undefined) {
+		const ratio = meta!.width / meta!.height;
+		return ratio;
+	}
 
 	const {
 		elements: { trigger, overlay, content, title, description, close, portalled },
@@ -60,16 +66,15 @@
 
 		{#if comment?.comment.comment_pictures != null}
 			<div class="flex justify-center bg-gradient-to-b from-gray-900 to-gray-600 rounded-md">
-				<img
-					loading="lazy"
-					decoding="async"
-					class="object-contain h-[28rem] w-fit"
-					alt="Postcard pic"
-					height={getDimention(comment?.comment.comment_pictures[0]).height}
-					width={imgWidth}
-					src={'https://subspace.place/cdn-cgi/image/fit=scale-down,width=550,format=auto/' +
-						comment?.comment.comment_pictures?.at(0)?.url}
-				/>
+				<div>
+					<Image
+						src="https://subspace.place/cdn-cgi/image/format=auto/{comment?.comment.comment_pictures[0]?.url}"
+						layout="constrained"
+						aspectRatio={getRatio(comment?.comment.comment_pictures[0])}
+						height="500"
+						alt="image"
+					/>
+				</div>
 			</div>
 		{/if}
 		{#if comment?.comment.comment_videos != null}
