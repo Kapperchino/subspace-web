@@ -1,1 +1,1 @@
-export const backendUrl = 'https://api.subspace.place';
+export const backendUrl = 'https://subspace-backend.fly.dev';
